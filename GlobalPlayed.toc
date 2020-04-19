@@ -2,8 +2,13 @@
 ## Title: GlobalPlayed
 ## Notes: See all your characters played
 ## Author: RedSkiesReaperr
-## Version: @0.1@
+## Version: 1.0
 ## SavedVariables: Characters, TotalDays, TotalHours, TotalAsHours
+
+## X-Category: Miscellaneous
+## X-Website: https://www.curseforge.com/wow/addons/globalplayed
+## X-Curse-Project-ID: 377190
+## X-License: All Rights Reserved
 
 # LUA Code
 Utils.lua
