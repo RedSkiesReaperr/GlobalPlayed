@@ -1,0 +1,8 @@
+## Interface: 80300
+## Title: GlobalPlayed
+## Notes: See all your characters played
+## Author: RedSkiesReaperr
+## Version: @0.1@
+## SavedVariables: Characters, TotalDays, TotalHours, TotalAsHours
+
+GlobalPlayed.lua
