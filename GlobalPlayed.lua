@@ -61,6 +61,9 @@ function UpdateTotalPlayed()
 	TotalDays = days + nbOfDays
 	TotalHours = hours - (nbOfDays * 24)
 	TotalAsHours = (TotalDays * 24) + TotalHours
+end
+
+function LogTotalPlayed()
 	Log("Total: " .. TotalDays .. " days " .. TotalHours .. " hours (" .. TotalAsHours .. "h)")
 end
 
@@ -75,6 +78,11 @@ end
 -- Addon behavior
 ----------------------
 Main()
+
+SLASH_GLOBAL_PLAYED1 = '/gp'
+SlashCmdList['GLOBAL_PLAYED'] = function()
+	LogTotalPlayed()
+end
 
 local frame = CreateFrame("Frame")
 local currentCharacter = nil
