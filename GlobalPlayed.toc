@@ -6,3 +6,8 @@
 ## SavedVariables: Characters, TotalDays, TotalHours, TotalAsHours
 
 GlobalPlayed.lua
+Character.lua
+Utils.lua
+
+Config.xml
+Config.lua
