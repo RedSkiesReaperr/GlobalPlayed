@@ -1,0 +1,13 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Script file="GlobalPlayed.lua" />
+	<Frame name="GlobalPlayedFrame" parent="UIParent" toplevel="true" enableMouse="true">
+		<Size>
+			<AbsDimension x="200" y="200" />
+		</Size>
+		<Scripts>
+			<OnLoad> GlobalPlayedFrame_OnLoad(self); </OnLoad>
+			<OnEvent> GlobalPlayedFrame_OnEvent(self, event, ...); </OnEvent>
+		</Scripts>
+	</Frame>
+</Ui>

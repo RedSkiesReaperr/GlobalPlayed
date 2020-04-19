@@ -5,9 +5,12 @@
 ## Version: @0.1@
 ## SavedVariables: Characters, TotalDays, TotalHours, TotalAsHours
 
-GlobalPlayed.lua
-Character.lua
+# LUA Code
 Utils.lua
+Classes/Character.lua
+EventHandlers/AddonLoaded.lua
+EventHandlers/TimePlayed.lua
 
-Config.xml
-Config.lua
+# Main Frame
+GlobalPlayed.xml
+GlobalPlayed.lua
