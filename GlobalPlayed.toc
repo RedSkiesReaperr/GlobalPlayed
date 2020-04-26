@@ -2,7 +2,7 @@
 ## Title: GlobalPlayed
 ## Notes: See all your characters played
 ## Author: RedSkiesReaperr
-## Version: 1.0
+## Version: 1.1
 ## SavedVariables: Characters, TotalDays, TotalHours, TotalAsHours
 
 ## X-Category: Miscellaneous
