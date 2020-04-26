@@ -4,9 +4,17 @@
 local currentCharacter = nil
 
 SLASH_GLOBAL_PLAYED1 = '/gplayed'
-SlashCmdList['GLOBAL_PLAYED'] = function()
-	LogTotalPlayed()
-	GlobalPlayedFrame:Show()
+SlashCmdList['GLOBAL_PLAYED'] = function(msg, editbox)
+	if msg == "" then
+		LogAccountPlayed()
+	elseif msg == "all" then
+		LogCharactersPlayed()
+	else
+		Log("Unknown command: /gplayed " .. msg)
+		Log("Availaible commands:")
+		Log("    /gplayed")
+		Log("    /gplayed all")
+	end
 end
 
 function GlobalPlayedFrame_OnLoad(self)
