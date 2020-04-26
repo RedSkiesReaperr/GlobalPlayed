@@ -9,5 +9,5 @@ function TimePlayedMsgHandler(total, currentLvl)
 
 	currentCharacter:UpdatePlayed(days, hours)
 
-	UpdateAccountPlayed()
+	MyAccount:UpdatePlayed()
 end

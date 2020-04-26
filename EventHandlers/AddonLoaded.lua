@@ -1,4 +1,10 @@
 function AddonLoadedHandler()
+	if MyAccount == nil then
+		MyAccount = Account:new()
+	else
+		setmetatable(MyAccount, Account)
+	end
+
 	if Characters == nil then -- If no characters registered
 		Characters = {  }
 	end
@@ -12,7 +18,7 @@ function AddonLoadedHandler()
 		currentCharacter = searchResult
 	end
 
-	UpdateAccountPlayed()
+	MyAccount:UpdatePlayed()
 	GlobalPlayedFrame:UnregisterEvent("ADDON_LOADED")
 	Log("Successfully loaded!")
 end

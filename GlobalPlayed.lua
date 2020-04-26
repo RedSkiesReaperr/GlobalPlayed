@@ -6,9 +6,10 @@ local currentCharacter = nil
 SLASH_GLOBAL_PLAYED1 = '/gplayed'
 SlashCmdList['GLOBAL_PLAYED'] = function(msg, editbox)
 	if msg == "" then
-		LogAccountPlayed()
+		Log(MyAccount:GetPlayed())
 	elseif msg == "all" then
 		LogCharactersPlayed()
+		Log(MyAccount:GetPlayed())
 	else
 		Log("Unknown command: /gplayed " .. msg)
 		Log("Availaible commands:")
