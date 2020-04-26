@@ -12,7 +12,7 @@ function AddonLoadedHandler()
 		currentCharacter = searchResult
 	end
 
-	UpdateTotalPlayed()
+	UpdateAccountPlayed()
 	GlobalPlayedFrame:UnregisterEvent("ADDON_LOADED")
 	Log("Successfully loaded!")
 end

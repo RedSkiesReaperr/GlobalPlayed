@@ -40,8 +40,7 @@ end
 ----------------------
 -- Playtime management functions
 ----------------------
-function UpdateTotalPlayed()
-	local days = 0
+function UpdateAccountPlayed()
 	local hours = 0
 
 	if Characters == nil then
@@ -49,18 +48,14 @@ function UpdateTotalPlayed()
 	end
 
 	for k, v in ipairs(Characters) do
-		if v.days ~= nil and v.days > 0 then
-			days = days + v.days
-		end
-
-		if v.hours ~= nil and v.hours > 0 then
-			hours = hours + v.hours
+		if v.totalAsHours ~= nil and v.totalAsHours > 0 then
+			hours = hours + v.totalAsHours
 		end
 	end
 
-	local nbOfDays = math.floor(hours / 24)
-	
-	TotalDays = days + nbOfDays
-	TotalHours = hours - (nbOfDays * 24)
-	TotalAsHours = (TotalDays * 24) + TotalHours
+	local daysCount = math.floor(hours / 24)
+
+	TotalAsHours = hours
+	TotalDays = daysCount
+	TotalHours = hours - (daysCount * 24)
 end
