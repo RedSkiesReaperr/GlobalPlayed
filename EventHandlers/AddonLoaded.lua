@@ -3,10 +3,10 @@ function AddonLoadedHandler()
 		Characters = {  }
 	end
 
-	searchResult = FindCharacterByName(UnitName("player"))
+	searchResult = FindCharacter(UnitName("player"), GetRealmName())
 
 	if searchResult == nil then
-		currentCharacter = Character:new(UnitName("player"))
+		currentCharacter = Character:new(UnitName("player"), GetRealmName())
 		table.insert(Characters, currentCharacter)
 	else
 		currentCharacter = searchResult
