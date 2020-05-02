@@ -5,15 +5,29 @@ local currentCharacter = nil
 
 SLASH_GLOBAL_PLAYED1 = '/gplayed'
 SlashCmdList['GLOBAL_PLAYED'] = function(msg, editbox)
-	if currentCharacter ~= nil then
-		currentCharacter:UpdatePlayed(days, hours)
-	end
+	if msg == "" then
+		UpdateAll()
 
-	if MyAccount ~= nil then
-		MyAccount:UpdatePlayed()
+		if IsAddOnLoaded("Ace3") == false then
+			Log(MyAccount:GetPlayed())		
+		else
+			OpenUI()
+		end	
+	elseif msg == "all" then
+		UpdateAll()
+
+		if IsAddOnLoaded("Ace3") == false then
+			LogCharactersPlayed()
+			Log(MyAccount:GetPlayed())
+		else
+			OpenUI()
+		end	
+	else
+		Log("Unknown command: /gplayed " .. msg)
+		Log("Availaible commands:")
+		Log("    /gplayed")
+		Log("    /gplayed all")
 	end
-	
-	OpenUI()
 end
 
 function GlobalPlayedFrame_OnLoad(self)
@@ -39,5 +53,15 @@ if event == "TIME_PLAYED_MSG" then
 		local total, currentLvl = ...
 
 		TimePlayedMsgHandler(total, currentLvl)
+	end
+end
+
+function UpdateAll()
+	if currentCharacter ~= nil then
+		currentCharacter:UpdatePlayed(days, hours)
+	end
+
+	if MyAccount ~= nil then
+		MyAccount:UpdatePlayed()
 	end
 end
