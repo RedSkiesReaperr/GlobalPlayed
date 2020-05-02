@@ -5,17 +5,15 @@ local currentCharacter = nil
 
 SLASH_GLOBAL_PLAYED1 = '/gplayed'
 SlashCmdList['GLOBAL_PLAYED'] = function(msg, editbox)
-	if msg == "" then
-		Log(MyAccount:GetPlayed())
-	elseif msg == "all" then
-		LogCharactersPlayed()
-		Log(MyAccount:GetPlayed())
-	else
-		Log("Unknown command: /gplayed " .. msg)
-		Log("Availaible commands:")
-		Log("    /gplayed")
-		Log("    /gplayed all")
+	if currentCharacter ~= nil then
+		currentCharacter:UpdatePlayed(days, hours)
 	end
+
+	if MyAccount ~= nil then
+		MyAccount:UpdatePlayed()
+	end
+	
+	OpenUI()
 end
 
 function GlobalPlayedFrame_OnLoad(self)

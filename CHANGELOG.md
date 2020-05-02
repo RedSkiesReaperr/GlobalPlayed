@@ -1,5 +1,11 @@
 # Changelogs
 
+## 1.3.0 (2020-05-02)
+
+- Add UI 
+- Bind UI to **/gplayed** in-game command
+- Remove **/gplayed all** in-game command
+
 ## 1.2.0 (2020-04-26)
 
 - Add Account class

@@ -2,8 +2,9 @@
 ## Title: GlobalPlayed
 ## Notes: See all your characters played
 ## Author: RedSkiesReaperr
-## Version: 1.2.0
+## Version: 1.3.0
 ## SavedVariables: Characters, MyAccount
+## Dependencies: Ace3
 
 ## X-Category: Miscellaneous
 ## X-Website: https://www.curseforge.com/wow/addons/globalplayed
@@ -20,3 +21,6 @@ EventHandlers/TimePlayed.lua
 # Main Frame
 GlobalPlayed.xml
 GlobalPlayed.lua
+
+# UI Frame
+UI.xml

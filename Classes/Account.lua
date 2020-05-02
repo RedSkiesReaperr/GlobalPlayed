@@ -15,7 +15,7 @@ function Account:new()
 end
 
 function Account:GetPlayed()
-	return "Total: " .. self.days .. " days " .. self.hours .. " hours (" .. self.totalAsHours .. "h)"
+	return "Account Total: " .. self.days .. " days " .. self.hours .. " hours (" .. self.totalAsHours .. "h)"
 end
 
 function Account:UpdatePlayed()
