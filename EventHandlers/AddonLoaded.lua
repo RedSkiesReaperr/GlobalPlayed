@@ -1,5 +1,5 @@
 function AddonLoadedHandler()
-	if MyAccount == nil then
+	if MyAccount == nil then -- If no account registered
 		MyAccount = Account:new()
 	else
 		setmetatable(MyAccount, Account)
@@ -9,7 +9,7 @@ function AddonLoadedHandler()
 		Characters = {  }
 	end
 
-	if Options == nil then
+	if Options == nil then -- If no options registered
 		Options = {
 			useAce = IsAddOnLoaded("Ace3")
 		}
