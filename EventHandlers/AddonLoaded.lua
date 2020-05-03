@@ -11,7 +11,7 @@ function AddonLoadedHandler()
 
 	if Options == nil then
 		Options = {
-			useAce = false
+			useAce = IsAddOnLoaded("Ace3")
 		}
 	end
 
