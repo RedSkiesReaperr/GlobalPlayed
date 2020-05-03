@@ -2,8 +2,8 @@
 ## Title: GlobalPlayed
 ## Notes: See all your characters played
 ## Author: RedSkiesReaperr
-## Version: 1.3.1
-## SavedVariables: Characters, MyAccount
+## Version: 1.3.2
+## SavedVariables: Characters, MyAccount, Options
 ## OptionalDeps: Ace3
 
 ## X-Category: Miscellaneous
@@ -24,3 +24,6 @@ GlobalPlayed.lua
 
 # UI Frame
 UI.xml
+
+# Options panel
+OptionsPanel.lua

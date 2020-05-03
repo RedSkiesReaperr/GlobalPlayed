@@ -8,7 +8,7 @@ SlashCmdList['GLOBAL_PLAYED'] = function(msg, editbox)
 	if msg == "" then
 		UpdateAll()
 
-		if IsAddOnLoaded("Ace3") == false then
+		if UseAceGui() == false then
 			Log(MyAccount:GetPlayed())		
 		else
 			OpenUI()
@@ -16,17 +16,21 @@ SlashCmdList['GLOBAL_PLAYED'] = function(msg, editbox)
 	elseif msg == "all" then
 		UpdateAll()
 
-		if IsAddOnLoaded("Ace3") == false then
+		if UseAceGui() == false then
 			LogCharactersPlayed()
 			Log(MyAccount:GetPlayed())
 		else
 			OpenUI()
-		end	
+		end
+	elseif msg == "options" then
+		OpenOptions()
+		OpenOptions()
 	else
 		Log("Unknown command: /gplayed " .. msg)
 		Log("Availaible commands:")
 		Log("    /gplayed")
 		Log("    /gplayed all")
+		Log("    /gplayed options")
 	end
 end
 

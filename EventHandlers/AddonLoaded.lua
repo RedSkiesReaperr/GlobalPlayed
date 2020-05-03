@@ -9,6 +9,12 @@ function AddonLoadedHandler()
 		Characters = {  }
 	end
 
+	if Options == nil then
+		Options = {
+			useAce = false
+		}
+	end
+
 	searchResult = FindCharacter(UnitName("player"), GetRealmName())
 
 	if searchResult == nil then

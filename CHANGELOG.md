@@ -1,5 +1,11 @@
 # Changelogs
 
+## 1.3.2 (2020-05-03)
+
+- Add interface options panel
+- Add Options SavedVariable
+- Add **/gplayed options** in-game command
+
 ## 1.3.1 (2020-05-02)
 
 - Ace3 is now an optionnal dependency
