@@ -5,6 +5,7 @@
 - Add interface options panel
 - Add Options SavedVariable
 - Add **/gplayed options** in-game command
+- Enhance UI error handling
 
 ## 1.3.1 (2020-05-02)
 

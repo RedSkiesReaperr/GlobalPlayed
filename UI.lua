@@ -20,21 +20,26 @@ function FillUI(p_UiFrame)
 	p_UiFrame:AddChild(scrollFrame)
 
 	for k, v in ipairs(Characters) do
-		local currCharacter = setmetatable(v, Character)
-		local group = AceGUI:Create("InlineGroup")
-		group:SetRelativeWidth(0.5)
+		if v ~= nil then
+			local currCharacter = setmetatable(v, Character)
 
-		local characterName = AceGUI:Create("Label")
-		characterName:SetText(currCharacter.name .. "-" .. currCharacter.realm)
-		FormatCharacterLabel(characterName)
+			if currCharacter ~=nil and currCharacter.name ~= nil and currCharacter.realm ~= nil then
+				local group = AceGUI:Create("InlineGroup")
+				group:SetRelativeWidth(0.5)
 
-		local charPlayed = AceGUI:Create("Label")
-		charPlayed:SetText(currCharacter:GetPlayed())
-		FormatPlayedLabel(charPlayed)
+				local characterName = AceGUI:Create("Label")
+				characterName:SetText(currCharacter.name .. "-" .. currCharacter.realm)
+				FormatCharacterLabel(characterName)
 
-		group:AddChild(characterName)
-		group:AddChild(charPlayed)
-		scrollFrame:AddChild(group)
+				local charPlayed = AceGUI:Create("Label")
+				charPlayed:SetText(currCharacter:GetPlayed())
+				FormatPlayedLabel(charPlayed)
+
+				group:AddChild(characterName)
+				group:AddChild(charPlayed)
+				scrollFrame:AddChild(group)
+			end
+		end
 	end
 end
 
