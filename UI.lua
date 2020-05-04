@@ -1,8 +1,17 @@
-local AceGUI = LibStub("AceGUI-3.0")
-local isUIShown = false
+local AceGUI = null
+local isUIShown = null
+local isUILoaded = false
+
+function LoadUI()
+	if IsAddOnLoaded("Ace3") == true then
+		AceGUI = LibStub("AceGUI-3.0")
+		isUIShown = false
+		isUILoaded = true
+	end
+end
 
 function OpenUI()
-	if isUIShown ~= nil and isUIShown == false then
+	if isUILoaded == true and isUIShown ~= nil and isUIShown == false then
 		local frame = AceGUI:Create("Frame")
 		frame:SetTitle("GlobalPlayed")
 		frame:SetStatusText(MyAccount:GetPlayed())

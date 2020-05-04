@@ -3,6 +3,7 @@
 ## 1.3.3 (2020-05-04)
 
 - Fix xml files load errors at startup
+- Fix lua errors at startup
 
 ## 1.3.2 (2020-05-03)
 

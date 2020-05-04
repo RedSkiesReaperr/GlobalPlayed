@@ -24,6 +24,7 @@ function AddonLoadedHandler()
 		currentCharacter = searchResult
 	end
 
+	LoadUI()
 	MyAccount:UpdatePlayed()
 	GlobalPlayedFrame:UnregisterEvent("ADDON_LOADED")
 	Log("Successfully loaded!")
