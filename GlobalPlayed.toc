@@ -24,6 +24,7 @@ GlobalPlayed.lua
 
 # UI Frame
 UI.xml
+UI.lua
 
 # Options panel
 OptionsPanel.lua

@@ -32,3 +32,18 @@ function FindCharacter(p_name, p_realm)
 	
 	return nil
 end
+
+----------------------
+-- Dependencies functions
+----------------------
+function IsAceLoaded()
+	return IsAddOnLoaded("Ace3")
+end
+
+function IsAceEnabled()
+	if Options ~= nil then
+		return (IsAceLoaded() == true and Options.useAce == true)
+	else
+		return false
+	end
+end

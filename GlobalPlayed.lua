@@ -8,7 +8,7 @@ SlashCmdList['GLOBAL_PLAYED'] = function(msg, editbox)
 	if msg == "" then
 		UpdateAll()
 
-		if UseAceGui() == false then
+		if IsAceEnabled() == false then
 			Log(MyAccount:GetPlayed())		
 		else
 			OpenUI()
@@ -16,7 +16,7 @@ SlashCmdList['GLOBAL_PLAYED'] = function(msg, editbox)
 	elseif msg == "all" then
 		UpdateAll()
 
-		if UseAceGui() == false then
+		if IsAceEnabled() == false then
 			LogCharactersPlayed()
 			Log(MyAccount:GetPlayed())
 		else

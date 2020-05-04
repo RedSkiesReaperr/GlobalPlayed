@@ -4,6 +4,8 @@
 
 - Fix xml files load errors at startup
 - Fix lua errors at startup
+- Clean dependencies functions
+- Enhance error handling
 
 ## 1.3.2 (2020-05-03)
 

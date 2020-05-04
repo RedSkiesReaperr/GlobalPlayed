@@ -11,7 +11,7 @@ function AddonLoadedHandler()
 
 	if Options == nil then -- If no options registered
 		Options = {
-			useAce = IsAddOnLoaded("Ace3")
+			useAce = IsAceLoaded()
 		}
 	end
 
@@ -25,6 +25,8 @@ function AddonLoadedHandler()
 	end
 
 	LoadUI()
+	LoadOptionsPanel()
+
 	MyAccount:UpdatePlayed()
 	GlobalPlayedFrame:UnregisterEvent("ADDON_LOADED")
 	Log("Successfully loaded!")

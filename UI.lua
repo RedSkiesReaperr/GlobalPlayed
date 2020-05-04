@@ -3,7 +3,7 @@ local isUIShown = null
 local isUILoaded = false
 
 function LoadUI()
-	if IsAddOnLoaded("Ace3") == true then
+	if IsAceLoaded() == true then
 		AceGUI = LibStub("AceGUI-3.0")
 		isUIShown = false
 		isUILoaded = true
