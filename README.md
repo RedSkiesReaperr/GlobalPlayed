@@ -16,7 +16,7 @@ Small addon to get your total played time accross characters. Auto fetched playe
 * [**Ace3 AddOn**](https://www.curseforge.com/wow/addons/ace3 "Ace3") If you want to display GlobalPlayed infos in a nice Movable/Scalable Window. (Optionnal)
 
 ### **Bug reports & Feature requests**
-Bug reports and Features requests are welcomed. Feel free to create issues on the [GitLab project](https://gitlab.com/my-wow-addons/globalplayed "GitLab project") to submit them !
+Bug reports and Features requests are welcomed. Feel free to create issues on the [GitHub project](https://github.com/RedSkiesReaperr/GlobalPlayed/) to submit them !
 
 ## Dev Helps & Docs
 
