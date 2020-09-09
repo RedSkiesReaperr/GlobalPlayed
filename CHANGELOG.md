@@ -1,5 +1,9 @@
 # Changelogs
 
+## 1.3.4 (2020-09-09)
+
+- Change addon in-game description to be clearer (suggested by MofSeth on CurseForge)
+
 ## 1.3.3 (2020-05-04)
 
 - Fix xml files load errors at startup
