@@ -1,5 +1,9 @@
 # Changelogs
 
+## 1.3.5 (2020-10-30)
+
+- Update to interface 90001 to match with WoW v9.0.1
+
 ## 1.3.4 (2020-09-09)
 
 - Change addon in-game description to be clearer (suggested by MofSeth on CurseForge)

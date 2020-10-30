@@ -1,8 +1,8 @@
-## Interface: 80300
+## Interface: 90001
 ## Title: GlobalPlayed
 ## Notes: See all your characters played |n|cffffffff|cffE57D06Available Commands: |n|cffffffff    |cffE57D06/gplayed -|cffffffff Display your global played |n|cffffffff    |cffE57D06/gplayed all -|cffffffff Display all your characters global played |n|cffffffff|cffE57D06    /gplayed options -|cffffffff Open options panel
 ## Author: RedSkiesReaperr
-## Version: 1.3.4
+## Version: 1.3.5
 ## SavedVariables: Characters, MyAccount, Options
 ## OptionalDeps: Ace3
 
