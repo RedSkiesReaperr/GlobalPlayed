@@ -1,5 +1,11 @@
 # Changelogs
 
+## 1.3.7 (2020-10-31)
+
+- Fix errors that occurred at startup related to Account & Character classes
+- Some code cleaning
+- Fix Github action trigger
+
 ## 1.3.6 (2020-10-31)
 
 - Add auto packaging with github
