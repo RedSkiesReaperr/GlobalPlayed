@@ -7,7 +7,7 @@ function TimePlayedMsgHandler(total, currentLvl)
 	local hours = math.floor(totalAsInt / 3600);
 	totalAsInt = totalAsInt - (hours * 3600);
 
-	currentCharacter:UpdatePlayed(days, hours)
+	Character_UpdatePlayed(currentCharacter, days, hours)
 
-	MyAccount:UpdatePlayed()
+	Account_UpdatePlayed(MyAccount)
 end

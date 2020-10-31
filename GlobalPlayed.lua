@@ -8,17 +8,17 @@ SlashCmdList['GLOBAL_PLAYED'] = function(msg, editbox)
 	if msg == "" then
 		UpdateAll()
 
-		if IsAceEnabled() == false then
-			Log(MyAccount:GetPlayed())		
+		if Addon_IsAceEnabled() == false then
+			Log(Account_GetPlayed(MyAccount))		
 		else
 			OpenUI()
 		end	
 	elseif msg == "all" then
 		UpdateAll()
 
-		if IsAceEnabled() == false then
+		if Addon_IsAceEnabled() == false then
 			LogCharactersPlayed()
-			Log(MyAccount:GetPlayed())
+			Log(Account_GetPlayed(MyAccount))
 		else
 			OpenUI()
 		end
@@ -53,7 +53,7 @@ function GlobalPlayedFrame_OnEvent(self, event, ...)
 		-- Do something when player enter in world (also after loading a new place like after tp, etc...)
 	end
 
-if event == "TIME_PLAYED_MSG" then
+	if event == "TIME_PLAYED_MSG" then
 		local total, currentLvl = ...
 
 		TimePlayedMsgHandler(total, currentLvl)
@@ -62,10 +62,10 @@ end
 
 function UpdateAll()
 	if currentCharacter ~= nil then
-		currentCharacter:UpdatePlayed(days, hours)
+		Character_UpdatePlayed(currentCharacter, days, hours)
 	end
 
 	if MyAccount ~= nil then
-		MyAccount:UpdatePlayed()
+		Account_UpdatePlayed(MyAccount)
 	end
 end

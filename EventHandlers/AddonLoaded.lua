@@ -1,8 +1,6 @@
 function AddonLoadedHandler()
 	if MyAccount == nil then -- If no account registered
-		MyAccount = Account:new()
-	else
-		setmetatable(MyAccount, Account)
+		MyAccount = Account_Create()
 	end
 
 	if Characters == nil then -- If no characters registered
@@ -11,14 +9,14 @@ function AddonLoadedHandler()
 
 	if Options == nil then -- If no options registered
 		Options = {
-			useAce = IsAceLoaded()
+			useAce = Addon_IsLoaded("Ace3")
 		}
 	end
 
 	searchResult = FindCharacter(UnitName("player"), GetRealmName())
 
 	if searchResult == nil then
-		currentCharacter = Character:new(UnitName("player"), GetRealmName())
+		currentCharacter = Character_Create(UnitName("player"), GetRealmName())
 		table.insert(Characters, currentCharacter)
 	else
 		currentCharacter = searchResult
@@ -27,7 +25,7 @@ function AddonLoadedHandler()
 	LoadUI()
 	LoadOptionsPanel()
 
-	MyAccount:UpdatePlayed()
+	Account_UpdatePlayed(MyAccount)
 	GlobalPlayedFrame:UnregisterEvent("ADDON_LOADED")
 	Log("Successfully loaded!")
 end
