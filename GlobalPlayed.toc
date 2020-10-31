@@ -15,6 +15,7 @@
 Utils.lua
 Classes/Character.lua
 Classes/Account.lua
+Classes/Addon.lua
 EventHandlers/AddonLoaded.lua
 EventHandlers/TimePlayed.lua
 
