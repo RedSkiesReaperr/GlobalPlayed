@@ -1,24 +1,19 @@
-----------------------
--- Here is the Account class
-----------------------
-Account = {}
-Account.__index = Account
-
-function Account:new()
-	local newAcc = {
+-- ----------------------
+-- -- Here is the Account behavior
+-- ----------------------
+function Account_Create()
+	return {
 		days = 0,
 		hours = 0,
 		totalAsHours = 0
 	}
-	setmetatable(newAcc, Account)
-	return newAcc
 end
 
-function Account:GetPlayed()
+function Account_GetPlayed(self)
 	return "Account Total: " .. self.days .. " days " .. self.hours .. " hours (" .. self.totalAsHours .. "h)"
 end
 
-function Account:UpdatePlayed()
+function Account_UpdatePlayed(self)
 	local hours = 0
 
 	if Characters == nil then

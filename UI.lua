@@ -3,7 +3,7 @@ local isUIShown = null
 local isUILoaded = false
 
 function LoadUI()
-	if IsAceLoaded() == true then
+	if Addon_IsLoaded("Ace3") == true then
 		AceGUI = LibStub("AceGUI-3.0")
 		isUIShown = false
 		isUILoaded = true
@@ -14,7 +14,7 @@ function OpenUI()
 	if isUILoaded == true and isUIShown ~= nil and isUIShown == false then
 		local frame = AceGUI:Create("Frame")
 		frame:SetTitle("GlobalPlayed")
-		frame:SetStatusText(MyAccount:GetPlayed())
+		frame:SetStatusText(Account_GetPlayed(MyAccount))
 		frame:SetLayout("Fill")
 		frame:SetCallback("OnClose", function(widget) CloseUI(widget) end)
 
@@ -30,7 +30,7 @@ function FillUI(p_UiFrame)
 
 	for k, v in ipairs(Characters) do
 		if v ~= nil then
-			local currCharacter = setmetatable(v, Character)
+			local currCharacter = v
 
 			if currCharacter ~=nil and currCharacter.name ~= nil and currCharacter.realm ~= nil then
 				local group = AceGUI:Create("InlineGroup")
@@ -41,7 +41,7 @@ function FillUI(p_UiFrame)
 				FormatCharacterLabel(characterName)
 
 				local charPlayed = AceGUI:Create("Label")
-				charPlayed:SetText(currCharacter:GetPlayed())
+				charPlayed:SetText(Character_GetPlayed(currCharacter))
 				FormatPlayedLabel(charPlayed)
 
 				group:AddChild(characterName)
