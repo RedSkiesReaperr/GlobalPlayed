@@ -1,5 +1,9 @@
 # Changelogs
 
+## 1.3.6 (2020-10-31)
+
+- Add auto packaging with github
+
 ## 1.3.5 (2020-10-30)
 
 - Update to interface 90001 to match with WoW v9.0.1
