@@ -1,6 +1,6 @@
 ## Interface: 90001
 ## Title: GlobalPlayed
-## Notes: See all your characters played |n|cffffffff|cffE57D06Available Commands: |n|cffffffff    |cffE57D06/gplayed -|cffffffff Display your global played |n|cffffffff    |cffE57D06/gplayed all -|cffffffff Display all your characters global played |n|cffffffff|cffE57D06    /gplayed options -|cffffffff Open options panel
+## Notes: See all your characters played |n|r|cffE57D06Available Commands: |n|r    |cffE57D06/gplayed -|r Display your global played |n|r    |cffE57D06/gplayed all -|r Display all your characters global played |n|r|cffE57D06    /gplayed options -|r Open options panel
 ## Author: RedSkiesReaperr
 ## Version: 1.4.0
 ## SavedVariables: Characters, MyAccount, Options
