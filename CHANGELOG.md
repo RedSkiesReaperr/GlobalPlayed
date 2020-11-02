@@ -1,5 +1,9 @@
 # Changelogs
 
+## 1.4.0 (2020-11-02)
+
+- Add libDataBroker-1.1 integration (To display indos in TitanPanel, etc..)
+
 ## 1.3.7 (2020-10-31)
 
 - Fix errors that occurred at startup related to Account & Character classes

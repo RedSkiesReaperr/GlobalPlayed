@@ -1,6 +1,7 @@
 **GlobalPlayed Addon**
 ==
 Small addon to get your total played time accross characters. Auto fetched played at character login.
+Ready to be used with some TitanPanel, etc.. through libDataBroker-1.1
 
 ### **Usage**
 * Connect to all your characters
