@@ -1,5 +1,9 @@
 # Changelogs
 
+## 1.4.2 (2020-11-23)
+
+- Fix GlobalPlayed options panel messages appears anywhere in interface panel
+
 ## 1.4.1 (2020-11-02)
 
 - Fix colors for tooltip in in-game addons listing
