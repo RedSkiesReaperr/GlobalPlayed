@@ -56,7 +56,7 @@ function GlobalPlayedFrame_OnEvent(self, event, ...)
 	if event == "TIME_PLAYED_MSG" then
 		local total, currentLvl = ...
 
-		TimePlayedMsgHandler(total, currentLvl)
+		GlobalPlayed_TimePlayedMsgHandler(total, currentLvl)
 	end
 end
 

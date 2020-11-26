@@ -1,4 +1,4 @@
-function TimePlayedMsgHandler(total, currentLvl)
+function GlobalPlayed_TimePlayedMsgHandler(total, currentLvl)
 	local totalAsInt = tonumber(total)
 
 	local days = math.floor(totalAsInt / 86400);
