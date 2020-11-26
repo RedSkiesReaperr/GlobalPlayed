@@ -10,7 +10,7 @@ function GlobalPlayed_LogCharactersPlayed()
 		iChar = GlobalPlayed_FindCharacter(v.name, v.realm)
 
 		if iChar ~= nil then
-			GlobalPlayed_Log(v.name .. "-" .. v.realm .. ": " .. Character_GetPlayed(iChar))
+			GlobalPlayed_Log(v.name .. "-" .. v.realm .. ": " .. GlobalPlayed_Character_GetPlayed(iChar))
 		end
 	end
 end

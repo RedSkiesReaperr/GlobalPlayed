@@ -62,7 +62,7 @@ end
 
 function GlobalPlayed_UpdateAll()
 	if currentCharacter ~= nil then
-		Character_UpdatePlayed(currentCharacter, days, hours)
+		GlobalPlayed_Character_UpdatePlayed(currentCharacter, days, hours)
 	end
 
 	if MyAccount ~= nil then

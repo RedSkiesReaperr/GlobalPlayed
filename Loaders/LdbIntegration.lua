@@ -25,12 +25,12 @@ function GlobalPlayed_LoadLdbIntegration()
 		self:AddDoubleLine("Left click", "Show UI", 0, 0.7, 0.8, 0, 0.7, 0.8)
 		self:AddLine(" ")
 
-		local ordered = GetCharactersOrderedByRealm(Characters)
+		local ordered = GlobalPlayed_GetCharactersOrderedByRealm(Characters)
 		for k, v in pairs(ordered) do
 			self:AddLine(string.format("%s", k), 0.17, 0.69, 0.33)
 
 			for kk, vv in ipairs(v) do
-				self:AddDoubleLine(string.format("%s", vv.name), Character_GetPlayed(vv))
+				self:AddDoubleLine(string.format("%s", vv.name), GlobalPlayed_Character_GetPlayed(vv))
 			end
 
 			self:AddLine(" ")

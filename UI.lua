@@ -45,7 +45,7 @@ local function GlobalPlayed_FillUI(p_UiFrame)
 				GlobalPlayed_FormatCharacterLabel(characterName)
 
 				local charPlayed = AceGUI:Create("Label")
-				charPlayed:SetText(Character_GetPlayed(currCharacter))
+				charPlayed:SetText(GlobalPlayed_Character_GetPlayed(currCharacter))
 				GlobalPlayed_FormatPlayedLabel(charPlayed)
 
 				group:AddChild(characterName)

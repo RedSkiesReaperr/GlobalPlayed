@@ -1,7 +1,7 @@
 ----------------------
 -- Here is the Character behavior
 ----------------------
-function Character_Create(p_name, p_realm)
+function GlobalPlayed_Character_Create(p_name, p_realm)
 	return {
 		name = p_name,
 		realm = p_realm,
@@ -11,17 +11,17 @@ function Character_Create(p_name, p_realm)
 	}
 end
 
-function Character_GetPlayed(self)
+function GlobalPlayed_Character_GetPlayed(self)
 	return (self.days .. " days " .. self.hours .. " hours (" .. self.totalAsHours .. "h)")
 end
 
-function Character_UpdatePlayed(self, p_days, p_hours)
+function GlobalPlayed_Character_UpdatePlayed(self, p_days, p_hours)
 	self.days = p_days
 	self.hours = p_hours
 	self.totalAsHours = self.hours + (self.days * 24)
 end
 
-function GetCharactersOrderedByRealm(list)
+function GlobalPlayed_GetCharactersOrderedByRealm(list)
 	local realms = {}
 
 	for k, v in ipairs(list) do

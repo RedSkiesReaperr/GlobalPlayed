@@ -13,10 +13,10 @@ function GlobalPlayed_AddonLoadedHandler()
 		}
 	end
 
-	searchResult = GlobalPlayed_FindCharacter(UnitName("player"), GetRealmName())
+	local searchResult = GlobalPlayed_FindCharacter(UnitName("player"), GetRealmName())
 
 	if searchResult == nil then
-		currentCharacter = Character_Create(UnitName("player"), GetRealmName())
+		currentCharacter = GlobalPlayed_Character_Create(UnitName("player"), GetRealmName())
 		table.insert(Characters, currentCharacter)
 	else
 		currentCharacter = searchResult
