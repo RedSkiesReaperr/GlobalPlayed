@@ -58,7 +58,7 @@ end
 
 -- Global exposed functions to load & open GlobalPlayed UI panel
 function GlobalPlayed_LoadUI()
-	if Addon_IsLoaded("Ace3") == true then
+	if GlobalPlayed_Addon_IsLoaded("Ace3") == true then
 		AceGUI = LibStub("AceGUI-3.0")
 		isUIShown = false
 		isUILoaded = true

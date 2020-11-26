@@ -9,7 +9,7 @@ function GlobalPlayed_AddonLoadedHandler()
 
 	if Options == nil then -- If no options registered
 		Options = {
-			useAce = Addon_IsLoaded("Ace3")
+			useAce = GlobalPlayed_Addon_IsLoaded("Ace3")
 		}
 	end
 

@@ -8,7 +8,7 @@ SlashCmdList['GLOBAL_PLAYED'] = function(msg, editbox)
 	if msg == "" then
 		GlobalPlayed_UpdateAll()
 
-		if Addon_IsAceEnabled() == false then
+		if GlobalPlayed_Addon_IsAceEnabled() == false then
 			GlobalPlayed_Log(Account_GetPlayed(MyAccount))		
 		else
 			GlobalPlayed_OpenUI()
@@ -16,7 +16,7 @@ SlashCmdList['GLOBAL_PLAYED'] = function(msg, editbox)
 	elseif msg == "all" then
 		GlobalPlayed_UpdateAll()
 
-		if Addon_IsAceEnabled() == false then
+		if GlobalPlayed_Addon_IsAceEnabled() == false then
 			GlobalPlayed_LogCharactersPlayed()
 			GlobalPlayed_Log(Account_GetPlayed(MyAccount))
 		else
