@@ -4,13 +4,21 @@ function GlobalPlayed_LoadLdbIntegration()
 	local dataobj = ldb:NewDataObject("GlobalPlayed", { 
 		type = "data source",
 		text = "GlobalPlayed",
+		data = "NUll",
 		OnClick = function(self, button)
-			GlobalPlayed_Log(self.name)
 			if self.name == "GlobalPlayed" then
 				if button == "LeftButton" then
-					GlobalPlayed_OpenUI()
+					if GlobalPlayed_Addon_IsAceEnabled() == true then
+						GlobalPlayed_OpenUI()
+					else
+						GlobalPlayed_LogCharactersPlayed()
+					end
+				elseif button == "MiddleButton" then
+					RequestTimePlayed()
+					GameTooltip:Hide()
 				elseif button == "RightButton" then
-					GlobalPlayed_Log("Alo")
+					GlobalPlayed_OpenOptionsPanel()
+					GlobalPlayed_OpenOptionsPanel()
 				end
 			end
 		end
@@ -22,7 +30,13 @@ function GlobalPlayed_LoadLdbIntegration()
 		self:AddLine("GlobalPlayed")
 		self:AddLine(" ")
 
-		self:AddDoubleLine("Left click", "Show UI", 0, 0.7, 0.8, 0, 0.7, 0.8)
+		if GlobalPlayed_Addon_IsAceEnabled() == true then
+			self:AddDoubleLine("Left click", "Show/Hide UI", 0, 0.7, 0.8, 0, 0.7, 0.8)
+		else
+			self:AddDoubleLine("Left click", "Show report in chat", 0, 0.7, 0.8, 0, 0.7, 0.8)
+		end
+		self:AddDoubleLine("Middle click", "Refresh datas", 0, 0.7, 0.8, 0, 0.7, 0.8)
+		self:AddDoubleLine("Right click", "Open options panel", 0, 0.7, 0.8, 0, 0.7, 0.8)
 		self:AddLine(" ")
 
 		local ordered = GlobalPlayed_GetCharactersOrderedByRealm(Characters)

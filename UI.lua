@@ -1,6 +1,7 @@
 local AceGUI = null
 local isUIShown = null
 local isUILoaded = false
+local uiFrame = nil
 
 -- Here are utils functions needed by the GlobalPlayed_GlobalPlayed_OpenUI function
 local function GlobalPlayed_CloseUI(widget)
@@ -66,14 +67,16 @@ function GlobalPlayed_LoadUI()
 end
 
 function GlobalPlayed_OpenUI()
-	if isUILoaded == true and isUIShown ~= nil and isUIShown == false then
-		local frame = AceGUI:Create("Frame")
-		frame:SetTitle("GlobalPlayed")
-		frame:SetStatusText(GlobalPlayed_Account_GetPlayed(MyAccount))
-		frame:SetLayout("Fill")
-		frame:SetCallback("OnClose", function(widget) GlobalPlayed_CloseUI(widget) end)
+	if isUIShown == false then
+		uiFrame = AceGUI:Create("Frame")
+		uiFrame:SetTitle("GlobalPlayed")
+		uiFrame:SetStatusText(GlobalPlayed_Account_GetPlayed(MyAccount))
+		uiFrame:SetLayout("Fill")
+		uiFrame:SetCallback("OnClose", function(widget) GlobalPlayed_CloseUI(widget) end)
 
 		isUIShown = true
-		GlobalPlayed_FillUI(frame)
+		GlobalPlayed_FillUI(uiFrame)
+	else
+		GlobalPlayed_CloseUI(uiFrame)
 	end
 end
