@@ -22,7 +22,7 @@ function AddonLoadedHandler()
 		currentCharacter = searchResult
 	end
 
-	LoadUI()
+	GlobalPlayed_LoadUI()
 	LoadOptionsPanel()
 
 	Account_UpdatePlayed(MyAccount)

@@ -50,7 +50,7 @@ function LoadLdbIntegration()
 
 	function OnClickDataObj(button)
 		if button == "LeftButton" then
-			OpenUI()
+			GlobalPlayed_OpenUI()
 		elseif button == "RightButton" then
 			GlobalPlayed_Log("Alo")
 		end

@@ -2,28 +2,32 @@ local AceGUI = null
 local isUIShown = null
 local isUILoaded = false
 
-function LoadUI()
-	if Addon_IsLoaded("Ace3") == true then
-		AceGUI = LibStub("AceGUI-3.0")
-		isUIShown = false
-		isUILoaded = true
-	end
+-- Here are utils functions needed by the GlobalPlayed_GlobalPlayed_OpenUI function
+local function GlobalPlayed_CloseUI(widget)
+	isUIShown = false
+	AceGUI:Release(widget)
 end
 
-function OpenUI()
-	if isUILoaded == true and isUIShown ~= nil and isUIShown == false then
-		local frame = AceGUI:Create("Frame")
-		frame:SetTitle("GlobalPlayed")
-		frame:SetStatusText(Account_GetPlayed(MyAccount))
-		frame:SetLayout("Fill")
-		frame:SetCallback("OnClose", function(widget) CloseUI(widget) end)
+local function GlobalPlayed_FormatPlayedLabel(p_label)
+	local fontName, fontHeight, fontFlags = p_label.label:GetFont()
 
-		isUIShown = true
-		FillUI(frame)
-	end
+	p_label:SetFullWidth(true)
+	p_label.label:SetFont(fontName, 15)
+	p_label.label:SetTextColor(0.9, 0.6, 0.2)
+	p_label:SetJustifyH("CENTER")
+	p_label:SetJustifyV("BOTTOM")
 end
 
-function FillUI(p_UiFrame)
+local function GlobalPlayed_FormatCharacterLabel(p_label)
+	local fontName, fontHeight, fontFlags = p_label.label:GetFont()
+
+	p_label:SetFullWidth(true)
+	p_label.label:SetFont(fontName, 12)
+	p_label:SetJustifyH("CENTER")
+	p_label:SetJustifyV("TOP")
+end
+
+local function GlobalPlayed_FillUI(p_UiFrame)
 	local scrollFrame = AceGUI:Create("ScrollFrame")
 	scrollFrame:SetLayout("Flow")
 	p_UiFrame:AddChild(scrollFrame)
@@ -38,11 +42,11 @@ function FillUI(p_UiFrame)
 
 				local characterName = AceGUI:Create("Label")
 				characterName:SetText(currCharacter.name .. "-" .. currCharacter.realm)
-				FormatCharacterLabel(characterName)
+				GlobalPlayed_FormatCharacterLabel(characterName)
 
 				local charPlayed = AceGUI:Create("Label")
 				charPlayed:SetText(Character_GetPlayed(currCharacter))
-				FormatPlayedLabel(charPlayed)
+				GlobalPlayed_FormatPlayedLabel(charPlayed)
 
 				group:AddChild(characterName)
 				group:AddChild(charPlayed)
@@ -52,26 +56,24 @@ function FillUI(p_UiFrame)
 	end
 end
 
-function FormatCharacterLabel(p_label)
-	local fontName, fontHeight, fontFlags = p_label.label:GetFont()
-
-	p_label:SetFullWidth(true)
-	p_label.label:SetFont(fontName, 12)
-	p_label:SetJustifyH("CENTER")
-	p_label:SetJustifyV("TOP")
+-- Global exposed functions to load & open GlobalPlayed UI panel
+function GlobalPlayed_LoadUI()
+	if Addon_IsLoaded("Ace3") == true then
+		AceGUI = LibStub("AceGUI-3.0")
+		isUIShown = false
+		isUILoaded = true
+	end
 end
 
-function FormatPlayedLabel(p_label)
-	local fontName, fontHeight, fontFlags = p_label.label:GetFont()
+function GlobalPlayed_OpenUI()
+	if isUILoaded == true and isUIShown ~= nil and isUIShown == false then
+		local frame = AceGUI:Create("Frame")
+		frame:SetTitle("GlobalPlayed")
+		frame:SetStatusText(Account_GetPlayed(MyAccount))
+		frame:SetLayout("Fill")
+		frame:SetCallback("OnClose", function(widget) GlobalPlayed_CloseUI(widget) end)
 
-	p_label:SetFullWidth(true)
-	p_label.label:SetFont(fontName, 15)
-	p_label.label:SetTextColor(0.9, 0.6, 0.2)
-	p_label:SetJustifyH("CENTER")
-	p_label:SetJustifyV("BOTTOM")
-end
-
-function CloseUI(widget)
-	isUIShown = false
-	AceGUI:Release(widget)
+		isUIShown = true
+		GlobalPlayed_FillUI(frame)
+	end
 end
