@@ -13,7 +13,7 @@ function AddonLoadedHandler()
 		}
 	end
 
-	searchResult = FindCharacter(UnitName("player"), GetRealmName())
+	searchResult = GlobalPlayed_FindCharacter(UnitName("player"), GetRealmName())
 
 	if searchResult == nil then
 		currentCharacter = Character_Create(UnitName("player"), GetRealmName())

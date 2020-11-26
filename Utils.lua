@@ -5,9 +5,9 @@ function GlobalPlayed_Log(message)
 	print("[GlobalPlayed] " .. message)
 end
 
-function LogCharactersPlayed()
+function GlobalPlayed_LogCharactersPlayed()
 	for k, v in ipairs(Characters) do
-		iChar = FindCharacter(v.name, v.realm)
+		iChar = GlobalPlayed_FindCharacter(v.name, v.realm)
 
 		if iChar ~= nil then
 			GlobalPlayed_Log(v.name .. "-" .. v.realm .. ": " .. Character_GetPlayed(iChar))
@@ -18,7 +18,7 @@ end
 ----------------------
 -- Characters search functions
 ----------------------
-function FindCharacter(p_name, p_realm)
+function GlobalPlayed_FindCharacter(p_name, p_realm)
 	if Characters == nil then
 		return nil
 	end
