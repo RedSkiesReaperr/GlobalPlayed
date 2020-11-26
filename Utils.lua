@@ -1,7 +1,7 @@
 ----------------------
 -- Log functions
 ----------------------
-function Log(message)
+function GlobalPlayed_Log(message)
 	print("[GlobalPlayed] " .. message)
 end
 
@@ -10,7 +10,7 @@ function LogCharactersPlayed()
 		iChar = FindCharacter(v.name, v.realm)
 
 		if iChar ~= nil then
-			Log(v.name .. "-" .. v.realm .. ": " .. Character_GetPlayed(iChar))
+			GlobalPlayed_Log(v.name .. "-" .. v.realm .. ": " .. Character_GetPlayed(iChar))
 		end
 	end
 end

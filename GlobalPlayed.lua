@@ -9,7 +9,7 @@ SlashCmdList['GLOBAL_PLAYED'] = function(msg, editbox)
 		UpdateAll()
 
 		if Addon_IsAceEnabled() == false then
-			Log(Account_GetPlayed(MyAccount))		
+			GlobalPlayed_Log(Account_GetPlayed(MyAccount))		
 		else
 			OpenUI()
 		end	
@@ -18,7 +18,7 @@ SlashCmdList['GLOBAL_PLAYED'] = function(msg, editbox)
 
 		if Addon_IsAceEnabled() == false then
 			LogCharactersPlayed()
-			Log(Account_GetPlayed(MyAccount))
+			GlobalPlayed_Log(Account_GetPlayed(MyAccount))
 		else
 			OpenUI()
 		end
@@ -26,11 +26,11 @@ SlashCmdList['GLOBAL_PLAYED'] = function(msg, editbox)
 		OpenOptions()
 		OpenOptions()
 	else
-		Log("Unknown command: /gplayed " .. msg)
-		Log("Availaible commands:")
-		Log("    /gplayed")
-		Log("    /gplayed all")
-		Log("    /gplayed options")
+		GlobalPlayed_Log("Unknown command: /gplayed " .. msg)
+		GlobalPlayed_Log("Availaible commands:")
+		GlobalPlayed_Log("    /gplayed")
+		GlobalPlayed_Log("    /gplayed all")
+		GlobalPlayed_Log("    /gplayed options")
 	end
 end
 

@@ -28,5 +28,5 @@ function AddonLoadedHandler()
 	Account_UpdatePlayed(MyAccount)
 	GlobalPlayedFrame:UnregisterEvent("ADDON_LOADED")
 	LoadLdbIntegration()
-	Log("Successfully loaded!")
+	GlobalPlayed_Log("Successfully loaded!")
 end
