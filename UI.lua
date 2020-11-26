@@ -69,7 +69,7 @@ function GlobalPlayed_OpenUI()
 	if isUILoaded == true and isUIShown ~= nil and isUIShown == false then
 		local frame = AceGUI:Create("Frame")
 		frame:SetTitle("GlobalPlayed")
-		frame:SetStatusText(Account_GetPlayed(MyAccount))
+		frame:SetStatusText(GlobalPlayed_Account_GetPlayed(MyAccount))
 		frame:SetLayout("Fill")
 		frame:SetCallback("OnClose", function(widget) GlobalPlayed_CloseUI(widget) end)
 

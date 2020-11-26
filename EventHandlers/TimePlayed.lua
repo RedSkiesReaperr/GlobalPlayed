@@ -9,5 +9,5 @@ function TimePlayedMsgHandler(total, currentLvl)
 
 	GlobalPlayed_Character_UpdatePlayed(currentCharacter, days, hours)
 
-	Account_UpdatePlayed(MyAccount)
+	GlobalPlayed_Account_UpdatePlayed(MyAccount)
 end

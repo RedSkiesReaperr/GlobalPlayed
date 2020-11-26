@@ -1,6 +1,6 @@
 function GlobalPlayed_AddonLoadedHandler()
 	if MyAccount == nil then -- If no account registered
-		MyAccount = Account_Create()
+		MyAccount = GlobalPlayed_Account_Create()
 	end
 
 	if Characters == nil then -- If no characters registered
@@ -25,7 +25,7 @@ function GlobalPlayed_AddonLoadedHandler()
 	GlobalPlayed_LoadUI()
 	GlobalPlayed_LoadOptionsPanel()
 
-	Account_UpdatePlayed(MyAccount)
+	GlobalPlayed_Account_UpdatePlayed(MyAccount)
 	GlobalPlayedFrame:UnregisterEvent("ADDON_LOADED")
 	GlobalPlayed_LoadLdbIntegration()
 	GlobalPlayed_Log("Successfully loaded!")

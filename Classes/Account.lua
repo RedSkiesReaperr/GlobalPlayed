@@ -1,7 +1,7 @@
 -- ----------------------
 -- -- Here is the Account behavior
 -- ----------------------
-function Account_Create()
+function GlobalPlayed_Account_Create()
 	return {
 		days = 0,
 		hours = 0,
@@ -9,11 +9,11 @@ function Account_Create()
 	}
 end
 
-function Account_GetPlayed(self)
+function GlobalPlayed_Account_GetPlayed(self)
 	return "Account Total: " .. self.days .. " days " .. self.hours .. " hours (" .. self.totalAsHours .. "h)"
 end
 
-function Account_UpdatePlayed(self)
+function GlobalPlayed_Account_UpdatePlayed(self)
 	local hours = 0
 
 	if Characters == nil then
