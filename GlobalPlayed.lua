@@ -23,8 +23,8 @@ SlashCmdList['GLOBAL_PLAYED'] = function(msg, editbox)
 			GlobalPlayed_OpenUI()
 		end
 	elseif msg == "options" then
-		OpenOptions()
-		OpenOptions()
+		GlobalPlayed_OpenOptionsPanel()
+		GlobalPlayed_OpenOptionsPanel()
 	else
 		GlobalPlayed_Log("Unknown command: /gplayed " .. msg)
 		GlobalPlayed_Log("Availaible commands:")

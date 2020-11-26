@@ -1,9 +1,10 @@
-GlobalPlayedOptionsPanel = CreateFrame("Frame", "GlobalPlayedOptionsPanel", InterfaceOptionsFramePanelContainer);
+local GlobalPlayedOptionsPanel = CreateFrame("Frame", "GlobalPlayedOptionsPanel", InterfaceOptionsFramePanelContainer);
 GlobalPlayedOptionsPanel.name = "GlobalPlayed";
 GlobalPlayedOptionsPanel.okay = function (self) self:Close(); end; 
+
 InterfaceOptions_AddCategory(GlobalPlayedOptionsPanel);
 
-function LoadOptionsPanel()
+function GlobalPlayed_LoadOptionsPanel()
     GlobalPlayedOptionsPanel:SetScript("OnShow", function(self)
         local Title = self:CreateFontString("GlobalPlayed", "ARTWORK", "GameFontNormalHuge")
         Title:SetPoint("TOPLEFT", 16, -16)
@@ -51,6 +52,6 @@ function LoadOptionsPanel()
     end)
 end
 
-function OpenOptions()
+function GlobalPlayed_OpenOptionsPanel()
     InterfaceOptionsFrame_OpenToCategory(GlobalPlayedOptionsPanel);
 end

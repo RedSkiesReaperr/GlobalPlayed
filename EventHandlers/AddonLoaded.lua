@@ -23,7 +23,7 @@ function AddonLoadedHandler()
 	end
 
 	GlobalPlayed_LoadUI()
-	LoadOptionsPanel()
+	GlobalPlayed_LoadOptionsPanel()
 
 	Account_UpdatePlayed(MyAccount)
 	GlobalPlayedFrame:UnregisterEvent("ADDON_LOADED")
