@@ -1,4 +1,4 @@
-function AddonLoadedHandler()
+function GlobalPlayed_AddonLoadedHandler()
 	if MyAccount == nil then -- If no account registered
 		MyAccount = Account_Create()
 	end
@@ -27,6 +27,6 @@ function AddonLoadedHandler()
 
 	Account_UpdatePlayed(MyAccount)
 	GlobalPlayedFrame:UnregisterEvent("ADDON_LOADED")
-	LoadLdbIntegration()
+	GlobalPlayed_LoadLdbIntegration()
 	GlobalPlayed_Log("Successfully loaded!")
 end

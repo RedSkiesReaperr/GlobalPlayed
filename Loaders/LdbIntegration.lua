@@ -1,17 +1,21 @@
-function LoadLdbIntegration()
+function GlobalPlayed_LoadLdbIntegration()
 	local ldb = LibStub:GetLibrary('LibDataBroker-1.1')
+	local f = CreateFrame("frame", "GlobalPlayedLDBFrame")
 	local dataobj = ldb:NewDataObject("GlobalPlayed", { 
 		type = "data source",
 		text = "GlobalPlayed",
 		OnClick = function(self, button)
 			GlobalPlayed_Log(self.name)
 			if self.name == "GlobalPlayed" then
-				OnClickDataObj(button)
+				if button == "LeftButton" then
+					GlobalPlayed_OpenUI()
+				elseif button == "RightButton" then
+					GlobalPlayed_Log("Alo")
+				end
 			end
 		end
 	})
-	local f = CreateFrame("frame", "GlobalPlayedLDBFrame")
-
+	
 	function dataobj:OnTooltipShow()
 		self:SetMinimumWidth(250)
 
@@ -46,13 +50,5 @@ function LoadLdbIntegration()
 
 	function dataobj:OnLeave()
 		GameTooltip:Hide()
-	end
-
-	function OnClickDataObj(button)
-		if button == "LeftButton" then
-			GlobalPlayed_OpenUI()
-		elseif button == "RightButton" then
-			GlobalPlayed_Log("Alo")
-		end
 	end
 end

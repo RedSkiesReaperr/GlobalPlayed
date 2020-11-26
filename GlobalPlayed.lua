@@ -6,7 +6,7 @@ local currentCharacter = nil
 SLASH_GLOBAL_PLAYED1 = '/gplayed'
 SlashCmdList['GLOBAL_PLAYED'] = function(msg, editbox)
 	if msg == "" then
-		UpdateAll()
+		GlobalPlayed_UpdateAll()
 
 		if Addon_IsAceEnabled() == false then
 			GlobalPlayed_Log(Account_GetPlayed(MyAccount))		
@@ -14,7 +14,7 @@ SlashCmdList['GLOBAL_PLAYED'] = function(msg, editbox)
 			GlobalPlayed_OpenUI()
 		end	
 	elseif msg == "all" then
-		UpdateAll()
+		GlobalPlayed_UpdateAll()
 
 		if Addon_IsAceEnabled() == false then
 			GlobalPlayed_LogCharactersPlayed()
@@ -45,7 +45,7 @@ function GlobalPlayedFrame_OnEvent(self, event, ...)
 		local addon = ...
 
 		if addon == "GlobalPlayed" then
-			AddonLoadedHandler()
+			GlobalPlayed_AddonLoadedHandler()
 		end
 	end
 
@@ -60,7 +60,7 @@ function GlobalPlayedFrame_OnEvent(self, event, ...)
 	end
 end
 
-function UpdateAll()
+function GlobalPlayed_UpdateAll()
 	if currentCharacter ~= nil then
 		Character_UpdatePlayed(currentCharacter, days, hours)
 	end
