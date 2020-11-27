@@ -5,6 +5,7 @@ function GlobalPlayed_LoadLdbIntegration()
 		type = "data source",
 		text = "GlobalPlayed",
 		data = "Null",
+		icon = "Interface\\AddOns\\GlobalPlayed\\Icons\\ldb_icon.jpg",
 		OnClick = function(self, button)
 			if self.name == "GlobalPlayed" then
 				if button == "LeftButton" then
