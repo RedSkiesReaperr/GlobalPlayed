@@ -40,13 +40,13 @@ local function GlobalPlayed_FillUI(p_UiFrame)
 			local currCharacter = v
 
 			if currCharacter ~=nil and currCharacter.name ~= nil and currCharacter.realm ~= nil then
-				local coloredClass = GlobalPlayed_Character_GetNameColored(currCharacter)
-			
+				local coloredNameRealm = GlobalPlayed_Character_GetNameRealmColored(currCharacter)
+
 				local group = AceGUI:Create("InlineGroup")
 				group:SetRelativeWidth(0.5)
 
 				local characterName = AceGUI:Create("Label")
-				characterName:SetText(coloredClass .. "-" .. currCharacter.realm)
+				characterName:SetText(coloredNameRealm)
 				GlobalPlayed_FormatCharacterLabel(characterName)
 
 				local charPlayed = AceGUI:Create("Label")

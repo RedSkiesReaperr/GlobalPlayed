@@ -6,19 +6,11 @@ function GlobalPlayed_Log(message)
 end
 
 function GlobalPlayed_LogCharactersPlayed()
-	local classColor = nil
-
 	for k, v in ipairs(GlobalPlayed_Characters) do
 		iChar = GlobalPlayed_FindCharacter(v.name, v.realm)
 
-		if GlobalPlayed_Options.useClassColoration == true then
-			classColor = "|cff" .. GlobalPlayed_Character_GetClassColor(iChar)
-		else
-			classColor = "|r"
-		end
-
 		if iChar ~= nil then
-			GlobalPlayed_Log(classColor .. v.name .. "-" .. v.realm .. "|r: " .. GlobalPlayed_Character_GetPlayed(iChar) .. " (" .. iChar.totalAsHours .. "h)")
+			GlobalPlayed_Log(GlobalPlayed_Character_GetNameRealmColored(iChar) .. ": " .. GlobalPlayed_Character_GetPlayedWithTotal(iChar))
 		end
 	end
 end

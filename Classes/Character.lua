@@ -65,6 +65,18 @@ function GlobalPlayed_Character_GetNameColored(self)
 	return classColor .. self.name .. "|r"
 end
 
+function GlobalPlayed_Character_GetNameRealmColored(self)
+	local classColor = nil
+
+	if GlobalPlayed_Options.useClassColoration == true then
+		classColor = "|cff" .. GlobalPlayed_Character_GetClassColor(self)
+	else
+		classColor = "|r"
+	end
+
+	return classColor .. self.name .. "-" .. self.realm .. "|r"
+end
+
 function GlobalPlayed_Character_UpdatePlayed(self, p_days, p_hours)
 	self.days = p_days
 	self.hours = p_hours
