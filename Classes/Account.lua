@@ -16,11 +16,11 @@ end
 function GlobalPlayed_Account_UpdatePlayed(self)
 	local hours = 0
 
-	if Characters == nil then
+	if GlobalPlayed_Characters == nil then
 		return nil
 	end
 
-	for k, v in ipairs(Characters) do
+	for k, v in ipairs(GlobalPlayed_Characters) do
 		if v.totalAsHours ~= nil and v.totalAsHours > 0 then
 			hours = hours + v.totalAsHours
 		end

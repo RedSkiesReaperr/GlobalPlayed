@@ -8,8 +8,8 @@ function GlobalPlayed_Addon_IsLoaded(p_name)
 end
 
 function GlobalPlayed_Addon_IsAceEnabled()
-	if Options ~= nil then
-		return (GlobalPlayed_Addon_IsLoaded("Ace3") == true and Options.useAce == true)
+	if GlobalPlayed_Options ~= nil then
+		return (GlobalPlayed_Addon_IsLoaded("Ace3") == true and GlobalPlayed_Options.useAce == true)
 	else
 		return false
 	end

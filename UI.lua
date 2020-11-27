@@ -33,7 +33,7 @@ local function GlobalPlayed_FillUI(p_UiFrame)
 	scrollFrame:SetLayout("Flow")
 	p_UiFrame:AddChild(scrollFrame)
 
-	for k, v in ipairs(Characters) do
+	for k, v in ipairs(GlobalPlayed_Characters) do
 		if v ~= nil then
 			local currCharacter = v
 
@@ -70,7 +70,7 @@ function GlobalPlayed_OpenUI()
 	if isUIShown == false then
 		uiFrame = AceGUI:Create("Frame")
 		uiFrame:SetTitle("GlobalPlayed")
-		uiFrame:SetStatusText(GlobalPlayed_Account_GetPlayed(MyAccount))
+		uiFrame:SetStatusText(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
 		uiFrame:SetLayout("Fill")
 		uiFrame:SetCallback("OnClose", function(widget) GlobalPlayed_CloseUI(widget) end)
 

@@ -9,7 +9,7 @@ SlashCmdList['GLOBAL_PLAYED'] = function(msg, editbox)
 		GlobalPlayed_UpdateAll()
 
 		if GlobalPlayed_Addon_IsAceEnabled() == false then
-			GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(MyAccount))		
+			GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))		
 		else
 			GlobalPlayed_OpenUI()
 		end	
@@ -18,7 +18,7 @@ SlashCmdList['GLOBAL_PLAYED'] = function(msg, editbox)
 
 		if GlobalPlayed_Addon_IsAceEnabled() == false then
 			GlobalPlayed_LogCharactersPlayed()
-			GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(MyAccount))
+			GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
 		else
 			GlobalPlayed_OpenUI()
 		end
@@ -65,7 +65,7 @@ function GlobalPlayed_UpdateAll()
 		GlobalPlayed_Character_UpdatePlayed(currentCharacter, days, hours)
 	end
 
-	if MyAccount ~= nil then
-		GlobalPlayed_Account_UpdatePlayed(MyAccount)
+	if GlobalPlayed_MyAccount ~= nil then
+		GlobalPlayed_Account_UpdatePlayed(GlobalPlayed_MyAccount)
 	end
 end

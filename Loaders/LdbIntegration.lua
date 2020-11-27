@@ -39,7 +39,7 @@ function GlobalPlayed_LoadLdbIntegration()
 		self:AddDoubleLine("Right click", "Open options panel", 0, 0.7, 0.8, 0, 0.7, 0.8)
 		self:AddLine(" ")
 
-		local ordered = GlobalPlayed_GetCharactersOrderedByRealm(Characters)
+		local ordered = GlobalPlayed_GetCharactersOrderedByRealm(GlobalPlayed_Characters)
 		for k, v in pairs(ordered) do
 			self:AddLine(string.format("%s", k), 0.17, 0.69, 0.33)
 
@@ -51,7 +51,7 @@ function GlobalPlayed_LoadLdbIntegration()
 		end
 
 		self:AddLine(" ")
-		self:AddDoubleLine(string.format("Total:"), string.format("%d days %d hours (%dh)", MyAccount.days, MyAccount.hours, MyAccount.totalAsHours))
+		self:AddDoubleLine(string.format("Total:"), string.format("%d days %d hours (%dh)", GlobalPlayed_MyAccount.days, GlobalPlayed_MyAccount.hours, GlobalPlayed_MyAccount.totalAsHours))
 	end
 
 	function dataobj:OnEnter()
