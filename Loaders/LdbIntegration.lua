@@ -71,7 +71,7 @@ function GlobalPlayed_LoadLdbIntegration()
 			for kk, vv in ipairs(v) do
 				local characterLineTexts = GlobalPlayed_LDB_GetCharacterLine(vv)
 
-				self:AddDoubleLine(characterLineTexts.name, characterLineTexts.playtime)
+				self:AddDoubleLine("    " .. characterLineTexts.name, characterLineTexts.playtime)
 			end
 
 			self:AddLine(" ")
