@@ -25,12 +25,19 @@ function GlobalPlayed_LoadOptionsPanel()
         useAceCheck:SetChecked(GlobalPlayed_Options.useAce)
 		useAceCheck:SetScript("OnClick", function(this) GlobalPlayed_Options.useAce = this:GetChecked() end)
 
-		local enableClassColorationCheck = CreateFrame("CheckButton", "Ace", self, "InterfaceOptionsCheckButtonTemplate")
-        enableClassColorationCheck:SetPoint("TOPLEFT", useAceCheck, "BOTTOMLEFT", 0, 5)
-        enableClassColorationCheck.Text:SetText("Display class colors")
-        enableClassColorationCheck.tooltipText = "Enable class coloration in UI, databroker, chat messages"
-        enableClassColorationCheck:SetChecked(GlobalPlayed_Options.enableClassColoration)
-        enableClassColorationCheck:SetScript("OnClick", function(this) GlobalPlayed_Options.enableClassColoration = this:GetChecked() end)
+		local useClassColorationCheck = CreateFrame("CheckButton", "Ace", self, "InterfaceOptionsCheckButtonTemplate")
+        useClassColorationCheck:SetPoint("TOPLEFT", useAceCheck, "BOTTOMLEFT", 0, 5)
+        useClassColorationCheck.Text:SetText("Use class colors")
+        useClassColorationCheck.tooltipText = "Use class coloration in UI, databroker, chat messages"
+        useClassColorationCheck:SetChecked(GlobalPlayed_Options.useClassColoration)
+		useClassColorationCheck:SetScript("OnClick", function(this) GlobalPlayed_Options.useClassColoration = this:GetChecked() end)
+		
+		local useShortDurationCheck = CreateFrame("CheckButton", "Ace", self, "InterfaceOptionsCheckButtonTemplate")
+        useShortDurationCheck:SetPoint("TOPLEFT", useClassColorationCheck, "BOTTOMLEFT", 0, 5)
+        useShortDurationCheck.Text:SetText("Use short duration units")
+        useShortDurationCheck.tooltipText = "Display 'd' and 'h' instead of 'days' and 'hours'"
+        useShortDurationCheck:SetChecked(GlobalPlayed_Options.useShortDuration)
+        useShortDurationCheck:SetScript("OnClick", function(this) GlobalPlayed_Options.useShortDuration = this:GetChecked() end)
 
         local Disclaimer = self:CreateFontString("$SubTitle", "ARTWORK", "GameFontHighlightSmall")
         Disclaimer:SetPoint("BOTTOMLEFT", GlobalPlayedOptionsPanel, "BOTTOMLEFT", 20, 20)
@@ -52,7 +59,8 @@ function GlobalPlayed_LoadOptionsPanel()
 
         function self:refresh()
 			useAceCheck:SetChecked(GlobalPlayed_Options.useAce)
-			enableClassColorationCheck:SetChecked(GlobalPlayed_Options.enableClassColoration)
+			useClassColorationCheck:SetChecked(GlobalPlayed_Options.useClassColoration)
+			useShortDurationCheck:SetChecked(GlobalPlayed_Options.useShortDuration)
         end
 
         self:refresh()

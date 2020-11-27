@@ -14,16 +14,35 @@ function GlobalPlayed_Character_Create(p_name, p_realm)
 	}
 end
 
+function GlobalPlayed_Character_GetPlayTimeUnits()
+	local daysUnit, hoursUnit = nil
+
+	if GlobalPlayed_Options.useShortDuration == true then
+		daysUnit = "d"
+		hoursUnit = "h"
+	else
+		daysUnit = "days"
+		hoursUnit = "hours"
+	end
+
+	return {
+		day = daysUnit,
+		hour = hoursUnit
+	}
+end
+
 function GlobalPlayed_Character_GetPlayed(self)
+	local units = GlobalPlayed_Character_GetPlayTimeUnits()
 	local hours = string.format("%02d", self.hours)
 
-	return (self.days .. " days " .. hours .. " hours")
+	return string.format("|cffffffff%s|r%s |cffffffff%s|r%s", self.days, units.day, hours, units.hour)
 end
 
 function GlobalPlayed_Character_GetPlayedWithTotal(self)
+	local units = GlobalPlayed_Character_GetPlayTimeUnits()
 	local hours = string.format("%02d", self.hours)
 
-	return (self.days .. " days " .. hours .. " hours (" .. self.totalAsHours .. "h)")
+	return string.format("%s%s %s%s (%sh)", self.days, units.day, hours, units.hour, self.totalAsHours)
 end
 
 function GlobalPlayed_Character_GetPlayedAsHours(self)
@@ -32,6 +51,18 @@ end
 
 function GlobalPlayed_Character_GetClassColor(self)
 	return GlobalPlayed_ClassColor_GetColor(self.class)
+end
+
+function GlobalPlayed_Character_GetNameColored(self)
+	local classColor = nil
+
+	if GlobalPlayed_Options.useClassColoration == true then
+		classColor = "|cff" .. GlobalPlayed_Character_GetClassColor(self)
+	else
+		classColor = "|r"
+	end
+
+	return classColor .. self.name .. "|r"
 end
 
 function GlobalPlayed_Character_UpdatePlayed(self, p_days, p_hours)

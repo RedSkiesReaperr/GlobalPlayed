@@ -40,17 +40,13 @@ local function GlobalPlayed_FillUI(p_UiFrame)
 			local currCharacter = v
 
 			if currCharacter ~=nil and currCharacter.name ~= nil and currCharacter.realm ~= nil then
-				if GlobalPlayed_Options.enableClassColoration == true then
-					classColor = "|cff" .. GlobalPlayed_Character_GetClassColor(currCharacter)
-				else
-					classColor = "|r"
-				end
+				local coloredClass = GlobalPlayed_Character_GetNameColored(currCharacter)
 			
 				local group = AceGUI:Create("InlineGroup")
 				group:SetRelativeWidth(0.5)
 
 				local characterName = AceGUI:Create("Label")
-				characterName:SetText(classColor .. currCharacter.name .. "-" .. currCharacter.realm)
+				characterName:SetText(coloredClass .. "-" .. currCharacter.realm)
 				GlobalPlayed_FormatCharacterLabel(characterName)
 
 				local charPlayed = AceGUI:Create("Label")

@@ -11,7 +11,7 @@ function GlobalPlayed_LogCharactersPlayed()
 	for k, v in ipairs(GlobalPlayed_Characters) do
 		iChar = GlobalPlayed_FindCharacter(v.name, v.realm)
 
-		if GlobalPlayed_Options.enableClassColoration == true then
+		if GlobalPlayed_Options.useClassColoration == true then
 			classColor = "|cff" .. GlobalPlayed_Character_GetClassColor(iChar)
 		else
 			classColor = "|r"

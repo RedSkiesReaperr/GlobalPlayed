@@ -26,10 +26,11 @@ function GlobalPlayed_LoadLdbIntegration()
 	})
 	
 	local function GlobalPlayed_LDB_GetAccountLine(account)
-		local left = "Total " .. string.format("(%dh)", account.totalAsHours)
+		local units = GlobalPlayed_Character_GetPlayTimeUnits()
 		local days = string.format("|cffffffff%d|r", account.days)
 		local hours = string.format("|cffffffff%02d|r", account.hours)
-		local playtime = string.format("%s days %s hours", days, hours)
+		local left = "Total " .. string.format("(%dh)", account.totalAsHours)
+		local playtime = string.format("%s%s %s%s", days, units.day, hours, units.hour)
 
 		return {
 			left = left,
@@ -38,18 +39,9 @@ function GlobalPlayed_LoadLdbIntegration()
 	end
 
 	local function GlobalPlayed_LDB_GetCharacterLine(character)
-		local classColor = nil 
-		
-		if GlobalPlayed_Options.enableClassColoration == true then
-			classColor = "|cff" .. GlobalPlayed_ClassColor_GetColor(character.class)
-		else
-			classColor = "|r"
-		end
-
-		local name = classColor .. character.name .. "|r (" .. GlobalPlayed_Character_GetPlayedAsHours(character) .. "h)"
-		local days = string.format("|cffffffff%d|r", character.days)
-		local hours = string.format("|cffffffff%02d|r", character.hours)
-		local playtime = days .. " days " .. hours .. " hours"
+		local coloredName = GlobalPlayed_Character_GetNameColored(character)
+		local name = coloredName .. " (" .. GlobalPlayed_Character_GetPlayedAsHours(character) .. "h)"
+		local playtime = GlobalPlayed_Character_GetPlayed(character)
 
 		return {
 			name = name,
