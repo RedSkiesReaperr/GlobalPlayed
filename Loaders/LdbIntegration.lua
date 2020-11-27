@@ -4,7 +4,7 @@ function GlobalPlayed_LoadLdbIntegration()
 	local dataobj = ldb:NewDataObject("GlobalPlayed", { 
 		type = "data source",
 		text = "GlobalPlayed",
-		data = "NUll",
+		data = "Null",
 		OnClick = function(self, button)
 			if self.name == "GlobalPlayed" then
 				if button == "LeftButton" then
@@ -12,6 +12,7 @@ function GlobalPlayed_LoadLdbIntegration()
 						GlobalPlayed_OpenUI()
 					else
 						GlobalPlayed_LogCharactersPlayed()
+						GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
 					end
 				elseif button == "MiddleButton" then
 					RequestTimePlayed()
@@ -24,6 +25,38 @@ function GlobalPlayed_LoadLdbIntegration()
 		end
 	})
 	
+	local function GlobalPlayed_LDB_GetAccountLine(account)
+		local left = "Total " .. string.format("(%dh)", account.totalAsHours)
+		local days = string.format("|cffffffff%d|r", account.days)
+		local hours = string.format("|cffffffff%02d|r", account.hours)
+		local playtime = string.format("%s days %s hours", days, hours)
+
+		return {
+			left = left,
+			right = playtime
+		}
+	end
+
+	local function GlobalPlayed_LDB_GetCharacterLine(character)
+		local classColor = nil 
+		
+		if GlobalPlayed_Options.enableClassColoration == true then
+			classColor = "|cff" .. GlobalPlayed_ClassColor_GetColor(character.class)
+		else
+			classColor = "|r"
+		end
+
+		local name = classColor .. character.name .. "|r (" .. GlobalPlayed_Character_GetPlayedAsHours(character) .. "h)"
+		local days = string.format("|cffffffff%d|r", character.days)
+		local hours = string.format("|cffffffff%02d|r", character.hours)
+		local playtime = days .. " days " .. hours .. " hours"
+
+		return {
+			name = name,
+			playtime = playtime
+		}
+	end
+
 	function dataobj:OnTooltipShow()
 		self:SetMinimumWidth(250)
 
@@ -41,17 +74,20 @@ function GlobalPlayed_LoadLdbIntegration()
 
 		local ordered = GlobalPlayed_GetCharactersOrderedByRealm(GlobalPlayed_Characters)
 		for k, v in pairs(ordered) do
-			self:AddLine(string.format("%s", k), 0.17, 0.69, 0.33)
+			self:AddLine(string.format("%s", k))
 
 			for kk, vv in ipairs(v) do
-				self:AddDoubleLine(string.format("%s", vv.name), GlobalPlayed_Character_GetPlayed(vv))
+				local characterLineTexts = GlobalPlayed_LDB_GetCharacterLine(vv)
+
+				self:AddDoubleLine(characterLineTexts.name, characterLineTexts.playtime)
 			end
 
 			self:AddLine(" ")
 		end
 
 		self:AddLine(" ")
-		self:AddDoubleLine(string.format("Total:"), string.format("%d days %d hours (%dh)", GlobalPlayed_MyAccount.days, GlobalPlayed_MyAccount.hours, GlobalPlayed_MyAccount.totalAsHours))
+		local accountLine = GlobalPlayed_LDB_GetAccountLine(GlobalPlayed_MyAccount)
+		self:AddDoubleLine(accountLine.left, accountLine.right)
 	end
 
 	function dataobj:OnEnter()

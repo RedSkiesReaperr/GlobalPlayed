@@ -9,7 +9,8 @@ function GlobalPlayed_AddonLoadedHandler()
 
 	if GlobalPlayed_Options == nil then -- If no options registered
 		GlobalPlayed_Options = {
-			useAce = GlobalPlayed_Addon_IsLoaded("Ace3")
+			useAce = GlobalPlayed_Addon_IsLoaded("Ace3"),
+			enableClassColoration = true
 		}
 	end
 

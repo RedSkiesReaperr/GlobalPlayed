@@ -23,7 +23,14 @@ function GlobalPlayed_LoadOptionsPanel()
         useAceCheck.Text:SetText("Use Ace3 GUI")
         useAceCheck.tooltipText = "Use the Ace3 integration to display played infos in a nice windowed UI"
         useAceCheck:SetChecked(GlobalPlayed_Options.useAce)
-        useAceCheck:SetScript("OnClick", function(this) GlobalPlayed_Options.useAce = this:GetChecked() end)
+		useAceCheck:SetScript("OnClick", function(this) GlobalPlayed_Options.useAce = this:GetChecked() end)
+
+		local enableClassColorationCheck = CreateFrame("CheckButton", "Ace", self, "InterfaceOptionsCheckButtonTemplate")
+        enableClassColorationCheck:SetPoint("TOPLEFT", useAceCheck, "BOTTOMLEFT", 0, 5)
+        enableClassColorationCheck.Text:SetText("Display class colors")
+        enableClassColorationCheck.tooltipText = "Enable class coloration in UI, databroker, chat messages"
+        enableClassColorationCheck:SetChecked(GlobalPlayed_Options.enableClassColoration)
+        enableClassColorationCheck:SetScript("OnClick", function(this) GlobalPlayed_Options.enableClassColoration = this:GetChecked() end)
 
         local Disclaimer = self:CreateFontString("$SubTitle", "ARTWORK", "GameFontHighlightSmall")
         Disclaimer:SetPoint("BOTTOMLEFT", GlobalPlayedOptionsPanel, "BOTTOMLEFT", 20, 20)
@@ -44,7 +51,8 @@ function GlobalPlayed_LoadOptionsPanel()
         end)
 
         function self:refresh()
-            useAceCheck:SetChecked(GlobalPlayed_Options.useAce)
+			useAceCheck:SetChecked(GlobalPlayed_Options.useAce)
+			enableClassColorationCheck:SetChecked(GlobalPlayed_Options.enableClassColoration)
         end
 
         self:refresh()

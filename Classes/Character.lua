@@ -2,9 +2,12 @@
 -- Here is the Character behavior
 ----------------------
 function GlobalPlayed_Character_Create(p_name, p_realm)
+	local localizedClass, englishClass = UnitClass("player")
+
 	return {
 		name = p_name,
 		realm = p_realm,
+		class = englishClass,
 		days = 0,
 		hours = 0,
 		totalAsHours = 0
@@ -12,7 +15,23 @@ function GlobalPlayed_Character_Create(p_name, p_realm)
 end
 
 function GlobalPlayed_Character_GetPlayed(self)
-	return (self.days .. " days " .. self.hours .. " hours (" .. self.totalAsHours .. "h)")
+	local hours = string.format("%02d", self.hours)
+
+	return (self.days .. " days " .. hours .. " hours")
+end
+
+function GlobalPlayed_Character_GetPlayedWithTotal(self)
+	local hours = string.format("%02d", self.hours)
+
+	return (self.days .. " days " .. hours .. " hours (" .. self.totalAsHours .. "h)")
+end
+
+function GlobalPlayed_Character_GetPlayedAsHours(self)
+	return self.totalAsHours
+end
+
+function GlobalPlayed_Character_GetClassColor(self)
+	return GlobalPlayed_ClassColor_GetColor(self.class)
 end
 
 function GlobalPlayed_Character_UpdatePlayed(self, p_days, p_hours)

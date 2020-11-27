@@ -33,20 +33,28 @@ local function GlobalPlayed_FillUI(p_UiFrame)
 	scrollFrame:SetLayout("Flow")
 	p_UiFrame:AddChild(scrollFrame)
 
+	local classColor = nil
+
 	for k, v in ipairs(GlobalPlayed_Characters) do
 		if v ~= nil then
 			local currCharacter = v
 
 			if currCharacter ~=nil and currCharacter.name ~= nil and currCharacter.realm ~= nil then
+				if GlobalPlayed_Options.enableClassColoration == true then
+					classColor = "|cff" .. GlobalPlayed_Character_GetClassColor(currCharacter)
+				else
+					classColor = "|r"
+				end
+			
 				local group = AceGUI:Create("InlineGroup")
 				group:SetRelativeWidth(0.5)
 
 				local characterName = AceGUI:Create("Label")
-				characterName:SetText(currCharacter.name .. "-" .. currCharacter.realm)
+				characterName:SetText(classColor .. currCharacter.name .. "-" .. currCharacter.realm)
 				GlobalPlayed_FormatCharacterLabel(characterName)
 
 				local charPlayed = AceGUI:Create("Label")
-				charPlayed:SetText(GlobalPlayed_Character_GetPlayed(currCharacter))
+				charPlayed:SetText(GlobalPlayed_Character_GetPlayedWithTotal(currCharacter))
 				GlobalPlayed_FormatPlayedLabel(charPlayed)
 
 				group:AddChild(characterName)
