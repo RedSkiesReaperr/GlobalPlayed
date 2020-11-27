@@ -64,9 +64,9 @@ function GlobalPlayed_LoadLdbIntegration()
 		self:AddDoubleLine("Right click", "Open options panel", 0, 0.7, 0.8, 0, 0.7, 0.8)
 		self:AddLine(" ")
 
-		local ordered = GlobalPlayed_GetCharactersOrderedByRealm(GlobalPlayed_Characters)
+		local ordered = GlobalPlayed_Account_GetCharactersOrderedByRealm(GlobalPlayed_Characters)
 		for k, v in pairs(ordered) do
-			self:AddLine(string.format("%s", k))
+			self:AddDoubleLine(string.format("%s:", k), string.format("Realm total: %sh", v.totalAsHours), 0.17, 0.69, 0.33, 0.17, 0.69, 0.33)
 
 			for kk, vv in ipairs(v) do
 				local characterLineTexts = GlobalPlayed_LDB_GetCharacterLine(vv)

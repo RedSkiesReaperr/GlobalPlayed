@@ -42,3 +42,21 @@ function GlobalPlayed_Account_UpdatePlayed(self)
 	self.days = daysCount
 	self.hours = hours - (daysCount * 24)
 end
+
+function GlobalPlayed_Account_GetCharactersOrderedByRealm(self)
+	local realms = {}
+
+	for k, v in ipairs(self) do
+		if realms[v.realm] == nil then
+			realms[v.realm] = {}
+		end
+
+		table.insert(realms[v.realm], v)
+
+		if realms[v.realm]['totalAsHours'] == nil then realms[v.realm]['totalAsHours'] = 0 end
+
+		realms[v.realm]['totalAsHours'] = realms[v.realm]['totalAsHours'] + v.totalAsHours
+	end
+
+	return realms
+end
