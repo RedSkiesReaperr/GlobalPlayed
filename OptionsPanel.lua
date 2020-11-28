@@ -1,9 +1,10 @@
-GlobalPlayedOptionsPanel = CreateFrame("Frame", "GlobalPlayedOptionsPanel", InterfaceOptionsFramePanelContainer);
+local GlobalPlayedOptionsPanel = CreateFrame("Frame", "GlobalPlayedOptionsPanel", InterfaceOptionsFramePanelContainer);
 GlobalPlayedOptionsPanel.name = "GlobalPlayed";
 GlobalPlayedOptionsPanel.okay = function (self) self:Close(); end; 
+
 InterfaceOptions_AddCategory(GlobalPlayedOptionsPanel);
 
-function LoadOptionsPanel()
+function GlobalPlayed_LoadOptionsPanel()
     GlobalPlayedOptionsPanel:SetScript("OnShow", function(self)
         local Title = self:CreateFontString("GlobalPlayed", "ARTWORK", "GameFontNormalHuge")
         Title:SetPoint("TOPLEFT", 16, -16)
@@ -21,8 +22,28 @@ function LoadOptionsPanel()
         useAceCheck:SetPoint("TOPLEFT", SubTitle, "BOTTOMLEFT", 0, 5)
         useAceCheck.Text:SetText("Use Ace3 GUI")
         useAceCheck.tooltipText = "Use the Ace3 integration to display played infos in a nice windowed UI"
-        useAceCheck:SetChecked(Options.useAce)
-        useAceCheck:SetScript("OnClick", function(this) Options.useAce = this:GetChecked() end)
+        useAceCheck:SetChecked(GlobalPlayed_Options.useAce)
+		useAceCheck:SetScript("OnClick", function(this) GlobalPlayed_Options.useAce = this:GetChecked() end)
+
+		local useClassColorationCheck = CreateFrame("CheckButton", "Ace", self, "InterfaceOptionsCheckButtonTemplate")
+        useClassColorationCheck:SetPoint("TOPLEFT", useAceCheck, "BOTTOMLEFT", 0, 5)
+        useClassColorationCheck.Text:SetText("Use class colors")
+        useClassColorationCheck.tooltipText = "Use class coloration in UI, databroker, chat messages"
+        useClassColorationCheck:SetChecked(GlobalPlayed_Options.useClassColoration)
+		useClassColorationCheck:SetScript("OnClick", function(this) GlobalPlayed_Options.useClassColoration = this:GetChecked() end)
+		
+		local useShortDurationCheck = CreateFrame("CheckButton", "Ace", self, "InterfaceOptionsCheckButtonTemplate")
+        useShortDurationCheck:SetPoint("TOPLEFT", useClassColorationCheck, "BOTTOMLEFT", 0, 5)
+        useShortDurationCheck.Text:SetText("Use short duration units")
+        useShortDurationCheck.tooltipText = "Display 'd' and 'h' instead of 'days' and 'hours'"
+        useShortDurationCheck:SetChecked(GlobalPlayed_Options.useShortDuration)
+        useShortDurationCheck:SetScript("OnClick", function(this) GlobalPlayed_Options.useShortDuration = this:GetChecked() end)
+
+		local useFactionIconCheck = CreateFrame("CheckButton", "Ace", self, "InterfaceOptionsCheckButtonTemplate")
+        useFactionIconCheck:SetPoint("TOPLEFT", useShortDurationCheck, "BOTTOMLEFT", 0, 5)
+        useFactionIconCheck.Text:SetText("Show faction icons")
+        useFactionIconCheck:SetChecked(GlobalPlayed_Options.useFactionIcon)
+        useFactionIconCheck:SetScript("OnClick", function(this) GlobalPlayed_Options.useFactionIcon = this:GetChecked() end)
 
         local Disclaimer = self:CreateFontString("$SubTitle", "ARTWORK", "GameFontHighlightSmall")
         Disclaimer:SetPoint("BOTTOMLEFT", GlobalPlayedOptionsPanel, "BOTTOMLEFT", 20, 20)
@@ -43,7 +64,10 @@ function LoadOptionsPanel()
         end)
 
         function self:refresh()
-            useAceCheck:SetChecked(Options.useAce)
+			useAceCheck:SetChecked(GlobalPlayed_Options.useAce)
+			useClassColorationCheck:SetChecked(GlobalPlayed_Options.useClassColoration)
+			useShortDurationCheck:SetChecked(GlobalPlayed_Options.useShortDuration)
+			useFactionIconCheck:SetChecked(GlobalPlayed_Options.useFactionIcon)
         end
 
         self:refresh()
@@ -51,6 +75,6 @@ function LoadOptionsPanel()
     end)
 end
 
-function OpenOptions()
+function GlobalPlayed_OpenOptionsPanel()
     InterfaceOptionsFrame_OpenToCategory(GlobalPlayedOptionsPanel);
 end

@@ -1,29 +1,29 @@
 ----------------------
 -- Log functions
 ----------------------
-function Log(message)
+function GlobalPlayed_Log(message)
 	print("[GlobalPlayed] " .. message)
 end
 
-function LogCharactersPlayed()
-	for k, v in ipairs(Characters) do
-		iChar = FindCharacter(v.name, v.realm)
+function GlobalPlayed_LogCharactersPlayed()
+	for k, v in ipairs(GlobalPlayed_Characters) do
+		iChar = GlobalPlayed_FindCharacter(v.name, v.realm)
 
 		if iChar ~= nil then
-			Log(v.name .. "-" .. v.realm .. ": " .. Character_GetPlayed(iChar))
+			GlobalPlayed_Log(GlobalPlayed_Character_GetNameRealmColored(iChar) .. ": " .. GlobalPlayed_Character_GetPlayedWithTotal(iChar))
 		end
 	end
 end
 
 ----------------------
--- Characters search functions
+-- GlobalPlayed_Characters search functions
 ----------------------
-function FindCharacter(p_name, p_realm)
-	if Characters == nil then
+function GlobalPlayed_FindCharacter(p_name, p_realm)
+	if GlobalPlayed_Characters == nil then
 		return nil
 	end
 
-	for k, v in ipairs(Characters) do
+	for k, v in ipairs(GlobalPlayed_Characters) do
 		if v.name == p_name and v.realm == p_realm then
 			return v
 		end

@@ -1,7 +1,7 @@
 -- ----------------------
 -- -- Here is the Account behavior
 -- ----------------------
-function Account_Create()
+function GlobalPlayed_Account_Create()
 	return {
 		days = 0,
 		hours = 0,
@@ -9,18 +9,28 @@ function Account_Create()
 	}
 end
 
-function Account_GetPlayed(self)
-	return "Account Total: " .. self.days .. " days " .. self.hours .. " hours (" .. self.totalAsHours .. "h)"
+function GlobalPlayed_Account_GetPlayed(self)
+	local daysUnit, hoursUnit = nil
+
+	if GlobalPlayed_Options.useShortDuration == true then
+		daysUnit = "d"
+		hoursUnit = "h"
+	else
+		daysUnit = "days"
+		hoursUnit = "hours"
+	end
+
+	return string.format("Account Total: %s%s %s%s (%sh)", self.days, daysUnit, self.hours, hoursUnit, self.totalAsHours)
 end
 
-function Account_UpdatePlayed(self)
+function GlobalPlayed_Account_UpdatePlayed(self)
 	local hours = 0
 
-	if Characters == nil then
+	if GlobalPlayed_Characters == nil then
 		return nil
 	end
 
-	for k, v in ipairs(Characters) do
+	for k, v in ipairs(GlobalPlayed_Characters) do
 		if v.totalAsHours ~= nil and v.totalAsHours > 0 then
 			hours = hours + v.totalAsHours
 		end
@@ -31,4 +41,22 @@ function Account_UpdatePlayed(self)
 	self.totalAsHours = hours
 	self.days = daysCount
 	self.hours = hours - (daysCount * 24)
+end
+
+function GlobalPlayed_Account_GetCharactersOrderedByRealm(self)
+	local realms = {}
+
+	for k, v in ipairs(self) do
+		if realms[v.realm] == nil then
+			realms[v.realm] = {}
+		end
+
+		table.insert(realms[v.realm], v)
+
+		if realms[v.realm]['totalAsHours'] == nil then realms[v.realm]['totalAsHours'] = 0 end
+
+		realms[v.realm]['totalAsHours'] = realms[v.realm]['totalAsHours'] + v.totalAsHours
+	end
+
+	return realms
 end

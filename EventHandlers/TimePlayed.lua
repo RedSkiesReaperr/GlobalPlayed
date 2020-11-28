@@ -1,4 +1,4 @@
-function TimePlayedMsgHandler(total, currentLvl)
+function GlobalPlayed_TimePlayedMsgHandler(total, currentLvl)
 	local totalAsInt = tonumber(total)
 
 	local days = math.floor(totalAsInt / 86400);
@@ -7,7 +7,7 @@ function TimePlayedMsgHandler(total, currentLvl)
 	local hours = math.floor(totalAsInt / 3600);
 	totalAsInt = totalAsInt - (hours * 3600);
 
-	Character_UpdatePlayed(currentCharacter, days, hours)
+	GlobalPlayed_Character_UpdatePlayed(currentCharacter, days, hours)
 
-	Account_UpdatePlayed(MyAccount)
+	GlobalPlayed_Account_UpdatePlayed(GlobalPlayed_MyAccount)
 end

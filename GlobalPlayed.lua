@@ -6,31 +6,31 @@ local currentCharacter = nil
 SLASH_GLOBAL_PLAYED1 = '/gplayed'
 SlashCmdList['GLOBAL_PLAYED'] = function(msg, editbox)
 	if msg == "" then
-		UpdateAll()
+		GlobalPlayed_UpdateAll()
 
-		if Addon_IsAceEnabled() == false then
-			Log(Account_GetPlayed(MyAccount))		
+		if GlobalPlayed_Addon_IsAceEnabled() == false then
+			GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))		
 		else
-			OpenUI()
+			GlobalPlayed_OpenUI()
 		end	
 	elseif msg == "all" then
-		UpdateAll()
+		GlobalPlayed_UpdateAll()
 
-		if Addon_IsAceEnabled() == false then
-			LogCharactersPlayed()
-			Log(Account_GetPlayed(MyAccount))
+		if GlobalPlayed_Addon_IsAceEnabled() == false then
+			GlobalPlayed_LogCharactersPlayed()
+			GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
 		else
-			OpenUI()
+			GlobalPlayed_OpenUI()
 		end
 	elseif msg == "options" then
-		OpenOptions()
-		OpenOptions()
+		GlobalPlayed_OpenOptionsPanel()
+		GlobalPlayed_OpenOptionsPanel()
 	else
-		Log("Unknown command: /gplayed " .. msg)
-		Log("Availaible commands:")
-		Log("    /gplayed")
-		Log("    /gplayed all")
-		Log("    /gplayed options")
+		GlobalPlayed_Log("Unknown command: /gplayed " .. msg)
+		GlobalPlayed_Log("Availaible commands:")
+		GlobalPlayed_Log("    /gplayed")
+		GlobalPlayed_Log("    /gplayed all")
+		GlobalPlayed_Log("    /gplayed options")
 	end
 end
 
@@ -45,7 +45,7 @@ function GlobalPlayedFrame_OnEvent(self, event, ...)
 		local addon = ...
 
 		if addon == "GlobalPlayed" then
-			AddonLoadedHandler()
+			GlobalPlayed_AddonLoadedHandler()
 		end
 	end
 
@@ -56,16 +56,16 @@ function GlobalPlayedFrame_OnEvent(self, event, ...)
 	if event == "TIME_PLAYED_MSG" then
 		local total, currentLvl = ...
 
-		TimePlayedMsgHandler(total, currentLvl)
+		GlobalPlayed_TimePlayedMsgHandler(total, currentLvl)
 	end
 end
 
-function UpdateAll()
+function GlobalPlayed_UpdateAll()
 	if currentCharacter ~= nil then
-		Character_UpdatePlayed(currentCharacter, days, hours)
+		GlobalPlayed_Character_UpdatePlayed(currentCharacter, days, hours)
 	end
 
-	if MyAccount ~= nil then
-		Account_UpdatePlayed(MyAccount)
+	if GlobalPlayed_MyAccount ~= nil then
+		GlobalPlayed_Account_UpdatePlayed(GlobalPlayed_MyAccount)
 	end
 end
