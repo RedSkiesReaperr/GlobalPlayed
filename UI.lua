@@ -9,6 +9,17 @@ local function GlobalPlayed_CloseUI(widget)
 	AceGUI:Release(widget)
 end
 
+local function GlobalPlayed_FormatRealmNameLabel(p_label)
+	local fontName, fontHeight, fontFlags = p_label.label:GetFont()
+
+	p_label:SetFullWidth(true)
+	p_label.label:SetFont(fontName, 16)
+	p_label.label:SetTextColor(0.17, 0.69, 0.33)
+	p_label:SetJustifyH("CENTER")
+	p_label:SetJustifyV("BOTTOM")
+end
+
+
 local function GlobalPlayed_FormatPlayedLabel(p_label)
 	local fontName, fontHeight, fontFlags = p_label.label:GetFont()
 
@@ -33,34 +44,38 @@ local function GlobalPlayed_FillUI(p_UiFrame)
 	scrollFrame:SetLayout("Flow")
 	p_UiFrame:AddChild(scrollFrame)
 
-	local classColor = nil
+	local ordered = GlobalPlayed_Account_GetCharactersOrderedByRealm(GlobalPlayed_Characters)
 
-	for k, v in ipairs(GlobalPlayed_Characters) do
+	for k, v in pairs(ordered) do
 		if v ~= nil then
-			local currCharacter = v
+			local realmName = AceGUI:Create("Label")
+			realmName:SetText(k .. string.format(" (%sh)", v.totalAsHours))
+			GlobalPlayed_FormatRealmNameLabel(realmName)
+			scrollFrame:AddChild(realmName)
 
-			if currCharacter ~=nil and currCharacter.name ~= nil and currCharacter.realm ~= nil then
-				local coloredNameRealm = GlobalPlayed_Character_GetNameRealmColored(currCharacter)
-
+			for kk, currCharacter in ipairs(v) do
+				local coloredNameRealm = GlobalPlayed_Character_GetNameColored(currCharacter)
 				local group = AceGUI:Create("InlineGroup")
 				group:SetLayout("List")
 				group:SetRelativeWidth(0.5)
-
-				local characterName = AceGUI:Create("Label")
-				characterName:SetText(coloredNameRealm)
-				GlobalPlayed_FormatCharacterLabel(characterName)
-
-				local charPlayed = AceGUI:Create("Label")
-				if GlobalPlayed_Options.useFactionIcon == true then
-					charPlayed:SetImage(GlobalPlayed_Character_GetFactionIcon(currCharacter))
-					charPlayed:SetImageSize(15, 15)
+	
+				if currCharacter ~=nil and currCharacter.name ~= nil and currCharacter.realm ~= nil then
+					local characterName = AceGUI:Create("Label")
+					characterName:SetText(coloredNameRealm)
+					GlobalPlayed_FormatCharacterLabel(characterName)
+	
+					local charPlayed = AceGUI:Create("Label")
+					if GlobalPlayed_Options.useFactionIcon == true then
+						charPlayed:SetImage(GlobalPlayed_Character_GetFactionIcon(currCharacter))
+						charPlayed:SetImageSize(15, 15)
+					end
+					charPlayed:SetText(GlobalPlayed_Character_GetPlayedWithTotal(currCharacter))
+					GlobalPlayed_FormatPlayedLabel(charPlayed)
+	
+					group:AddChild(characterName)
+					group:AddChild(charPlayed)
+					scrollFrame:AddChild(group)
 				end
-				charPlayed:SetText(GlobalPlayed_Character_GetPlayedWithTotal(currCharacter))
-				GlobalPlayed_FormatPlayedLabel(charPlayed)
-
-				group:AddChild(characterName)
-				group:AddChild(charPlayed)
-				scrollFrame:AddChild(group)
 			end
 		end
 	end
