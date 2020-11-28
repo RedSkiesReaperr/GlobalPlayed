@@ -39,6 +39,12 @@ function GlobalPlayed_LoadOptionsPanel()
         useShortDurationCheck:SetChecked(GlobalPlayed_Options.useShortDuration)
         useShortDurationCheck:SetScript("OnClick", function(this) GlobalPlayed_Options.useShortDuration = this:GetChecked() end)
 
+		local useFactionIconCheck = CreateFrame("CheckButton", "Ace", self, "InterfaceOptionsCheckButtonTemplate")
+        useFactionIconCheck:SetPoint("TOPLEFT", useShortDurationCheck, "BOTTOMLEFT", 0, 5)
+        useFactionIconCheck.Text:SetText("Show faction icons")
+        useFactionIconCheck:SetChecked(GlobalPlayed_Options.useFactionIcon)
+        useFactionIconCheck:SetScript("OnClick", function(this) GlobalPlayed_Options.useFactionIcon = this:GetChecked() end)
+
         local Disclaimer = self:CreateFontString("$SubTitle", "ARTWORK", "GameFontHighlightSmall")
         Disclaimer:SetPoint("BOTTOMLEFT", GlobalPlayedOptionsPanel, "BOTTOMLEFT", 20, 20)
         Disclaimer:SetHeight(32)
@@ -61,6 +67,7 @@ function GlobalPlayed_LoadOptionsPanel()
 			useAceCheck:SetChecked(GlobalPlayed_Options.useAce)
 			useClassColorationCheck:SetChecked(GlobalPlayed_Options.useClassColoration)
 			useShortDurationCheck:SetChecked(GlobalPlayed_Options.useShortDuration)
+			useFactionIconCheck:SetChecked(GlobalPlayed_Options.useFactionIcon)
         end
 
         self:refresh()

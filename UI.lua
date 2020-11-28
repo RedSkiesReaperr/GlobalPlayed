@@ -43,6 +43,7 @@ local function GlobalPlayed_FillUI(p_UiFrame)
 				local coloredNameRealm = GlobalPlayed_Character_GetNameRealmColored(currCharacter)
 
 				local group = AceGUI:Create("InlineGroup")
+				group:SetLayout("List")
 				group:SetRelativeWidth(0.5)
 
 				local characterName = AceGUI:Create("Label")
@@ -50,6 +51,10 @@ local function GlobalPlayed_FillUI(p_UiFrame)
 				GlobalPlayed_FormatCharacterLabel(characterName)
 
 				local charPlayed = AceGUI:Create("Label")
+				if GlobalPlayed_Options.useFactionIcon == true then
+					charPlayed:SetImage(GlobalPlayed_Character_GetFactionIcon(currCharacter))
+					charPlayed:SetImageSize(15, 15)
+				end
 				charPlayed:SetText(GlobalPlayed_Character_GetPlayedWithTotal(currCharacter))
 				GlobalPlayed_FormatPlayedLabel(charPlayed)
 

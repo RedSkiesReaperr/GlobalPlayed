@@ -65,6 +65,7 @@ function GlobalPlayed_LoadLdbIntegration()
 		self:AddDoubleLine("Right click", "Open options panel", 0, 0.7, 0.8, 0, 0.7, 0.8)
 		self:AddLine(" ")
 
+		local factionIcon = nil
 		local ordered = GlobalPlayed_Account_GetCharactersOrderedByRealm(GlobalPlayed_Characters)
 		for k, v in pairs(ordered) do
 			self:AddDoubleLine(string.format("%s:", k), string.format("Realm total: %sh", v.totalAsHours), 0.17, 0.69, 0.33, 0.17, 0.69, 0.33)
@@ -72,7 +73,12 @@ function GlobalPlayed_LoadLdbIntegration()
 			for kk, vv in ipairs(v) do
 				local characterLineTexts = GlobalPlayed_LDB_GetCharacterLine(vv)
 
-				self:AddDoubleLine("    " .. characterLineTexts.name, characterLineTexts.playtime)
+				if GlobalPlayed_Options.useFactionIcon == true then
+					factionIcon = GlobalPlayed_Character_GetFactionIcon(vv)
+					self:AddDoubleLine("|T" .. factionIcon .. ":16:16:2:0|t  " .. characterLineTexts.name, characterLineTexts.playtime)
+				else
+					self:AddDoubleLine("    " .. characterLineTexts.name, characterLineTexts.playtime)
+				end
 			end
 
 			self:AddLine(" ")

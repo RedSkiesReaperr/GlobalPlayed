@@ -11,7 +11,8 @@ function GlobalPlayed_AddonLoadedHandler()
 		GlobalPlayed_Options = {
 			useAce = GlobalPlayed_Addon_IsLoaded("Ace3"),
 			useClassColoration = true,
-			useShortDuration = false
+			useShortDuration = false,
+			useFactionIcon = true
 		}
 	end
 

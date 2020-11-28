@@ -3,10 +3,12 @@
 ----------------------
 function GlobalPlayed_Character_Create(p_name, p_realm)
 	local localizedClass, englishClass = UnitClass("player")
+	local englishFaction, localizedFaction = UnitFactionGroup("player")
 
 	return {
 		name = p_name,
 		realm = p_realm,
+		faction = englishFaction,
 		class = englishClass,
 		days = 0,
 		hours = 0,
@@ -75,6 +77,20 @@ function GlobalPlayed_Character_GetNameRealmColored(self)
 	end
 
 	return classColor .. self.name .. "-" .. self.realm .. "|r"
+end
+
+function GlobalPlayed_Character_GetFactionIcon(self)
+	local iconPath = nil
+
+	if self.faction == "Alliance" then
+		iconPath = "Interface\\AddOns\\GlobalPlayed\\Icons\\Factions\\alliance"
+	elseif self.faction == "Horde" then
+		iconPath = "Interface\\AddOns\\GlobalPlayed\\Icons\\Factions\\horde"
+	else
+		iconPath = "Interface\\AddOns\\GlobalPlayed\\Icons\\Factions\\neutral"
+	end
+
+	return iconPath
 end
 
 function GlobalPlayed_Character_UpdatePlayed(self, p_days, p_hours)
