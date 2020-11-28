@@ -1,5 +1,22 @@
 # Changelogs
 
+## 1.5.0 (2020-11-28)
+
+- Huge code clean & Optimizations
+- Fix addon functions names to be unique and prevent miss override
+- Fix addon variables names to be unique and prevent miss override
+- Fix all time units now using the same 2digits format
+- Fix addon icon can now be displayed in databroker
+- Add new options in GlobalPlayed options panel
+- Add LeftClick on databroker object will now open/close GlobalPlayed UI (or print report in chat if  Ace3 disabled)
+- Add MiddleClick on databroker object will now perform a refresh data refresh
+- Add RightClick on databroker object will now open GlobalePlayed options panel
+- Add coloration matched with charaters classes (can be enabled/disabled in options panel)
+- Add option to switch between short and long time units (can be enabled/disabled in options panel)
+- Add you can now vizualize your total playtime for each realms
+- Add faction icons displayed next each characters (can be enabled/disabled in options panel)
+- Add characters in Ace3 UI are now ordered by realms
+
 ## 1.4.2 (2020-11-23)
 
 - Fix GlobalPlayed options panel messages appears anywhere in interface panel
