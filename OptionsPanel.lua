@@ -1,6 +1,6 @@
 local GlobalPlayedOptionsPanel = CreateFrame("Frame", "GlobalPlayedOptionsPanel", InterfaceOptionsFramePanelContainer);
 GlobalPlayedOptionsPanel.name = "GlobalPlayed";
-GlobalPlayedOptionsPanel.okay = function (self) self:Close(); end; 
+GlobalPlayedOptionsPanel.close = function (self) self:Close(); end; 
 
 InterfaceOptions_AddCategory(GlobalPlayedOptionsPanel);
 

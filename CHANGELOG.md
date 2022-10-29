@@ -1,5 +1,10 @@
 # Changelogs
 
+## 1.5.1 (2022-10-29)
+
+- Update Interface version for v10.0
+- Fix lua error on closing options panel 
+
 ## 1.5.0 (2020-11-28)
 
 - Huge code clean & Optimizations
