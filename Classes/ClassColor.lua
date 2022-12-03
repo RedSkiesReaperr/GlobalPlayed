@@ -10,7 +10,8 @@ local classColors = {
 	WARLOCK = "9482C9",
 	MONK = "00FF96",
 	DRUID = "FF7D0A",
-	DEMONHUNTER = "A330C9"
+	DEMONHUNTER = "A330C9",
+	EVOKER = "205e51"
 }
 
 function GlobalPlayed_ClassColor_GetColor(class)

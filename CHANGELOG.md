@@ -1,5 +1,9 @@
 # Changelogs
 
+## 1.5.2 (2022-12-03)
+
+- Add Evoker class support
+
 ## 1.5.1 (2022-10-29)
 
 - Update Interface version for v10.0
