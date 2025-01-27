@@ -2,7 +2,7 @@
 -- Here is the Addon behavior
 ----------------------
 function GlobalPlayed_Addon_IsLoaded(p_name)
-	local loaded, _finished  = IsAddOnLoaded(p_name)
+	local loaded, _finished  = C_AddOns.IsAddOnLoaded(p_name)
 
 	return loaded
 end
