@@ -25,6 +25,7 @@ Bug reports and Features requests are welcomed. Feel free to create issues on th
 
 ## Dev Helps & Docs
 
-- [wowwiki](https://wowwiki.fandom.com/wiki/World_of_Warcraft_API)
-- [wowpedia](https://wow.gamepedia.com/World_of_Warcraft_API)
+- [wowpedia](https://wowpedia.fandom.com/wiki/World_of_Warcraft_API)
+- [warcraft.wiki.gg](https://warcraft.wiki.gg/wiki/Warcraft_Wiki)
 - [lua.org](https://www.lua.org/manual/5.3/)
+- [wow-ui-source](https://github.com/Gethe/wow-ui-source)
