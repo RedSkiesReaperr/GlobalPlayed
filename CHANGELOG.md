@@ -1,5 +1,14 @@
 # Changelogs
 
+## 1.5.3 (2022-10-29)
+
+- Update Interface version for v11.0.7
+- Update calbackHandler lib 1.0.8 -> 1.0.9
+- Fixed removed function IsAddOnLoaded
+- Fixed removed function InterfaceOptions_AddCategory
+- Fixed removed function InterfaceOptionsFrame_OpenToCategory
+- Fixed SetJustifyV() argument
+
 ## 1.5.2 (2022-12-03)
 
 - Add Evoker class support
