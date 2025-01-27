@@ -1,8 +1,8 @@
 local GlobalPlayedOptionsPanel = CreateFrame("Frame", "GlobalPlayedOptionsPanel", InterfaceOptionsFramePanelContainer);
-GlobalPlayedOptionsPanel.name = "GlobalPlayed";
-GlobalPlayedOptionsPanel.close = function (self) self:Close(); end; 
+local background = GlobalPlayedOptionsPanel:CreateTexture()
+local category = Settings.RegisterCanvasLayoutCategory(GlobalPlayedOptionsPanel, "GlobalPlayed")
+Settings.RegisterAddOnCategory(category)
 
-InterfaceOptions_AddCategory(GlobalPlayedOptionsPanel);
 
 function GlobalPlayed_LoadOptionsPanel()
     GlobalPlayedOptionsPanel:SetScript("OnShow", function(self)
@@ -50,7 +50,7 @@ function GlobalPlayed_LoadOptionsPanel()
         Disclaimer:SetHeight(32)
         Disclaimer:SetWidth(400)
         Disclaimer:SetJustifyH("CENTER")
-        Disclaimer:SetJustifyV("CENTER")
+        Disclaimer:SetJustifyV("MIDDLE")
         Disclaimer:SetText("Disclaimer: After update some options, you may need to reload your UI through /reload or 'Save & Reload' button")
 
         local SaveReload = CreateFrame("Button", "$SaveReload" , self, "UIPanelButtonTemplate")
@@ -76,5 +76,5 @@ function GlobalPlayed_LoadOptionsPanel()
 end
 
 function GlobalPlayed_OpenOptionsPanel()
-    InterfaceOptionsFrame_OpenToCategory(GlobalPlayedOptionsPanel);
+    Settings.OpenToCategory(category.ID, "GlobalPlayed")
 end
