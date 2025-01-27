@@ -1,12 +1,14 @@
 local GlobalPlayedOptionsPanel = CreateFrame("Frame", "GlobalPlayedOptionsPanel", InterfaceOptionsFramePanelContainer);
-local background = GlobalPlayedOptionsPanel:CreateTexture()
-local category = Settings.RegisterCanvasLayoutCategory(GlobalPlayedOptionsPanel, "GlobalPlayed")
+GlobalPlayedOptionsPanel.name = "GlobalPlayed";
+GlobalPlayedOptionsPanel.close = function (self) self:Close(); end;
+
+local category = Settings.RegisterCanvasLayoutCategory(GlobalPlayedOptionsPanel, GlobalPlayedOptionsPanel.name)
 Settings.RegisterAddOnCategory(category)
 
 
 function GlobalPlayed_LoadOptionsPanel()
     GlobalPlayedOptionsPanel:SetScript("OnShow", function(self)
-        local Title = self:CreateFontString("GlobalPlayed", "ARTWORK", "GameFontNormalHuge")
+        local Title = self:CreateFontString(GlobalPlayedOptionsPanel.name, "ARTWORK", "GameFontNormalHuge")
         Title:SetPoint("TOPLEFT", 16, -16)
         Title:SetText(self.name)
 
@@ -76,5 +78,5 @@ function GlobalPlayed_LoadOptionsPanel()
 end
 
 function GlobalPlayed_OpenOptionsPanel()
-    Settings.OpenToCategory(category.ID, "GlobalPlayed")
+    Settings.OpenToCategory(category.ID, GlobalPlayedOptionsPanel.name)
 end
