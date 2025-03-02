@@ -27,8 +27,22 @@ jobs:
       #     CF_API_KEY: ${{ secrets.CF_API_KEY }}
 
       - name: Upload to Wago.io
-        run: |
-          curl -X POST "https://addons.wago.io/api/projects/globalplayed/upload" \
-          -H "Authorization: Bearer ${{ secrets.WAGO_API_KEY }}" \
-          -H "Content-Type: multipart/form-data" \
-          -F "file=@GlobalPlayed-${{ github.ref_name }}.zip"
+        uses: BigWigsMods/packager@master
+        env:
+          WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
+
+      # - name: Upload to Wago.io
+      #   run: |
+      #     curl -X POST "https://addons.wago.io/api/projects/globalplayed/version" \
+      #     -H "Authorization: Bearer ${{ secrets.WAGO_API_KEY }}" \
+      #     -H "Content-Type: multipart/form-data" \
+      #     -F "file=@GlobalPlayed-${{ github.ref_name }}.zip"
+
+      # - name: Upload to Wago.io
+      #   run: |
+      #     curl -f -X POST \
+      #     -F "metadata=$METADATASTRING \
+      #     -F "file=@<path-to-file>" \
+      #     -H "authorization: Bearer $WAGO_API_KEY"
+      #     -H "accept: application/json" \
+      #     https://addons.wago.io/api/projects/<project id>/version

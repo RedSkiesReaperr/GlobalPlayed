@@ -11,6 +11,8 @@
 ## X-Curse-Project-ID: 377190
 ## X-License: All Rights Reserved
 
+## X-Wago-ID: QNlqm46e
+
 # LUA Code
 Utils.lua
 Classes/ClassColor.lua
