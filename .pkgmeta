@@ -24,7 +24,7 @@ externals:
     url: https://repos.wowace.com/wow/libdatabroker-1-1/trunk
     tag: latest
   libs/Ace3:
-    url: https://www.curseforge.com/wow/addons/ace3
+    url: https://repos.curseforge.com/wow/ace3/trunk
     tag: latest
 
 required-dependencies:
