@@ -8,10 +8,11 @@
 
 ## X-Category: Miscellaneous
 ## X-Website: https://www.curseforge.com/wow/addons/globalplayed
-## X-Curse-Project-ID: 377190
 ## X-License: All Rights Reserved
 
+## X-Curse-Project-ID: 377190
 ## X-Wago-ID: QNlqm46e
+## X-WoWI-ID: 26910
 
 # LUA Code
 Utils.lua

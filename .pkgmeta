@@ -6,3 +6,22 @@ ignore:
   - .vscode
   - README.md
   - LICENSE
+
+# externals:
+#   Libs/LibStub:
+#     url: https://repos.wowace.com/wow/libstub/trunk
+#     tag: 1.0
+#   Libs/CallbackHandler-1.0:
+#     url: https://repos.wowace.com/wow/callbackhandler/trunk/CallbackHandler-1.0
+#     tag: latest
+#   # Libs/LibMonkey-1.0: https://repos.curseforge.net/wow/libmonkey-1-0/trunk
+#   # Libs/LibBanana-1.0:
+#   #   url: https://github.com/monkehdude/LibBanana-1.0.git
+#   #   curse-slug: libbanana-1-0
+#   # Libs/LibSuit-2.0:
+#   #   url: https://repos.curseforge.net/wow/libsuit-2-0
+#   #   type: hg
+
+# manual-changelog:
+#   filename: CHANGELOG.md
+#   markup-type: markdown
