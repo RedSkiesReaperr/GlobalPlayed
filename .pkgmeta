@@ -2,26 +2,63 @@ package-as: GlobalPlayed
 
 ignore:
   - .git
+  - .gitignore
   - .github
   - .vscode
   - README.md
+  - CHANGELOG.md
   - LICENSE
+  - scripts/
+  - tests/
 
-# externals:
-#   Libs/LibStub:
-#     url: https://repos.wowace.com/wow/libstub/trunk
-#     tag: 1.0
-#   Libs/CallbackHandler-1.0:
-#     url: https://repos.wowace.com/wow/callbackhandler/trunk/CallbackHandler-1.0
-#     tag: latest
-#   # Libs/LibMonkey-1.0: https://repos.curseforge.net/wow/libmonkey-1-0/trunk
-#   # Libs/LibBanana-1.0:
-#   #   url: https://github.com/monkehdude/LibBanana-1.0.git
-#   #   curse-slug: libbanana-1-0
-#   # Libs/LibSuit-2.0:
-#   #   url: https://repos.curseforge.net/wow/libsuit-2-0
-#   #   type: hg
+enable-toc-libraries: false
 
-# manual-changelog:
-#   filename: CHANGELOG.md
-#   markup-type: markdown
+externals:
+  libs/LibStub:
+    url: https://repos.wowace.com/wow/libstub/trunk
+    tag: latest
+  libs/CallbackHandler-1.0:
+    url: https://repos.wowace.com/wow/callbackhandler-1-0/trunk
+    tag: latest
+  libs/LibDataBroker-1.1:
+    url: https://repos.wowace.com/wow/libdatabroker-1-1/trunk
+    tag: latest
+  libs/Ace3:
+    url: https://www.curseforge.com/wow/addons/ace3
+    tag: latest
+
+required-dependencies:
+  - LibStub
+  - CallbackHandler-1.0
+  - LibDataBroker-1.1
+
+optional-dependencies:
+  - Ace3
+
+embedded-libraries:
+  - LibStub
+  - CallbackHandler-1.0
+  - LibDataBroker-1.1
+
+tools-used:
+  - packager
+  - curseforge
+  - wago.io
+  - wowinterface
+
+manual-changelog: 
+  filename: CHANGELOG.md
+  markup-type: markdown
+
+tags:
+  use-project-version: true
+
+enable-nolib-creation: yes
+
+relations:
+  curseforge:
+    id: 377190
+  wago:
+    id: QNlqm46e
+  wowinterface:
+    id: 26910
