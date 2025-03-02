@@ -19,7 +19,7 @@ jobs:
         run: sudo apt update && sudo apt install -y zip
 
       - name: Create Release ZIP
-        run: zip -r GlobalPlayed-${{ github.ref_name }}.zip GlobalPlayed/
+        run: zip -r GlobalPlayed-${{ github.ref_name }}.zip .
 
       - name: Upload to CurseForge
         uses: BigWigsMods/packager@master
