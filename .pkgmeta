@@ -54,11 +54,3 @@ tags:
   use-project-version: true
 
 enable-nolib-creation: yes
-
-relations:
-  curseforge:
-    id: globalplayed
-  wago:
-    id: QNlqm46e
-  wowinterface:
-    id: 26910
