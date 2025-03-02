@@ -25,3 +25,10 @@ jobs:
         uses: BigWigsMods/packager@master
         env:
           CF_API_KEY: ${{ secrets.CF_API_KEY }}
+
+      - name: Upload to Wago.io
+        run: |
+          curl -X POST "https://addons.wago.io/api/projects/globalplayed/upload" \
+          -H "Authorization: Bearer ${{ secrets.WAGO_API_KEY }}" \
+          -H "Content-Type: multipart/form-data" \
+          -F "file=@GlobalPlayed-${{ github.ref_name }}.zip"
