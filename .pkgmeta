@@ -1,0 +1,8 @@
+package-as: GlobalPlayed
+
+ignore:
+  - .git
+  - .github
+  - .vscode
+  - README.md
+  - LICENSE

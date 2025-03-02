@@ -1,0 +1,24 @@
+name: Build Addon
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: sudo apt update && sudo apt install -y zip
+
+      - name: Create Release ZIP
+        run: zip -r GlobalPlayed-v${{ github.ref_name }}.zip GlobalPlayed
+
+      - name: Upload to CurseForge
+        uses: BigWigsMods/packager@master
+        env:
+          CF_API_KEY: ${{ secrets.CF_API_KEY }}
