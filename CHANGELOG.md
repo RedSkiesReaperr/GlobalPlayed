@@ -1,5 +1,10 @@
 # Changelogs
 
+## 1.5.4 (2025-03-02)
+
+- Fixed install in Interface/AddOns/ without GlobalPlayed/
+- Added auto build and release to CurseForge, Wago.io, WowInterface, github release
+
 ## 1.5.3 (2025-01-28)
 
 - Update Interface version for v11.0.7

@@ -1,0 +1,56 @@
+package-as: GlobalPlayed
+
+ignore:
+  - .git
+  - .gitignore
+  - .github
+  - .vscode
+  - README.md
+  - CHANGELOG.md
+  - LICENSE
+  - scripts/
+  - tests/
+
+enable-toc-libraries: false
+
+externals:
+  libs/LibStub:
+    url: https://repos.curseforge.com/wow/libstub/trunk
+    tag: latest
+  libs/CallbackHandler-1.0:
+    url: https://repos.curseforge.com/wow/callbackhandler/trunk
+    tag: latest
+  libs/LibDataBroker-1.1:
+    url: https://repos.curseforge.com/wow/libdatabroker-1-1
+    tag: latest
+  libs/Ace3:
+    url: https://repos.curseforge.com/wow/ace3/trunk
+    tag: latest
+
+required-dependencies:
+  - LibStub
+  - CallbackHandler-1.0
+  - LibDataBroker-1.1
+
+optional-dependencies:
+  - Ace3
+
+embedded-libraries:
+  - LibStub
+  - CallbackHandler-1.0
+  - LibDataBroker-1.1
+
+tools-used:
+  - packager
+  - curseforge
+  - wago.io
+  - wowinterface
+
+manual-changelog: 
+  filename: CHANGELOG.md
+  markup-type: markdown
+
+tags:
+  use-project-version: true
+
+enable-nolib-creation: yes
