@@ -57,7 +57,7 @@ enable-nolib-creation: yes
 
 relations:
   curseforge:
-    id: 377190
+    id: globalplayed
   wago:
     id: QNlqm46e
   wowinterface:
