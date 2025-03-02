@@ -7,9 +7,8 @@ echo "🔍 Checking version consistency: $VERSION"
 
 # List of files where the version should be present
 FILES_TO_CHECK=(
-  "GlobalPlayed/GlobalPlayed.toc"
-  "GlobalPlayed/README.md"
-  "GlobalPlayed/CHANGELOG.md"
+  "GlobalPlayed.toc"
+  "CHANGELOG.md"
 )
 
 MISSING=false
