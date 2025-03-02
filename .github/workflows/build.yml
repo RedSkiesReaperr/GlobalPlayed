@@ -21,17 +21,10 @@ jobs:
       - name: Create Release ZIP
         run: zip -r GlobalPlayed-${{ github.ref_name }}.zip .
 
-      # - name: Upload to CurseForge
-      #   uses: BigWigsMods/packager@master
-      #   env:
-      #     CF_API_KEY: ${{ secrets.CF_API_KEY }}
-
-      # - name: Upload to Wago.io
-      #   uses: BigWigsMods/packager@master
-      #   env:
-      #     WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
-
       - name: Upload to WowInterface
         uses: BigWigsMods/packager@master
         env:
           WOWI_API_TOKEN: ${{ secrets.WOWI_API_TOKEN }}
+          CF_API_KEY: ${{ secrets.CF_API_KEY }}
+          WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
+          GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
