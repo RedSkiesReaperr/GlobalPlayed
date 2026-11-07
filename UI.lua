@@ -77,15 +77,15 @@ local function GlobalPlayed_FillUI(p_UiFrame)
 	scrollFrame:SetLayout(CARDS_LAYOUT)
 	p_UiFrame:AddChild(scrollFrame)
 
-	local ordered = GlobalPlayed_Account_GetCharactersOrderedByRealm(GlobalPlayed_Characters)
+	local realms = GlobalPlayed_Roster_GroupByRealm(GlobalPlayed_Characters)
 
-	for k, v in ipairs(ordered) do
+	for k, v in ipairs(realms) do
 		local realmName = AceGUI:Create("Label")
-		realmName:SetText(v.name .. string.format(" (%sh)", v.totalAsHours))
+		realmName:SetText(v.realm .. string.format(" (%sh)", v.totalAsHours))
 		GlobalPlayed_FormatRealmNameLabel(realmName)
 		scrollFrame:AddChild(realmName)
 
-		for kk, currCharacter in ipairs(v) do
+		for kk, currCharacter in ipairs(v.characters) do
 			local characterName = AceGUI:Create("Label")
 			characterName:SetText(GlobalPlayed_Character_GetNameColored(currCharacter))
 			GlobalPlayed_FormatCharacterLabel(characterName)

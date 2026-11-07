@@ -14,7 +14,7 @@ SlashCmdList['GLOBAL_PLAYED'] = function(msg)
 	elseif msg == "all" then
 		GlobalPlayed_RequestPlayed(function()
 			if GlobalPlayed_Addon_IsAceEnabled() == false then
-				GlobalPlayed_LogCharactersPlayed()
+				GlobalPlayed_Roster_LogPlayed()
 				GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
 			else
 				GlobalPlayed_OpenUI()

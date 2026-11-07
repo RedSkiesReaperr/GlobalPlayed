@@ -17,6 +17,7 @@ Utils.lua
 Classes/ClassColor.lua
 Classes/PlayedTime.lua
 Classes/Character.lua
+Classes/Roster.lua
 Classes/Account.lua
 Classes/Addon.lua
 Loaders/LdbIntegration.lua

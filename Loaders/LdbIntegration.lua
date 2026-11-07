@@ -9,7 +9,7 @@ function GlobalPlayed_LoadLdbIntegration()
 				if GlobalPlayed_Addon_IsAceEnabled() == true then
 					GlobalPlayed_OpenUI()
 				else
-					GlobalPlayed_LogCharactersPlayed()
+					GlobalPlayed_Roster_LogPlayed()
 					GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
 				end
 			elseif button == "MiddleButton" then
@@ -58,11 +58,11 @@ function GlobalPlayed_LoadLdbIntegration()
 		self:AddLine(" ")
 
 		local factionIcon = nil
-		local ordered = GlobalPlayed_Account_GetCharactersOrderedByRealm(GlobalPlayed_Characters)
-		for k, v in ipairs(ordered) do
-			self:AddDoubleLine(string.format("%s:", v.name), string.format("Realm total: %sh", v.totalAsHours), 0.17, 0.69, 0.33, 0.17, 0.69, 0.33)
+		local realms = GlobalPlayed_Roster_GroupByRealm(GlobalPlayed_Characters)
+		for k, v in ipairs(realms) do
+			self:AddDoubleLine(string.format("%s:", v.realm), string.format("Realm total: %sh", v.totalAsHours), 0.17, 0.69, 0.33, 0.17, 0.69, 0.33)
 
-			for kk, vv in ipairs(v) do
+			for kk, vv in ipairs(v.characters) do
 				local characterLineTexts = GlobalPlayed_LDB_GetCharacterLine(vv)
 
 				if GlobalPlayed_Options.useFactionIcon == true then

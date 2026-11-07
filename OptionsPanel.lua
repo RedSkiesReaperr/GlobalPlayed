@@ -90,7 +90,7 @@ local function GlobalPlayed_CreateCharacterRow(p_index)
 end
 
 local function GlobalPlayed_RefreshCharacterList()
-    local characters = GlobalPlayed_SortCharacters(GlobalPlayed_Characters, true)
+    local characters = GlobalPlayed_Roster_Sort(GlobalPlayed_Characters, true)
 
     for index, character in ipairs(characters) do
         local row = characterRows[index] or GlobalPlayed_CreateCharacterRow(index)
@@ -116,7 +116,7 @@ StaticPopupDialogs["GLOBALPLAYED_DELETE_CHARACTER"] = {
     button1 = YES,
     button2 = NO,
     OnAccept = function(self, p_character)
-        GlobalPlayed_RemoveCharacter(p_character)
+        GlobalPlayed_Roster_Remove(p_character)
         GlobalPlayed_RefreshCharacterList()
     end,
     timeout = 0,
