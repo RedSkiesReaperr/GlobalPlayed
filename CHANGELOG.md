@@ -8,6 +8,8 @@
 - Add **/gplayed** and **/gplayed all** now refresh played time before displaying it
 - Add MiddleClick on databroker object no longer prints in chat
 - Add option to display minutes and seconds in played time
+- Add characters can now be removed from the options panel
+- Add characters and realms are now sorted by name in every list
 - Add auto build and upload to CurseForge and Wago.io
 - Fix account and realm totals losing the minutes of each character
 - Fix faction and class are now refreshed at each character login

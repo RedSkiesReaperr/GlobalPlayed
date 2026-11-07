@@ -38,16 +38,18 @@ end
 
 function GlobalPlayed_Account_GetCharactersOrderedByRealm(self)
 	local realms = {}
+	local realm = nil
 
-	for k, v in ipairs(self) do
-		if realms[v.realm] == nil then
-			realms[v.realm] = {}
+	for k, v in ipairs(GlobalPlayed_SortCharacters(self, true)) do
+		if realm == nil or realm.name ~= v.realm then
+			realm = { name = v.realm, totalSeconds = 0 }
+			table.insert(realms, realm)
 		end
 
-		table.insert(realms[v.realm], v)
+		table.insert(realm, v)
 
-		realms[v.realm]['totalSeconds'] = (realms[v.realm]['totalSeconds'] or 0) + GlobalPlayed_Character_GetTotalSeconds(v)
-		realms[v.realm]['totalAsHours'] = math.floor(realms[v.realm]['totalSeconds'] / 3600)
+		realm.totalSeconds = realm.totalSeconds + GlobalPlayed_Character_GetTotalSeconds(v)
+		realm.totalAsHours = math.floor(realm.totalSeconds / 3600)
 	end
 
 	return realms

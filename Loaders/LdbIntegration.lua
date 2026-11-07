@@ -63,8 +63,8 @@ function GlobalPlayed_LoadLdbIntegration()
 
 		local factionIcon = nil
 		local ordered = GlobalPlayed_Account_GetCharactersOrderedByRealm(GlobalPlayed_Characters)
-		for k, v in pairs(ordered) do
-			self:AddDoubleLine(string.format("%s:", k), string.format("Realm total: %sh", v.totalAsHours), 0.17, 0.69, 0.33, 0.17, 0.69, 0.33)
+		for k, v in ipairs(ordered) do
+			self:AddDoubleLine(string.format("%s:", v.name), string.format("Realm total: %sh", v.totalAsHours), 0.17, 0.69, 0.33, 0.17, 0.69, 0.33)
 
 			for kk, vv in ipairs(v) do
 				local characterLineTexts = GlobalPlayed_LDB_GetCharacterLine(vv)

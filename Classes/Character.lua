@@ -126,7 +126,28 @@ function GlobalPlayed_Character_GetNameColored(self)
 	return classColor .. self.name .. "|r"
 end
 
+-- Forever names are unique per region and its realm value is only a grouping label
+local function GlobalPlayed_Character_AddRealmPrefix(self, p_name)
+	if GlobalPlayed_Addon_IsForever() == true then
+		return p_name
+	end
+
+	return self.realm .. " - " .. p_name
+end
+
+function GlobalPlayed_Character_GetDisplayName(self)
+	return GlobalPlayed_Character_AddRealmPrefix(self, self.name)
+end
+
+function GlobalPlayed_Character_GetDisplayNameColored(self)
+	return GlobalPlayed_Character_AddRealmPrefix(self, GlobalPlayed_Character_GetNameColored(self))
+end
+
 function GlobalPlayed_Character_GetNameRealmColored(self)
+	if GlobalPlayed_Addon_IsForever() == true then
+		return GlobalPlayed_Character_GetNameColored(self)
+	end
+
 	local classColor = nil
 
 	if GlobalPlayed_Options.useClassColoration == true then

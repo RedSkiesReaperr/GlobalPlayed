@@ -46,10 +46,10 @@ local function GlobalPlayed_FillUI(p_UiFrame)
 
 	local ordered = GlobalPlayed_Account_GetCharactersOrderedByRealm(GlobalPlayed_Characters)
 
-	for k, v in pairs(ordered) do
+	for k, v in ipairs(ordered) do
 		if v ~= nil then
 			local realmName = AceGUI:Create("Label")
-			realmName:SetText(k .. string.format(" (%sh)", v.totalAsHours))
+			realmName:SetText(v.name .. string.format(" (%sh)", v.totalAsHours))
 			GlobalPlayed_FormatRealmNameLabel(realmName)
 			scrollFrame:AddChild(realmName)
 
