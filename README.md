@@ -9,6 +9,7 @@ Small addon to get your total playtime across characters, on Retail and WoW Fore
 * Type any GlobalPlayed in-game command in chat
 * Enable/Disable the use of Ace3 dependecy in InterfaceOptions (**Esc &gt; Options &gt; Add-ons &gt; GlobalPlayed**)
 * Retail and WoW Forever keep separate totals
+* Remove deleted characters in the options panel (**Esc &gt; Options &gt; Add-ons &gt; GlobalPlayed**)
 
 ### **Available in-game commands**
 * **/gplayed** : Display your global played time in chat (Or in a UI window if [Ace3](https://www.curseforge.com/wow/addons/ace3 "Ace3") is installed and enabled in options)
