@@ -24,18 +24,17 @@ function GlobalPlayed_Account_GetPlayed(self)
 end
 
 function GlobalPlayed_Account_UpdatePlayed(self)
-	local hours = 0
+	local seconds = 0
 
 	if GlobalPlayed_Characters == nil then
 		return nil
 	end
 
 	for k, v in ipairs(GlobalPlayed_Characters) do
-		if v.totalAsHours ~= nil and v.totalAsHours > 0 then
-			hours = hours + v.totalAsHours
-		end
+		seconds = seconds + GlobalPlayed_Character_GetTotalSeconds(v)
 	end
 
+	local hours = math.floor(seconds / 3600)
 	local daysCount = math.floor(hours / 24)
 
 	self.totalAsHours = hours
@@ -53,9 +52,8 @@ function GlobalPlayed_Account_GetCharactersOrderedByRealm(self)
 
 		table.insert(realms[v.realm], v)
 
-		if realms[v.realm]['totalAsHours'] == nil then realms[v.realm]['totalAsHours'] = 0 end
-
-		realms[v.realm]['totalAsHours'] = realms[v.realm]['totalAsHours'] + v.totalAsHours
+		realms[v.realm]['totalSeconds'] = (realms[v.realm]['totalSeconds'] or 0) + GlobalPlayed_Character_GetTotalSeconds(v)
+		realms[v.realm]['totalAsHours'] = math.floor(realms[v.realm]['totalSeconds'] / 3600)
 	end
 
 	return realms

@@ -7,7 +7,8 @@ function GlobalPlayed_Character_Create(p_name, p_realm)
 		realm = p_realm,
 		days = 0,
 		hours = 0,
-		totalAsHours = 0
+		totalAsHours = 0,
+		totalSeconds = 0
 	}
 
 	GlobalPlayed_Character_RefreshIdentity(character)
@@ -100,8 +101,14 @@ function GlobalPlayed_Character_GetFactionIcon(self)
 	return iconPath
 end
 
-function GlobalPlayed_Character_UpdatePlayed(self, p_days, p_hours)
-	self.days = p_days
-	self.hours = p_hours
-	self.totalAsHours = self.hours + (self.days * 24)
+function GlobalPlayed_Character_GetTotalSeconds(self)
+	-- Characters saved by older versions only know their played time in hours until their next login
+	return self.totalSeconds or ((self.totalAsHours or 0) * 3600)
+end
+
+function GlobalPlayed_Character_UpdatePlayed(self, p_totalSeconds)
+	self.totalSeconds = p_totalSeconds
+	self.totalAsHours = math.floor(p_totalSeconds / 3600)
+	self.days = math.floor(self.totalAsHours / 24)
+	self.hours = self.totalAsHours - (self.days * 24)
 end
