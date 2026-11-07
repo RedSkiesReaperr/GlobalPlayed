@@ -4,22 +4,26 @@
 SLASH_GLOBAL_PLAYED1 = '/gplayed'
 SlashCmdList['GLOBAL_PLAYED'] = function(msg, editbox)
 	if msg == "" then
-		GlobalPlayed_UpdateAll()
+		GlobalPlayed_RequestPlayed(function()
+			GlobalPlayed_UpdateAll()
 
-		if GlobalPlayed_Addon_IsAceEnabled() == false then
-			GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))		
-		else
-			GlobalPlayed_OpenUI()
-		end	
+			if GlobalPlayed_Addon_IsAceEnabled() == false then
+				GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
+			else
+				GlobalPlayed_OpenUI()
+			end
+		end)
 	elseif msg == "all" then
-		GlobalPlayed_UpdateAll()
+		GlobalPlayed_RequestPlayed(function()
+			GlobalPlayed_UpdateAll()
 
-		if GlobalPlayed_Addon_IsAceEnabled() == false then
-			GlobalPlayed_LogCharactersPlayed()
-			GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
-		else
-			GlobalPlayed_OpenUI()
-		end
+			if GlobalPlayed_Addon_IsAceEnabled() == false then
+				GlobalPlayed_LogCharactersPlayed()
+				GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
+			else
+				GlobalPlayed_OpenUI()
+			end
+		end)
 	elseif msg == "options" then
 		GlobalPlayed_OpenOptionsPanel()
 	else

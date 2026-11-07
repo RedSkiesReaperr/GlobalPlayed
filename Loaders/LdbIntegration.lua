@@ -16,7 +16,7 @@ function GlobalPlayed_LoadLdbIntegration()
 						GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
 					end
 				elseif button == "MiddleButton" then
-					RequestTimePlayed()
+					GlobalPlayed_RequestPlayed()
 					GameTooltip:Hide()
 				elseif button == "RightButton" then
 					GlobalPlayed_OpenOptionsPanel()

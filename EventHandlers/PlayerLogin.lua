@@ -1,3 +1,5 @@
+local LOGIN_REQUEST_DELAY = 2
+
 function GlobalPlayed_PlayerLoginHandler()
 	local name = UnitName("player")
 	local realm = GetRealmName()
@@ -11,4 +13,6 @@ function GlobalPlayed_PlayerLoginHandler()
 	end
 
 	GlobalPlayed_CurrentCharacter = character
+
+	C_Timer.After(LOGIN_REQUEST_DELAY, function() GlobalPlayed_RequestPlayed() end)
 end
