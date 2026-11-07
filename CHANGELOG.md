@@ -20,7 +20,7 @@
 - Fix install in Interface/AddOns/ without GlobalPlayed/
 - Fix addon files loaded twice
 - Fix display error for characters with an unknown class
-- Fix Evoker class color
+- Fix class colors now match the official game colors
 - Fix options added by new versions now get their default value on upgrade
 - Fix account total hours now use two digits like characters
 - Fix /gplayed commands now ignore case and extra spaces
