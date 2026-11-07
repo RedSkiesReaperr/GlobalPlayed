@@ -1,3 +1,13 @@
+local HINT_COLOR = { 0, 0.7, 0.8 }
+local REALM_COLOR = { 0.17, 0.69, 0.33 }
+local TOOLTIP_MIN_WIDTH = 250
+
+local function GlobalPlayed_LDB_AddColoredLine(p_tooltip, p_left, p_right, p_color)
+	local r, g, b = unpack(p_color)
+
+	p_tooltip:AddDoubleLine(p_left, p_right, r, g, b, r, g, b)
+end
+
 function GlobalPlayed_LoadLdbIntegration()
 	local ldb = LibStub:GetLibrary('LibDataBroker-1.1')
 	local dataobj = ldb:NewDataObject("GlobalPlayed", { 
@@ -38,24 +48,24 @@ function GlobalPlayed_LoadLdbIntegration()
 	end
 
 	function dataobj:OnTooltipShow()
-		self:SetMinimumWidth(250)
+		self:SetMinimumWidth(TOOLTIP_MIN_WIDTH)
 
 		self:AddLine("GlobalPlayed")
 		self:AddLine(" ")
 
 		if GlobalPlayed_Addon_IsAceEnabled() == true then
-			self:AddDoubleLine("Left click", "Show/Hide UI", 0, 0.7, 0.8, 0, 0.7, 0.8)
+			GlobalPlayed_LDB_AddColoredLine(self, "Left click", "Show/Hide UI", HINT_COLOR)
 		else
-			self:AddDoubleLine("Left click", "Show report in chat", 0, 0.7, 0.8, 0, 0.7, 0.8)
+			GlobalPlayed_LDB_AddColoredLine(self, "Left click", "Show report in chat", HINT_COLOR)
 		end
-		self:AddDoubleLine("Middle click", "Refresh data", 0, 0.7, 0.8, 0, 0.7, 0.8)
-		self:AddDoubleLine("Right click", "Open options panel", 0, 0.7, 0.8, 0, 0.7, 0.8)
+		GlobalPlayed_LDB_AddColoredLine(self, "Middle click", "Refresh data", HINT_COLOR)
+		GlobalPlayed_LDB_AddColoredLine(self, "Right click", "Open options panel", HINT_COLOR)
 		self:AddLine(" ")
 
 		local factionIcon = nil
 		local realms = GlobalPlayed_Roster_GroupByRealm(GlobalPlayed_Characters)
 		for k, v in ipairs(realms) do
-			self:AddDoubleLine(string.format("%s:", v.realm), string.format("Realm total: %sh", v.totalAsHours), 0.17, 0.69, 0.33, 0.17, 0.69, 0.33)
+			GlobalPlayed_LDB_AddColoredLine(self, string.format("%s:", v.realm), string.format("Realm total: %sh", v.totalAsHours), REALM_COLOR)
 
 			for kk, vv in ipairs(v.characters) do
 				local characterLineTexts = GlobalPlayed_LDB_GetCharacterLine(vv)

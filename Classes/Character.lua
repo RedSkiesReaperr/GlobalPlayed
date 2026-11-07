@@ -2,6 +2,9 @@
 -- Here is the Character behavior
 ----------------------
 local FOREVER_REALM = "WoW Forever"
+local FACTION_ICONS_PATH = "Interface\\AddOns\\GlobalPlayed\\Icons\\Factions\\"
+local FACTION_ICONS = { Alliance = "alliance", Horde = "horde" }
+local NEUTRAL_ICON = "neutral"
 
 -- Forever has no player facing realms and UnitName returns the surname as second value
 function GlobalPlayed_Character_GetPlayerIdentity()
@@ -109,17 +112,7 @@ function GlobalPlayed_Character_GetNameRealmColored(self)
 end
 
 function GlobalPlayed_Character_GetFactionIcon(self)
-	local iconPath = nil
-
-	if self.faction == "Alliance" then
-		iconPath = "Interface\\AddOns\\GlobalPlayed\\Icons\\Factions\\alliance"
-	elseif self.faction == "Horde" then
-		iconPath = "Interface\\AddOns\\GlobalPlayed\\Icons\\Factions\\horde"
-	else
-		iconPath = "Interface\\AddOns\\GlobalPlayed\\Icons\\Factions\\neutral"
-	end
-
-	return iconPath
+	return FACTION_ICONS_PATH .. (FACTION_ICONS[self.faction] or NEUTRAL_ICON)
 end
 
 function GlobalPlayed_Character_GetTotalSeconds(self)
