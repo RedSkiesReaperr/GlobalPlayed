@@ -11,8 +11,9 @@ end
 
 function GlobalPlayed_Account_GetPlayed(self)
 	local units = GlobalPlayed_Character_GetPlayTimeUnits()
+	local details = GlobalPlayed_Character_GetPlayedDetails(self.totalSeconds or 0, "%s")
 
-	return string.format("Account Total: %s%s %s%s (%sh)", self.days, units.day, self.hours, units.hour, self.totalAsHours)
+	return string.format("Account Total: %s%s %s%s%s (%sh)", self.days, units.day, self.hours, units.hour, details, self.totalAsHours)
 end
 
 function GlobalPlayed_Account_UpdatePlayed(self)
@@ -29,6 +30,7 @@ function GlobalPlayed_Account_UpdatePlayed(self)
 	local hours = math.floor(seconds / 3600)
 	local daysCount = math.floor(hours / 24)
 
+	self.totalSeconds = seconds
 	self.totalAsHours = hours
 	self.days = daysCount
 	self.hours = hours - (daysCount * 24)

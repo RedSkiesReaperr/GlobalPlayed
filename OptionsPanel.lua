@@ -22,6 +22,11 @@ local OPTIONS = {
         tooltip = "Display 'd' and 'h' instead of 'days' and 'hours'"
     },
     {
+        key = "useFullDuration",
+        label = "Show full played time",
+        tooltip = "Display minutes and seconds in addition to days and hours"
+    },
+    {
         key = "useFactionIcon",
         label = "Show faction icons"
     }

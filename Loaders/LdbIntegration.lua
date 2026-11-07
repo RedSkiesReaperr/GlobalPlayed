@@ -26,7 +26,8 @@ function GlobalPlayed_LoadLdbIntegration()
 		local days = string.format("|cffffffff%d|r", account.days)
 		local hours = string.format("|cffffffff%02d|r", account.hours)
 		local left = "Total " .. string.format("(%dh)", account.totalAsHours)
-		local playtime = string.format("%s%s %s%s", days, units.day, hours, units.hour)
+		local details = GlobalPlayed_Character_GetPlayedDetails(account.totalSeconds or 0, "|cffffffff%s|r")
+		local playtime = string.format("%s%s %s%s%s", days, units.day, hours, units.hour, details)
 
 		return {
 			left = left,
