@@ -20,7 +20,6 @@ function GlobalPlayed_LoadLdbIntegration()
 					GameTooltip:Hide()
 				elseif button == "RightButton" then
 					GlobalPlayed_OpenOptionsPanel()
-					GlobalPlayed_OpenOptionsPanel()
 				end
 			end
 		end
