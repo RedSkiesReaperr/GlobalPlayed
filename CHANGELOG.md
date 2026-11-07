@@ -10,6 +10,7 @@
 - Add option to display minutes and seconds in played time
 - Add characters can now be removed from the options panel
 - Add characters and realms are now sorted by name in every list
+- Add GlobalPlayed window now adapts its columns to its width and remembers its size and position
 - Add auto build and upload to CurseForge and Wago.io
 - Fix account and realm totals losing the minutes of each character
 - Fix faction and class are now refreshed at each character login
