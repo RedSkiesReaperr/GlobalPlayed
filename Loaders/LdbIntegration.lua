@@ -6,12 +6,7 @@ function GlobalPlayed_LoadLdbIntegration()
 		icon = "Interface\\AddOns\\GlobalPlayed\\Icons\\ldb_icon.jpg",
 		OnClick = function(self, button)
 			if button == "LeftButton" then
-				if GlobalPlayed_Addon_IsAceEnabled() == true then
-					GlobalPlayed_OpenUI()
-				else
-					GlobalPlayed_Roster_LogPlayed()
-					GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
-				end
+				GlobalPlayed_ShowPlayed(true)
 			elseif button == "MiddleButton" then
 				GlobalPlayed_RequestPlayed()
 				GameTooltip:Hide()

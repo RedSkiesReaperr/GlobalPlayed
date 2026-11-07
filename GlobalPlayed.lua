@@ -1,26 +1,27 @@
 ----------------------
 -- Addon behavior
 ----------------------
+-- The Ace3 window when enabled, otherwise a report in chat
+function GlobalPlayed_ShowPlayed(p_withCharacters)
+	if GlobalPlayed_Addon_IsAceEnabled() == true then
+		GlobalPlayed_OpenUI()
+		return
+	end
+
+	if p_withCharacters == true then
+		GlobalPlayed_Roster_LogPlayed()
+	end
+
+	GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
+end
+
 SLASH_GLOBAL_PLAYED1 = '/gplayed'
 SlashCmdList['GLOBAL_PLAYED'] = function(msg)
-	if msg == "" then
-		GlobalPlayed_RequestPlayed(function()
-			if GlobalPlayed_Addon_IsAceEnabled() == false then
-				GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
-			else
-				GlobalPlayed_OpenUI()
-			end
-		end)
-	elseif msg == "all" then
-		GlobalPlayed_RequestPlayed(function()
-			if GlobalPlayed_Addon_IsAceEnabled() == false then
-				GlobalPlayed_Roster_LogPlayed()
-				GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
-			else
-				GlobalPlayed_OpenUI()
-			end
-		end)
-	elseif msg == "options" then
+	local command = msg:match("^%s*(.-)%s*$"):lower()
+
+	if command == "" or command == "all" then
+		GlobalPlayed_RequestPlayed(function() GlobalPlayed_ShowPlayed(command == "all") end)
+	elseif command == "options" then
 		GlobalPlayed_OpenOptionsPanel()
 	else
 		GlobalPlayed_Log("Unknown command: /gplayed " .. msg)
