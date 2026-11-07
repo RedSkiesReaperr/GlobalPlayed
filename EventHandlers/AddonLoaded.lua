@@ -12,7 +12,7 @@ function GlobalPlayed_AddonLoadedHandler()
 	end
 
 	if GlobalPlayed_Characters == nil then -- If no characters registered
-		GlobalPlayed_Characters = {  }
+		GlobalPlayed_Characters = {}
 	end
 
 	if GlobalPlayed_Options == nil then -- If no options registered

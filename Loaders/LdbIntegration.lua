@@ -9,8 +9,8 @@ local function GlobalPlayed_LDB_AddColoredLine(p_tooltip, p_left, p_right, p_col
 end
 
 function GlobalPlayed_LoadLdbIntegration()
-	local ldb = LibStub:GetLibrary('LibDataBroker-1.1')
-	local dataobj = ldb:NewDataObject("GlobalPlayed", { 
+	local ldb = LibStub:GetLibrary("LibDataBroker-1.1")
+	local dataobj = ldb:NewDataObject("GlobalPlayed", {
 		type = "data source",
 		text = "GlobalPlayed",
 		icon = "Interface\\AddOns\\GlobalPlayed\\Icons\\ldb_icon.jpg",
@@ -25,10 +25,10 @@ function GlobalPlayed_LoadLdbIntegration()
 			end
 		end
 	})
-	
-	local function GlobalPlayed_LDB_GetAccountLine(account)
-		local left = "Total " .. string.format("(%dh)", account.totalAsHours)
-		local playtime = GlobalPlayed_PlayedTime_Format(account.totalSeconds or 0, "|cffffffff%s|r")
+
+	local function GlobalPlayed_LDB_GetAccountLine(p_account)
+		local left = "Total " .. string.format("(%dh)", p_account.totalAsHours)
+		local playtime = GlobalPlayed_PlayedTime_Format(p_account.totalSeconds or 0, "|cffffffff%s|r")
 
 		return {
 			left = left,
@@ -36,10 +36,10 @@ function GlobalPlayed_LoadLdbIntegration()
 		}
 	end
 
-	local function GlobalPlayed_LDB_GetCharacterLine(character)
-		local coloredName = GlobalPlayed_Character_GetNameColored(character)
-		local name = coloredName .. " (" .. GlobalPlayed_Character_GetPlayedAsHours(character) .. "h)"
-		local playtime = GlobalPlayed_Character_GetPlayed(character)
+	local function GlobalPlayed_LDB_GetCharacterLine(p_character)
+		local coloredName = GlobalPlayed_Character_GetNameColored(p_character)
+		local name = coloredName .. " (" .. GlobalPlayed_Character_GetPlayedAsHours(p_character) .. "h)"
+		local playtime = GlobalPlayed_Character_GetPlayed(p_character)
 
 		return {
 			name = name,

@@ -1,5 +1,5 @@
 ----------------------
--- Addon behavior
+-- Slash command and game events
 ----------------------
 -- The Ace3 window when enabled, otherwise a report in chat
 function GlobalPlayed_ShowPlayed(p_withCharacters)
@@ -15,16 +15,16 @@ function GlobalPlayed_ShowPlayed(p_withCharacters)
 	GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
 end
 
-SLASH_GLOBAL_PLAYED1 = '/gplayed'
-SlashCmdList['GLOBAL_PLAYED'] = function(msg)
-	local command = msg:match("^%s*(.-)%s*$"):lower()
+SLASH_GLOBAL_PLAYED1 = "/gplayed"
+SlashCmdList["GLOBAL_PLAYED"] = function(p_message)
+	local command = p_message:match("^%s*(.-)%s*$"):lower()
 
 	if command == "" or command == "all" then
 		GlobalPlayed_RequestPlayed(function() GlobalPlayed_ShowPlayed(command == "all") end)
 	elseif command == "options" then
 		GlobalPlayed_OpenOptionsPanel()
 	else
-		GlobalPlayed_Log("Unknown command: /gplayed " .. msg)
+		GlobalPlayed_Log("Unknown command: /gplayed " .. p_message)
 		GlobalPlayed_Log("Available commands:")
 		GlobalPlayed_Log("    /gplayed")
 		GlobalPlayed_Log("    /gplayed all")

@@ -14,6 +14,6 @@ local classColors = {
 	EVOKER = "33937F"
 }
 
-function GlobalPlayed_ClassColor_GetColor(class)
-	return classColors[class]
+function GlobalPlayed_ClassColor_GetColor(p_class)
+	return classColors[p_class]
 end

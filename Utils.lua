@@ -1,6 +1,6 @@
 ----------------------
 -- Log functions
 ----------------------
-function GlobalPlayed_Log(message)
-	print("[GlobalPlayed] " .. message)
+function GlobalPlayed_Log(p_message)
+	print("[GlobalPlayed] " .. p_message)
 end

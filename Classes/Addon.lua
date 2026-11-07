@@ -17,9 +17,5 @@ function GlobalPlayed_Addon_IsForever()
 end
 
 function GlobalPlayed_Addon_IsAceEnabled()
-	if GlobalPlayed_Options ~= nil then
-		return (GlobalPlayed_Addon_IsLoaded("Ace3") == true and GlobalPlayed_Options.useAce == true)
-	else
-		return false
-	end
+	return GlobalPlayed_Options ~= nil and GlobalPlayed_Addon_IsLoaded("Ace3") == true and GlobalPlayed_Options.useAce == true
 end

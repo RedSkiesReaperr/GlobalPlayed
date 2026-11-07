@@ -1,6 +1,6 @@
--- ----------------------
--- -- Here is the Account behavior
--- ----------------------
+----------------------
+-- Here is the Account behavior
+----------------------
 function GlobalPlayed_Account_Create()
 	return {
 		days = 0,
