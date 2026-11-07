@@ -1,6 +1,5 @@
 local GlobalPlayedOptionsPanel = CreateFrame("Frame", "GlobalPlayedOptionsPanel");
 GlobalPlayedOptionsPanel.name = "GlobalPlayed";
-GlobalPlayedOptionsPanel.close = function (self) self:Close(); end;
 
 local category = Settings.RegisterCanvasLayoutCategory(GlobalPlayedOptionsPanel, GlobalPlayedOptionsPanel.name)
 Settings.RegisterAddOnCategory(category)
@@ -128,11 +127,11 @@ StaticPopupDialogs["GLOBALPLAYED_DELETE_CHARACTER"] = {
 
 function GlobalPlayed_LoadOptionsPanel()
     GlobalPlayedOptionsPanel:SetScript("OnShow", function(self)
-        local Title = self:CreateFontString(GlobalPlayedOptionsPanel.name, "ARTWORK", "GameFontNormalHuge")
+        local Title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalHuge")
         Title:SetPoint("TOPLEFT", 16, -16)
         Title:SetText(self.name)
 
-        local SubTitle = self:CreateFontString("$SubTitle", "ARTWORK", "GameFontHighlightSmall")
+        local SubTitle = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
         SubTitle:SetPoint("TOPLEFT", Title, "BOTTOMLEFT", 0, -8)
         SubTitle:SetPoint("RIGHT", -32, 0)
         SubTitle:SetHeight(32)
@@ -164,7 +163,7 @@ function GlobalPlayed_LoadOptionsPanel()
         CharactersScroll:SetScrollChild(characterList)
         CharactersScroll:SetScript("OnSizeChanged", function(this, width) characterList:SetWidth(width) end)
 
-        local Disclaimer = self:CreateFontString("$SubTitle", "ARTWORK", "GameFontHighlightSmall")
+        local Disclaimer = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
         Disclaimer:SetPoint("BOTTOMLEFT", GlobalPlayedOptionsPanel, "BOTTOMLEFT", 20, 20)
         Disclaimer:SetHeight(32)
         Disclaimer:SetWidth(400)
@@ -172,7 +171,7 @@ function GlobalPlayed_LoadOptionsPanel()
         Disclaimer:SetJustifyV("MIDDLE")
         Disclaimer:SetText("Disclaimer: After update some options, you may need to reload your UI through /reload or 'Save & Reload' button")
 
-        local SaveReload = CreateFrame("Button", "$SaveReload" , self, "UIPanelButtonTemplate")
+        local SaveReload = CreateFrame("Button", nil, self, "UIPanelButtonTemplate")
         SaveReload:SetPoint("BOTTOMRIGHT", GlobalPlayedOptionsPanel, "BOTTOMRIGHT", -20, 20)
         SaveReload:SetWidth(100)
         SaveReload:SetHeight(25)
