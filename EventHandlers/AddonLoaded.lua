@@ -6,6 +6,7 @@ local DEFAULT_OPTIONS = {
 	useFullDuration = false
 }
 
+-- Initializes saved variables and migrations, then loads the window, options panel and broker
 function GlobalPlayed_AddonLoadedHandler()
 	if GlobalPlayed_MyAccount == nil then -- If no account registered
 		GlobalPlayed_MyAccount = GlobalPlayed_Account_Create()

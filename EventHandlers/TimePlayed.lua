@@ -18,6 +18,7 @@ local function GlobalPlayed_MuteChatFrames()
 	end
 end
 
+-- Registers the played event back on the chat frames muted by the addon
 local function GlobalPlayed_UnmuteChatFrames()
 	for _, chatFrame in ipairs(mutedChatFrames) do
 		chatFrame:RegisterEvent(PLAYED_EVENT)
@@ -26,6 +27,7 @@ local function GlobalPlayed_UnmuteChatFrames()
 	mutedChatFrames = {}
 end
 
+-- Ends the pending request: runs its callbacks and unmutes the chat
 local function GlobalPlayed_FinishPlayedRequest()
 	if isRequestPending == false then
 		return
@@ -69,6 +71,7 @@ function GlobalPlayed_RequestPlayed(p_onDone)
 	end)
 end
 
+-- Stores a received played time on the current character and the account
 function GlobalPlayed_TimePlayedMsgHandler(p_totalSeconds)
 	if GlobalPlayed_CurrentCharacter ~= nil then
 		GlobalPlayed_Character_UpdatePlayed(GlobalPlayed_CurrentCharacter, p_totalSeconds)

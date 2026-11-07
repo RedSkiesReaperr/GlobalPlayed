@@ -14,6 +14,7 @@ local classColors = {
 	EVOKER = "33937F"
 }
 
+-- Returns the RRGGBB color of an English class token, or nil when unknown
 function GlobalPlayed_ClassColor_GetColor(p_class)
 	return classColors[p_class]
 end

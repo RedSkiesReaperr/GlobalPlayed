@@ -1,7 +1,7 @@
 ----------------------
 -- Slash command and game events
 ----------------------
--- The Ace3 window when enabled, otherwise a report in chat
+-- Shows played time: the Ace3 window when enabled, otherwise a report in chat
 function GlobalPlayed_ShowPlayed(p_withCharacters)
 	if GlobalPlayed_Addon_IsAceEnabled() == true then
 		GlobalPlayed_OpenUI()
@@ -16,6 +16,7 @@ function GlobalPlayed_ShowPlayed(p_withCharacters)
 end
 
 SLASH_GLOBAL_PLAYED1 = "/gplayed"
+-- Handles /gplayed, /gplayed all and /gplayed options, ignoring case and extra spaces
 SlashCmdList["GLOBAL_PLAYED"] = function(p_message)
 	local command = p_message:match("^%s*(.-)%s*$"):lower()
 
@@ -38,6 +39,7 @@ eventFrame:RegisterEvent("ADDON_LOADED")
 eventFrame:RegisterEvent("PLAYER_LOGIN")
 eventFrame:RegisterEvent("TIME_PLAYED_MSG")
 
+-- Dispatches game events to their handler
 eventFrame:SetScript("OnEvent", function(self, p_event, ...)
 	if p_event == "ADDON_LOADED" then
 		local addonName = ...

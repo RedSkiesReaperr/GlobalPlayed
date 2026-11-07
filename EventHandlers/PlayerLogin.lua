@@ -1,5 +1,6 @@
 local LOGIN_REQUEST_DELAY = 2
 
+-- Finds or creates the logged in character, then silently requests its played time
 function GlobalPlayed_PlayerLoginHandler()
 	GlobalPlayed_CurrentCharacter = GlobalPlayed_Roster_FindOrAddCurrent()
 

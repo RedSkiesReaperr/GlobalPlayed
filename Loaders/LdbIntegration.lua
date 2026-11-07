@@ -2,18 +2,21 @@ local HINT_COLOR = { 0, 0.7, 0.8 }
 local REALM_COLOR = { 0.17, 0.69, 0.33 }
 local TOOLTIP_MIN_WIDTH = 250
 
+-- Adds a two column tooltip line with both texts in one color
 local function GlobalPlayed_LDB_AddColoredLine(p_tooltip, p_left, p_right, p_color)
 	local r, g, b = unpack(p_color)
 
 	p_tooltip:AddDoubleLine(p_left, p_right, r, g, b, r, g, b)
 end
 
+-- Registers the LibDataBroker data source, its clicks and its tooltip
 function GlobalPlayed_LoadLdbIntegration()
 	local ldb = LibStub:GetLibrary("LibDataBroker-1.1")
 	local dataobj = ldb:NewDataObject("GlobalPlayed", {
 		type = "data source",
 		text = "GlobalPlayed",
 		icon = "Interface\\AddOns\\GlobalPlayed\\Icons\\ldb_icon.jpg",
+		-- Left: report or window, middle: refresh played time, right: options
 		OnClick = function(self, button)
 			if button == "LeftButton" then
 				GlobalPlayed_ShowPlayed(true)
@@ -26,6 +29,7 @@ function GlobalPlayed_LoadLdbIntegration()
 		end
 	})
 
+	-- Builds the left and right texts of the account total line
 	local function GlobalPlayed_LDB_GetAccountLine(p_account)
 		local left = "Total " .. string.format("(%dh)", p_account.totalAsHours)
 		local playtime = GlobalPlayed_PlayedTime_Format(p_account.totalSeconds or 0, "|cffffffff%s|r")
@@ -36,6 +40,7 @@ function GlobalPlayed_LoadLdbIntegration()
 		}
 	end
 
+	-- Builds the name and played texts of a character line
 	local function GlobalPlayed_LDB_GetCharacterLine(p_character)
 		local coloredName = GlobalPlayed_Character_GetNameColored(p_character)
 		local name = coloredName .. " (" .. GlobalPlayed_Character_GetPlayedAsHours(p_character) .. "h)"
@@ -47,6 +52,7 @@ function GlobalPlayed_LoadLdbIntegration()
 		}
 	end
 
+	-- Fills the tooltip with usage hints, characters grouped by realm and the account total
 	function dataobj:OnTooltipShow()
 		self:SetMinimumWidth(TOOLTIP_MIN_WIDTH)
 
@@ -86,6 +92,7 @@ function GlobalPlayed_LoadLdbIntegration()
 		self:AddDoubleLine(accountLine.left, accountLine.right)
 	end
 
+	-- Shows the tooltip for displays calling OnEnter instead of OnTooltipShow
 	function dataobj:OnEnter()
 		GameTooltip:SetOwner(self, "ANCHOR_NONE")
 		GameTooltip:SetPoint("TOPLEFT", self, "BOTTOMLEFT")
@@ -94,6 +101,7 @@ function GlobalPlayed_LoadLdbIntegration()
 		GameTooltip:Show()
 	end
 
+	-- Hides the tooltip
 	function dataobj:OnLeave()
 		GameTooltip:Hide()
 	end

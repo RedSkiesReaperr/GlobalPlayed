@@ -1,10 +1,12 @@
 ----------------------
 -- Saved character list: lookup, sorting, grouping and removal
 ----------------------
+-- Case insensitive comparison used for sorting
 local function GlobalPlayed_Roster_IsBefore(p_left, p_right)
 	return p_left:lower() < p_right:lower()
 end
 
+-- Returns the saved character matching name and realm, or nil
 function GlobalPlayed_Roster_Find(p_name, p_realm)
 	if GlobalPlayed_Characters == nil then
 		return nil
@@ -19,6 +21,7 @@ function GlobalPlayed_Roster_Find(p_name, p_realm)
 	return nil
 end
 
+-- Returns the saved entry of the logged in character, creating it on first login
 function GlobalPlayed_Roster_FindOrAddCurrent()
 	local name, realm = GlobalPlayed_Character_GetPlayerIdentity()
 	local character = GlobalPlayed_Roster_Find(name, realm)
@@ -42,7 +45,7 @@ function GlobalPlayed_Roster_FindOrAddCurrent()
 	return character
 end
 
--- Returns a sorted copy, the saved list keeps its order
+-- Returns a copy sorted by name, or by realm then name. The saved list keeps its order
 function GlobalPlayed_Roster_Sort(p_characters, p_byRealm)
 	local sorted = {}
 
@@ -67,6 +70,7 @@ function GlobalPlayed_Roster_Sort(p_characters, p_byRealm)
 	return sorted
 end
 
+-- Groups characters by realm, both sorted by name, with each realm played total
 function GlobalPlayed_Roster_GroupByRealm(p_characters)
 	local realms = {}
 	local realm = nil
@@ -86,6 +90,7 @@ function GlobalPlayed_Roster_GroupByRealm(p_characters)
 	return realms
 end
 
+-- Removes a character from the saved list and updates the account total.
 -- The logged in character cannot be removed, its entry would be recreated at next login
 function GlobalPlayed_Roster_Remove(p_character)
 	if GlobalPlayed_Characters == nil or p_character == GlobalPlayed_CurrentCharacter then
@@ -104,6 +109,7 @@ function GlobalPlayed_Roster_Remove(p_character)
 	return false
 end
 
+-- Prints every character played time in chat, sorted by name
 function GlobalPlayed_Roster_LogPlayed()
 	for k, v in ipairs(GlobalPlayed_Roster_Sort(GlobalPlayed_Characters, false)) do
 		GlobalPlayed_Log(GlobalPlayed_Character_GetNameRealmColored(v) .. ": " .. GlobalPlayed_Character_GetPlayedWithTotal(v))

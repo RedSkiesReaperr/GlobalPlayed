@@ -36,6 +36,7 @@ local OPTIONS = {
 	}
 }
 
+-- Creates a checkbox bound to an option below p_anchor. p_onChange runs after each click
 local function GlobalPlayed_CreateOptionCheck(p_parent, p_anchor, p_option, p_onChange)
 	local check = CreateFrame("CheckButton", nil, p_parent, "UICheckButtonTemplate")
 	check:SetSize(26, 26)
@@ -63,6 +64,7 @@ local function GlobalPlayed_CreateOptionCheck(p_parent, p_anchor, p_option, p_on
 	return check
 end
 
+-- Creates a character row with its name, played time and delete button
 local function GlobalPlayed_CreateCharacterRow(p_index)
 	local row = CreateFrame("Frame", nil, characterList)
 	row:SetHeight(CHARACTER_ROW_HEIGHT)
@@ -89,6 +91,7 @@ local function GlobalPlayed_CreateCharacterRow(p_index)
 	return row
 end
 
+-- Fills the character rows, reusing existing ones and hiding the extra ones
 local function GlobalPlayed_RefreshCharacterList()
 	local characters = GlobalPlayed_Roster_Sort(GlobalPlayed_Characters, true)
 
@@ -115,6 +118,7 @@ StaticPopupDialogs["GLOBALPLAYED_DELETE_CHARACTER"] = {
 	text = "Remove %s from GlobalPlayed?",
 	button1 = YES,
 	button2 = NO,
+	-- Removes the confirmed character and refreshes the list
 	OnAccept = function(self, p_character)
 		GlobalPlayed_Roster_Remove(p_character)
 		GlobalPlayed_RefreshCharacterList()
@@ -125,6 +129,7 @@ StaticPopupDialogs["GLOBALPLAYED_DELETE_CHARACTER"] = {
 	preferredIndex = 3
 }
 
+-- Builds the panel content on first show, when saved variables are loaded
 function GlobalPlayed_LoadOptionsPanel()
 	GlobalPlayedOptionsPanel:SetScript("OnShow", function(self)
 		local title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalHuge")
@@ -178,6 +183,7 @@ function GlobalPlayed_LoadOptionsPanel()
 		saveReload:SetText("Save & Reload")
 		saveReload:SetScript("OnClick", function() ReloadUI() end)
 
+		-- Syncs the checkboxes and the character list with the saved data
 		function self:refresh()
 			for _, check in ipairs(checks) do
 				check:SetChecked(GlobalPlayed_Options[check.optionKey])
@@ -191,6 +197,7 @@ function GlobalPlayed_LoadOptionsPanel()
 	end)
 end
 
+-- Opens the game settings on the addon panel
 function GlobalPlayed_OpenOptionsPanel()
 	Settings.OpenToCategory(category:GetID())
 end

@@ -8,6 +8,7 @@ local HOURS_PER_DAY = 24
 local SHORT_UNITS = { day = "d", hour = "h", minute = "m", second = "s" }
 local LONG_UNITS = { day = "days", hour = "hours", minute = "minutes", second = "seconds" }
 
+-- Returns the unit labels matching the short duration option
 function GlobalPlayed_PlayedTime_GetUnits()
 	if GlobalPlayed_Options.useShortDuration == true then
 		return SHORT_UNITS
@@ -16,10 +17,12 @@ function GlobalPlayed_PlayedTime_GetUnits()
 	return LONG_UNITS
 end
 
+-- Converts seconds to whole hours
 function GlobalPlayed_PlayedTime_ToHours(p_totalSeconds)
 	return math.floor(p_totalSeconds / SECONDS_PER_HOUR)
 end
 
+-- Writes seconds plus the days, hours and totalAsHours fields still read by 1.5.x
 function GlobalPlayed_PlayedTime_Store(p_target, p_totalSeconds)
 	p_target.totalSeconds = p_totalSeconds
 	p_target.totalAsHours = GlobalPlayed_PlayedTime_ToHours(p_totalSeconds)
@@ -27,6 +30,7 @@ function GlobalPlayed_PlayedTime_Store(p_target, p_totalSeconds)
 	p_target.hours = p_target.totalAsHours - (p_target.days * HOURS_PER_DAY)
 end
 
+-- Formats "Xd YYh", plus minutes and seconds when enabled. p_valueFormat wraps each value, for example in a color
 function GlobalPlayed_PlayedTime_Format(p_totalSeconds, p_valueFormat)
 	local valueFormat = p_valueFormat or "%s"
 	local units = GlobalPlayed_PlayedTime_GetUnits()

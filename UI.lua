@@ -27,6 +27,7 @@ local BOTTOM_BUTTONS_GAP = 4
 local STATUS_BAR_RIGHT = 132
 local STATUS_BAR_Y = 15
 
+-- Returns how many card columns fit in a width, between 1 and MAX_COLUMNS
 local function GlobalPlayed_GetColumnCount(p_width)
 	return math.max(1, math.min(MAX_COLUMNS, math.floor(p_width / CARD_MIN_WIDTH)))
 end
@@ -45,6 +46,7 @@ local function GlobalPlayed_CardsLayout(p_content, p_children)
 	AceGUI:GetLayout("Flow")(p_content, p_children)
 end
 
+-- Sets the resize bounds when the client supports it
 local function GlobalPlayed_SetFrameResizeBounds(p_frame, p_width, p_height)
 	if p_frame.SetResizeBounds ~= nil then
 		p_frame:SetResizeBounds(p_width, p_height)
@@ -74,6 +76,7 @@ local function GlobalPlayed_CloseUI(p_widget)
 	AceGUI:Release(p_widget)
 end
 
+-- Centers a full width label with a font size, and a color when given
 local function GlobalPlayed_StyleLabel(p_label, p_fontSize, p_justifyV, p_color)
 	local fontName = p_label.label:GetFont()
 
@@ -87,6 +90,7 @@ local function GlobalPlayed_StyleLabel(p_label, p_fontSize, p_justifyV, p_color)
 	end
 end
 
+-- Rebuilds the realm headers and character cards, then the account total
 local function GlobalPlayed_FillCards()
 	cardsContainer:PauseLayout()
 	cardsContainer:ReleaseChildren()
@@ -124,7 +128,7 @@ local function GlobalPlayed_FillCards()
 	uiFrame:SetStatusText(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
 end
 
--- The button stays disabled until the played time reply arrives
+-- Asks the played time again and rebuilds the cards. The button stays disabled until the reply arrives
 local function GlobalPlayed_RefreshUI()
 	refreshButton:SetDisabled(true)
 
@@ -138,7 +142,7 @@ local function GlobalPlayed_RefreshUI()
 	end)
 end
 
--- Global exposed functions to load & open GlobalPlayed UI panel
+-- Prepares AceGUI and the cards layout when Ace3 is loaded
 function GlobalPlayed_LoadUI()
 	if GlobalPlayed_Addon_IsLoaded("Ace3") == true then
 		AceGUI = LibStub("AceGUI-3.0")
@@ -146,6 +150,7 @@ function GlobalPlayed_LoadUI()
 	end
 end
 
+-- Opens the window, or closes it when already shown
 function GlobalPlayed_OpenUI()
 	if uiFrame ~= nil then
 		GlobalPlayed_CloseUI(uiFrame)

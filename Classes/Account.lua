@@ -1,6 +1,7 @@
 ----------------------
 -- Here is the Account behavior
 ----------------------
+-- Creates an empty account total
 function GlobalPlayed_Account_Create()
 	return {
 		days = 0,
@@ -10,10 +11,12 @@ function GlobalPlayed_Account_Create()
 	}
 end
 
+-- Formats the account total for chat and the window status bar
 function GlobalPlayed_Account_GetPlayed(self)
 	return "Account Total: " .. GlobalPlayed_PlayedTime_Format(self.totalSeconds or 0) .. string.format(" (%sh)", self.totalAsHours)
 end
 
+-- Recomputes the account total from every saved character
 function GlobalPlayed_Account_UpdatePlayed(self)
 	local seconds = 0
 
