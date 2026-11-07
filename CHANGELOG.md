@@ -21,6 +21,7 @@
 - Fix display error for characters with an unknown class
 - Fix Evoker class color
 - Fix options added by new versions now get their default value on upgrade
+- Fix account total hours now use two digits like characters
 - Fix WoW Forever characters now use their full name, so characters sharing a first name are no longer merged
 - Fix WoW Forever characters are now grouped under a single header instead of a technical realm name
 

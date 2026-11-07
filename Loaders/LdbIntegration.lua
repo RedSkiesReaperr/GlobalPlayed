@@ -22,12 +22,8 @@ function GlobalPlayed_LoadLdbIntegration()
 	})
 	
 	local function GlobalPlayed_LDB_GetAccountLine(account)
-		local units = GlobalPlayed_Character_GetPlayTimeUnits()
-		local days = string.format("|cffffffff%d|r", account.days)
-		local hours = string.format("|cffffffff%02d|r", account.hours)
 		local left = "Total " .. string.format("(%dh)", account.totalAsHours)
-		local details = GlobalPlayed_Character_GetPlayedDetails(account.totalSeconds or 0, "|cffffffff%s|r")
-		local playtime = string.format("%s%s %s%s%s", days, units.day, hours, units.hour, details)
+		local playtime = GlobalPlayed_PlayedTime_Format(account.totalSeconds or 0, "|cffffffff%s|r")
 
 		return {
 			left = left,

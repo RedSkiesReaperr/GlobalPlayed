@@ -52,58 +52,12 @@ function GlobalPlayed_Character_RefreshIdentity(self)
 	self.faction = englishFaction or self.faction
 end
 
-function GlobalPlayed_Character_GetPlayTimeUnits()
-	local daysUnit, hoursUnit, minutesUnit, secondsUnit = nil
-
-	if GlobalPlayed_Options.useShortDuration == true then
-		daysUnit = "d"
-		hoursUnit = "h"
-		minutesUnit = "m"
-		secondsUnit = "s"
-	else
-		daysUnit = "days"
-		hoursUnit = "hours"
-		minutesUnit = "minutes"
-		secondsUnit = "seconds"
-	end
-
-	return {
-		day = daysUnit,
-		hour = hoursUnit,
-		minute = minutesUnit,
-		second = secondsUnit
-	}
-end
-
--- Minutes and seconds to append to a played time, empty unless the option is enabled
-function GlobalPlayed_Character_GetPlayedDetails(p_totalSeconds, p_valueFormat)
-	if GlobalPlayed_Options.useFullDuration ~= true then
-		return ""
-	end
-
-	local units = GlobalPlayed_Character_GetPlayTimeUnits()
-	local minutes = string.format("%02d", math.floor(p_totalSeconds / 60) % 60)
-	local seconds = string.format("%02d", p_totalSeconds % 60)
-
-	return string.format(" " .. p_valueFormat .. "%s " .. p_valueFormat .. "%s", minutes, units.minute, seconds, units.second)
-end
-
 function GlobalPlayed_Character_GetPlayed(self)
-	local units = GlobalPlayed_Character_GetPlayTimeUnits()
-	local hours = string.format("%02d", self.hours)
-
-	local details = GlobalPlayed_Character_GetPlayedDetails(GlobalPlayed_Character_GetTotalSeconds(self), "|cffffffff%s|r")
-
-	return string.format("|cffffffff%s|r%s |cffffffff%s|r%s%s", self.days, units.day, hours, units.hour, details)
+	return GlobalPlayed_PlayedTime_Format(GlobalPlayed_Character_GetTotalSeconds(self), "|cffffffff%s|r")
 end
 
 function GlobalPlayed_Character_GetPlayedWithTotal(self)
-	local units = GlobalPlayed_Character_GetPlayTimeUnits()
-	local hours = string.format("%02d", self.hours)
-
-	local details = GlobalPlayed_Character_GetPlayedDetails(GlobalPlayed_Character_GetTotalSeconds(self), "%s")
-
-	return string.format("%s%s %s%s%s (%sh)", self.days, units.day, hours, units.hour, details, self.totalAsHours)
+	return GlobalPlayed_PlayedTime_Format(GlobalPlayed_Character_GetTotalSeconds(self)) .. string.format(" (%sh)", self.totalAsHours)
 end
 
 function GlobalPlayed_Character_GetPlayedAsHours(self)
@@ -174,8 +128,5 @@ function GlobalPlayed_Character_GetTotalSeconds(self)
 end
 
 function GlobalPlayed_Character_UpdatePlayed(self, p_totalSeconds)
-	self.totalSeconds = p_totalSeconds
-	self.totalAsHours = math.floor(p_totalSeconds / 3600)
-	self.days = math.floor(self.totalAsHours / 24)
-	self.hours = self.totalAsHours - (self.days * 24)
+	GlobalPlayed_PlayedTime_Store(self, p_totalSeconds)
 end
