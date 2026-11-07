@@ -2,18 +2,25 @@
 -- Here is the Character behavior
 ----------------------
 function GlobalPlayed_Character_Create(p_name, p_realm)
-	local localizedClass, englishClass = UnitClass("player")
-	local englishFaction, localizedFaction = UnitFactionGroup("player")
-
-	return {
+	local character = {
 		name = p_name,
 		realm = p_realm,
-		faction = englishFaction,
-		class = englishClass,
 		days = 0,
 		hours = 0,
 		totalAsHours = 0
 	}
+
+	GlobalPlayed_Character_RefreshIdentity(character)
+
+	return character
+end
+
+function GlobalPlayed_Character_RefreshIdentity(self)
+	local localizedClass, englishClass = UnitClass("player")
+	local englishFaction, localizedFaction = UnitFactionGroup("player")
+
+	self.class = englishClass or self.class
+	self.faction = englishFaction or self.faction
 end
 
 function GlobalPlayed_Character_GetPlayTimeUnits()

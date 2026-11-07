@@ -20,15 +20,14 @@ Classes/Account.lua
 Classes/Addon.lua
 Loaders/LdbIntegration.lua
 EventHandlers/AddonLoaded.lua
+EventHandlers/PlayerLogin.lua
 EventHandlers/TimePlayed.lua
 
 # Main Frame
 GlobalPlayed.xml
-GlobalPlayed.lua
 
 # UI Frame
 UI.xml
-UI.lua
 
 # GlobalPlayed_Options panel
 OptionsPanel.lua
