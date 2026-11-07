@@ -11,6 +11,7 @@
 - Add characters can now be removed from the options panel
 - Add characters and realms are now sorted by name in every list
 - Add GlobalPlayed window now adapts its columns to its width and remembers its size and position
+- Add Refresh button in the GlobalPlayed window
 - Add auto build and upload to CurseForge and Wago.io
 - Fix account and realm totals losing the minutes of each character
 - Fix faction and class are now refreshed at each character login
