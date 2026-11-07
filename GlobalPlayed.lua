@@ -32,28 +32,25 @@ SlashCmdList['GLOBAL_PLAYED'] = function(msg)
 	end
 end
 
-function GlobalPlayedFrame_OnLoad(self)
-	self:RegisterEvent("ADDON_LOADED")
-	self:RegisterEvent("PLAYER_LOGIN")
-	self:RegisterEvent("TIME_PLAYED_MSG")
-end
+local eventFrame = CreateFrame("Frame")
 
-function GlobalPlayedFrame_OnEvent(self, event, ...)
-	if event == "ADDON_LOADED" then
-		local addon = ...
+eventFrame:RegisterEvent("ADDON_LOADED")
+eventFrame:RegisterEvent("PLAYER_LOGIN")
+eventFrame:RegisterEvent("TIME_PLAYED_MSG")
 
-		if addon == "GlobalPlayed" then
+eventFrame:SetScript("OnEvent", function(self, p_event, ...)
+	if p_event == "ADDON_LOADED" then
+		local addonName = ...
+
+		if addonName == "GlobalPlayed" then
+			self:UnregisterEvent("ADDON_LOADED")
 			GlobalPlayed_AddonLoadedHandler()
 		end
-	end
-
-	if event == "PLAYER_LOGIN" then
+	elseif p_event == "PLAYER_LOGIN" then
 		GlobalPlayed_PlayerLoginHandler()
-	end
-
-	if event == "TIME_PLAYED_MSG" then
+	elseif p_event == "TIME_PLAYED_MSG" then
 		local totalSeconds = ...
 
 		GlobalPlayed_TimePlayedMsgHandler(totalSeconds)
 	end
-end
+end)

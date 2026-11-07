@@ -12,24 +12,27 @@
 ## X-Wago-ID: QNlqm46e
 ## X-License: All Rights Reserved
 
-# LUA Code
+# Libraries
+Libs/LibStub.lua
+Libs/CallbackHandler-1.0.lua
+Libs/LibDataBroker-1.1.lua
+
+# Core
 Utils.lua
+Classes/Addon.lua
 Classes/ClassColor.lua
 Classes/PlayedTime.lua
 Classes/Character.lua
 Classes/Roster.lua
 Classes/Account.lua
-Classes/Addon.lua
-Loaders/LdbIntegration.lua
 EventHandlers/AddonLoaded.lua
 EventHandlers/PlayerLogin.lua
 EventHandlers/TimePlayed.lua
+Loaders/LdbIntegration.lua
+GlobalPlayed.lua
 
-# Main Frame
-GlobalPlayed.xml
+# Ace3 window
+UI.lua
 
-# UI Frame
-UI.xml
-
-# GlobalPlayed_Options panel
+# Options panel
 OptionsPanel.lua

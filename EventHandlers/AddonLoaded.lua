@@ -33,7 +33,6 @@ function GlobalPlayed_AddonLoadedHandler()
 	GlobalPlayed_LoadOptionsPanel()
 
 	GlobalPlayed_Account_UpdatePlayed(GlobalPlayed_MyAccount)
-	GlobalPlayedFrame:UnregisterEvent("ADDON_LOADED")
 	GlobalPlayed_LoadLdbIntegration()
 	GlobalPlayed_Log("Successfully loaded!")
 end
