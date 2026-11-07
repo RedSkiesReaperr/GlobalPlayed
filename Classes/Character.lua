@@ -45,8 +45,8 @@ function GlobalPlayed_Character_Create(p_name, p_realm)
 end
 
 function GlobalPlayed_Character_RefreshIdentity(self)
-	local localizedClass, englishClass = UnitClass("player")
-	local englishFaction, localizedFaction = UnitFactionGroup("player")
+	local _, englishClass = UnitClass("player")
+	local englishFaction = UnitFactionGroup("player")
 
 	self.class = englishClass or self.class
 	self.faction = englishFaction or self.faction

@@ -2,11 +2,9 @@
 -- Addon behavior
 ----------------------
 SLASH_GLOBAL_PLAYED1 = '/gplayed'
-SlashCmdList['GLOBAL_PLAYED'] = function(msg, editbox)
+SlashCmdList['GLOBAL_PLAYED'] = function(msg)
 	if msg == "" then
 		GlobalPlayed_RequestPlayed(function()
-			GlobalPlayed_UpdateAll()
-
 			if GlobalPlayed_Addon_IsAceEnabled() == false then
 				GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
 			else
@@ -15,8 +13,6 @@ SlashCmdList['GLOBAL_PLAYED'] = function(msg, editbox)
 		end)
 	elseif msg == "all" then
 		GlobalPlayed_RequestPlayed(function()
-			GlobalPlayed_UpdateAll()
-
 			if GlobalPlayed_Addon_IsAceEnabled() == false then
 				GlobalPlayed_LogCharactersPlayed()
 				GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
@@ -55,14 +51,8 @@ function GlobalPlayedFrame_OnEvent(self, event, ...)
 	end
 
 	if event == "TIME_PLAYED_MSG" then
-		local total, currentLvl = ...
+		local totalSeconds = ...
 
-		GlobalPlayed_TimePlayedMsgHandler(total, currentLvl)
-	end
-end
-
-function GlobalPlayed_UpdateAll()
-	if GlobalPlayed_MyAccount ~= nil then
-		GlobalPlayed_Account_UpdatePlayed(GlobalPlayed_MyAccount)
+		GlobalPlayed_TimePlayedMsgHandler(totalSeconds)
 	end
 end

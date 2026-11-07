@@ -20,7 +20,7 @@ function GlobalPlayed_Account_UpdatePlayed(self)
 	local seconds = 0
 
 	if GlobalPlayed_Characters == nil then
-		return nil
+		return
 	end
 
 	for k, v in ipairs(GlobalPlayed_Characters) do

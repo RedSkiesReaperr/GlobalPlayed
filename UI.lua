@@ -1,6 +1,5 @@
 local AceGUI = nil
 local isUIShown = nil
-local isUILoaded = false
 local uiFrame = nil
 
 local CARDS_LAYOUT = "GlobalPlayedCards"
@@ -44,7 +43,7 @@ local function GlobalPlayed_CloseUI(widget)
 end
 
 local function GlobalPlayed_FormatRealmNameLabel(p_label)
-	local fontName, fontHeight, fontFlags = p_label.label:GetFont()
+	local fontName = p_label.label:GetFont()
 
 	p_label:SetFullWidth(true)
 	p_label.label:SetFont(fontName, 16)
@@ -55,7 +54,7 @@ end
 
 
 local function GlobalPlayed_FormatPlayedLabel(p_label)
-	local fontName, fontHeight, fontFlags = p_label.label:GetFont()
+	local fontName = p_label.label:GetFont()
 
 	p_label:SetFullWidth(true)
 	p_label.label:SetFont(fontName, 15)
@@ -65,7 +64,7 @@ local function GlobalPlayed_FormatPlayedLabel(p_label)
 end
 
 local function GlobalPlayed_FormatCharacterLabel(p_label)
-	local fontName, fontHeight, fontFlags = p_label.label:GetFont()
+	local fontName = p_label.label:GetFont()
 
 	p_label:SetFullWidth(true)
 	p_label.label:SetFont(fontName, 12)
@@ -81,36 +80,30 @@ local function GlobalPlayed_FillUI(p_UiFrame)
 	local ordered = GlobalPlayed_Account_GetCharactersOrderedByRealm(GlobalPlayed_Characters)
 
 	for k, v in ipairs(ordered) do
-		if v ~= nil then
-			local realmName = AceGUI:Create("Label")
-			realmName:SetText(v.name .. string.format(" (%sh)", v.totalAsHours))
-			GlobalPlayed_FormatRealmNameLabel(realmName)
-			scrollFrame:AddChild(realmName)
+		local realmName = AceGUI:Create("Label")
+		realmName:SetText(v.name .. string.format(" (%sh)", v.totalAsHours))
+		GlobalPlayed_FormatRealmNameLabel(realmName)
+		scrollFrame:AddChild(realmName)
 
-			for kk, currCharacter in ipairs(v) do
-				local coloredNameRealm = GlobalPlayed_Character_GetNameColored(currCharacter)
-				local group = AceGUI:Create("InlineGroup")
-				group:SetLayout("List")
-				group:SetUserData("isCharacterCard", true)
-	
-				if currCharacter ~=nil and currCharacter.name ~= nil and currCharacter.realm ~= nil then
-					local characterName = AceGUI:Create("Label")
-					characterName:SetText(coloredNameRealm)
-					GlobalPlayed_FormatCharacterLabel(characterName)
-	
-					local charPlayed = AceGUI:Create("Label")
-					if GlobalPlayed_Options.useFactionIcon == true then
-						charPlayed:SetImage(GlobalPlayed_Character_GetFactionIcon(currCharacter))
-						charPlayed:SetImageSize(15, 15)
-					end
-					charPlayed:SetText(GlobalPlayed_Character_GetPlayedWithTotal(currCharacter))
-					GlobalPlayed_FormatPlayedLabel(charPlayed)
-	
-					group:AddChild(characterName)
-					group:AddChild(charPlayed)
-					scrollFrame:AddChild(group)
-				end
+		for kk, currCharacter in ipairs(v) do
+			local characterName = AceGUI:Create("Label")
+			characterName:SetText(GlobalPlayed_Character_GetNameColored(currCharacter))
+			GlobalPlayed_FormatCharacterLabel(characterName)
+
+			local charPlayed = AceGUI:Create("Label")
+			if GlobalPlayed_Options.useFactionIcon == true then
+				charPlayed:SetImage(GlobalPlayed_Character_GetFactionIcon(currCharacter))
+				charPlayed:SetImageSize(15, 15)
 			end
+			charPlayed:SetText(GlobalPlayed_Character_GetPlayedWithTotal(currCharacter))
+			GlobalPlayed_FormatPlayedLabel(charPlayed)
+
+			local group = AceGUI:Create("InlineGroup")
+			group:SetLayout("List")
+			group:SetUserData("isCharacterCard", true)
+			group:AddChild(characterName)
+			group:AddChild(charPlayed)
+			scrollFrame:AddChild(group)
 		end
 	end
 end
@@ -121,7 +114,6 @@ function GlobalPlayed_LoadUI()
 		AceGUI = LibStub("AceGUI-3.0")
 		AceGUI:RegisterLayout(CARDS_LAYOUT, GlobalPlayed_CardsLayout)
 		isUIShown = false
-		isUILoaded = true
 	end
 end
 

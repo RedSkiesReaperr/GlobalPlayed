@@ -7,11 +7,7 @@ end
 
 function GlobalPlayed_LogCharactersPlayed()
 	for k, v in ipairs(GlobalPlayed_SortCharacters(GlobalPlayed_Characters, false)) do
-		local iChar = GlobalPlayed_FindCharacter(v.name, v.realm)
-
-		if iChar ~= nil then
-			GlobalPlayed_Log(GlobalPlayed_Character_GetNameRealmColored(iChar) .. ": " .. GlobalPlayed_Character_GetPlayedWithTotal(iChar))
-		end
+		GlobalPlayed_Log(GlobalPlayed_Character_GetNameRealmColored(v) .. ": " .. GlobalPlayed_Character_GetPlayedWithTotal(v))
 	end
 end
 

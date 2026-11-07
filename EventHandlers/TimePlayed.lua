@@ -69,9 +69,9 @@ function GlobalPlayed_RequestPlayed(p_onDone)
 	end)
 end
 
-function GlobalPlayed_TimePlayedMsgHandler(total, currentLvl)
+function GlobalPlayed_TimePlayedMsgHandler(p_totalSeconds)
 	if GlobalPlayed_CurrentCharacter ~= nil then
-		GlobalPlayed_Character_UpdatePlayed(GlobalPlayed_CurrentCharacter, tonumber(total))
+		GlobalPlayed_Character_UpdatePlayed(GlobalPlayed_CurrentCharacter, p_totalSeconds)
 
 		GlobalPlayed_Account_UpdatePlayed(GlobalPlayed_MyAccount)
 	end
