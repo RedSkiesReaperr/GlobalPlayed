@@ -1,9 +1,17 @@
 local LOGIN_REQUEST_DELAY = 2
 
 function GlobalPlayed_PlayerLoginHandler()
-	local name = UnitName("player")
-	local realm = GetRealmName()
+	local name, realm = GlobalPlayed_Character_GetPlayerIdentity()
 	local character = GlobalPlayed_FindCharacter(name, realm)
+
+	if character == nil then
+		-- Forever characters saved before surnames were handled only have their first name
+		character = GlobalPlayed_FindCharacter((UnitName("player")), realm)
+
+		if character ~= nil then
+			character.name = name
+		end
+	end
 
 	if character == nil then
 		character = GlobalPlayed_Character_Create(name, realm)

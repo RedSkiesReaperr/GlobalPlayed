@@ -1,6 +1,34 @@
 ----------------------
 -- Here is the Character behavior
 ----------------------
+local FOREVER_REALM = "WoW Forever"
+
+-- Forever has no player facing realms and UnitName returns the surname as second value
+function GlobalPlayed_Character_GetPlayerIdentity()
+	local name, surname = UnitName("player")
+
+	if GlobalPlayed_Addon_IsForever() == false then
+		return name, GetRealmName()
+	end
+
+	if surname ~= nil and surname ~= "" then
+		name = name .. " " .. surname
+	end
+
+	return name, FOREVER_REALM
+end
+
+-- Saved variables are per client, so every entry of a Forever client is a Forever character
+function GlobalPlayed_Character_MigrateForeverRealms()
+	if GlobalPlayed_Addon_IsForever() == false then
+		return
+	end
+
+	for k, v in ipairs(GlobalPlayed_Characters) do
+		v.realm = FOREVER_REALM
+	end
+end
+
 function GlobalPlayed_Character_Create(p_name, p_realm)
 	local character = {
 		name = p_name,

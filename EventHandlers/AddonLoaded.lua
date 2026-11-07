@@ -16,6 +16,8 @@ function GlobalPlayed_AddonLoadedHandler()
 		}
 	end
 
+	GlobalPlayed_Character_MigrateForeverRealms()
+
 	GlobalPlayed_LoadUI()
 	GlobalPlayed_LoadOptionsPanel()
 
