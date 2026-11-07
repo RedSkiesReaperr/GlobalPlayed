@@ -114,16 +114,19 @@ function GlobalPlayed_Character_GetClassColor(self)
 	return GlobalPlayed_ClassColor_GetColor(self.class)
 end
 
-function GlobalPlayed_Character_GetNameColored(self)
-	local classColor = nil
+-- Unknown or missing classes keep the default text color instead of breaking the display
+local function GlobalPlayed_Character_Colorize(self, p_text)
+	local color = GlobalPlayed_Character_GetClassColor(self)
 
-	if GlobalPlayed_Options.useClassColoration == true then
-		classColor = "|cff" .. GlobalPlayed_Character_GetClassColor(self)
-	else
-		classColor = "|r"
+	if GlobalPlayed_Options.useClassColoration ~= true or color == nil then
+		return p_text
 	end
 
-	return classColor .. self.name .. "|r"
+	return "|cff" .. color .. p_text .. "|r"
+end
+
+function GlobalPlayed_Character_GetNameColored(self)
+	return GlobalPlayed_Character_Colorize(self, self.name)
 end
 
 -- Forever names are unique per region and its realm value is only a grouping label
@@ -148,15 +151,7 @@ function GlobalPlayed_Character_GetNameRealmColored(self)
 		return GlobalPlayed_Character_GetNameColored(self)
 	end
 
-	local classColor = nil
-
-	if GlobalPlayed_Options.useClassColoration == true then
-		classColor = "|cff" .. GlobalPlayed_Character_GetClassColor(self)
-	else
-		classColor = "|r"
-	end
-
-	return classColor .. self.name .. "-" .. self.realm .. "|r"
+	return GlobalPlayed_Character_Colorize(self, self.name .. "-" .. self.realm)
 end
 
 function GlobalPlayed_Character_GetFactionIcon(self)

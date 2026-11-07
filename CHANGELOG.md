@@ -18,6 +18,8 @@
 - Fix options panel checkboxes on current game versions
 - Fix install in Interface/AddOns/ without GlobalPlayed/
 - Fix addon files loaded twice
+- Fix display error for characters with an unknown class
+- Fix Evoker class color
 - Fix WoW Forever characters now use their full name, so characters sharing a first name are no longer merged
 - Fix WoW Forever characters are now grouped under a single header instead of a technical realm name
 
