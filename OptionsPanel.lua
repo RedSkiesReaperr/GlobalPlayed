@@ -169,7 +169,7 @@ function GlobalPlayed_LoadOptionsPanel()
         Disclaimer:SetWidth(400)
         Disclaimer:SetJustifyH("CENTER")
         Disclaimer:SetJustifyV("MIDDLE")
-        Disclaimer:SetText("Disclaimer: After update some options, you may need to reload your UI through /reload or 'Save & Reload' button")
+        Disclaimer:SetText("Disclaimer: After updating some options, you may need to reload your UI through /reload or 'Save & Reload' button")
 
         local SaveReload = CreateFrame("Button", nil, self, "UIPanelButtonTemplate")
         SaveReload:SetPoint("BOTTOMRIGHT", GlobalPlayedOptionsPanel, "BOTTOMRIGHT", -20, 20)

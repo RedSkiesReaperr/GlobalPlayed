@@ -57,7 +57,7 @@ function GlobalPlayed_LoadLdbIntegration()
 		else
 			self:AddDoubleLine("Left click", "Show report in chat", 0, 0.7, 0.8, 0, 0.7, 0.8)
 		end
-		self:AddDoubleLine("Middle click", "Refresh datas", 0, 0.7, 0.8, 0, 0.7, 0.8)
+		self:AddDoubleLine("Middle click", "Refresh data", 0, 0.7, 0.8, 0, 0.7, 0.8)
 		self:AddDoubleLine("Right click", "Open options panel", 0, 0.7, 0.8, 0, 0.7, 0.8)
 		self:AddLine(" ")
 
