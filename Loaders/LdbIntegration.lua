@@ -7,20 +7,18 @@ function GlobalPlayed_LoadLdbIntegration()
 		data = "Null",
 		icon = "Interface\\AddOns\\GlobalPlayed\\Icons\\ldb_icon.jpg",
 		OnClick = function(self, button)
-			if self.name == "GlobalPlayed" then
-				if button == "LeftButton" then
-					if GlobalPlayed_Addon_IsAceEnabled() == true then
-						GlobalPlayed_OpenUI()
-					else
-						GlobalPlayed_LogCharactersPlayed()
-						GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
-					end
-				elseif button == "MiddleButton" then
-					GlobalPlayed_RequestPlayed()
-					GameTooltip:Hide()
-				elseif button == "RightButton" then
-					GlobalPlayed_OpenOptionsPanel()
+			if button == "LeftButton" then
+				if GlobalPlayed_Addon_IsAceEnabled() == true then
+					GlobalPlayed_OpenUI()
+				else
+					GlobalPlayed_LogCharactersPlayed()
+					GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
 				end
+			elseif button == "MiddleButton" then
+				GlobalPlayed_RequestPlayed()
+				GameTooltip:Hide()
+			elseif button == "RightButton" then
+				GlobalPlayed_OpenOptionsPanel()
 			end
 		end
 	})
