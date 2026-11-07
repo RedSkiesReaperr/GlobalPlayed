@@ -6,28 +6,47 @@ Small addon to get your total playtime across characters, on Retail and WoW Fore
 
 ### **Usage**
 * Connect once to each of your characters: WoW only gives the played time of the character you are logged on
-* Type any GlobalPlayed in-game command in chat
-* Enable/Disable the use of Ace3 dependecy in InterfaceOptions (**Esc &gt; Options &gt; Add-ons &gt; GlobalPlayed**)
+* Type any GlobalPlayed command in chat, or use the data broker in your display addon
 * Retail and WoW Forever keep separate totals
-* Remove deleted characters in the options panel (**Esc &gt; Options &gt; Add-ons &gt; GlobalPlayed**)
 
 ### **Available in-game commands**
-* **/gplayed** : Display your global played time in chat (Or in a UI window if [Ace3](https://www.curseforge.com/wow/addons/ace3 "Ace3") is installed and enabled in options)
-* **/gplayed all** : Display your global played time accross all your characters in chat (Or in a UI window if [Ace3](https://www.curseforge.com/wow/addons/ace3 "Ace3") is installed and enabled in options)
-* **/gplayed options** : Open the GlobalPlayed options panel (Can also be opened via **Esc &gt; Options &gt; Add-ons &gt; GlobalPlayed**)
+* **/gplayed** : Refresh and display your account total in chat (or open/close the window if [Ace3](https://www.curseforge.com/wow/addons/ace3 "Ace3") is installed and enabled in options)
+* **/gplayed all** : Refresh and display every character and the account total in chat (or open/close the window if [Ace3](https://www.curseforge.com/wow/addons/ace3 "Ace3") is installed and enabled in options)
+* **/gplayed options** : Open the GlobalPlayed options panel (also via **Esc &gt; Options &gt; Add-ons &gt; GlobalPlayed**)
+
+### **Data broker**
+* **Hover** : characters grouped by realm with their played time, and the account total
+* **Left click** : open/close the window, or print the report in chat without Ace3
+* **Middle click** : refresh the played time
+* **Right click** : open the options panel
+
+### **Window** (requires Ace3)
+* Characters grouped by realm, sorted by name
+* Columns adapt to the window width, and its size and position are remembered
+* **Refresh** button next to **Close**
+
+### **Options** (**Esc &gt; Options &gt; Add-ons &gt; GlobalPlayed**)
+* Use the Ace3 window
+* Class colors
+* Short duration units (d, h instead of days, hours)
+* Full played time with minutes and seconds
+* Faction icons
+* Remove the characters you deleted from the list (the logged in character cannot be removed)
 
 ### **Dependencies**
-* [**Ace3 AddOn**](https://www.curseforge.com/wow/addons/ace3 "View it on CurseForge") If you want to display GlobalPlayed infos in a nice Movable/Scalable Window. (Optionnal)
+* [**Ace3 AddOn**](https://www.curseforge.com/wow/addons/ace3 "View it on CurseForge") (optional) for the resizable window
 * [Embedded] [**CallbackHandler-1.0**](https://www.curseforge.com/wow/addons/callbackhandler "View it on CurseForge")
 * [Embedded] [**LibDataBroker-1.1**](https://www.curseforge.com/wow/addons/libdatabroker-1-1 "View it on CurseForge")
 * [Embedded] [**LibStub**](https://www.curseforge.com/wow/addons/libstub "View it on CurseForge")
 
 ### **Bug reports & Feature requests**
-Bug reports and Features requests are welcomed. Feel free to create issues on the [GitHub project](https://github.com/RedSkiesReaperr/GlobalPlayed/) to submit them !
+Bug reports and feature requests are welcome. Feel free to create issues on the [GitHub project](https://github.com/RedSkiesReaperr/GlobalPlayed/) to submit them!
 
 ## Dev Helps & Docs
 
-- [wowpedia](https://wowpedia.fandom.com/wiki/World_of_Warcraft_API)
-- [warcraft.wiki.gg](https://warcraft.wiki.gg/wiki/Warcraft_Wiki)
-- [lua.org](https://www.lua.org/manual/5.3/)
+- [warcraft.wiki.gg API](https://warcraft.wiki.gg/wiki/World_of_Warcraft_API)
+- [Lua 5.1 manual](https://www.lua.org/manual/5.1/) (the Lua version used by WoW)
 - [wow-ui-source](https://github.com/Gethe/wow-ui-source)
+
+### Releasing
+Push a `vX.Y.Z` tag, or `vX.Y.Z-betaN` for a beta. It must match `## Version:` in `GlobalPlayed.toc` and a dated `## X.Y.Z (YYYY-MM-DD)` entry in `CHANGELOG.md`. The workflow then packages the addon and uploads it to CurseForge and Wago.
