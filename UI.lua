@@ -1,5 +1,5 @@
-local AceGUI = null
-local isUIShown = null
+local AceGUI = nil
+local isUIShown = nil
 local isUILoaded = false
 local uiFrame = nil
 

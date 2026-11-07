@@ -1,10 +1,8 @@
 function GlobalPlayed_LoadLdbIntegration()
 	local ldb = LibStub:GetLibrary('LibDataBroker-1.1')
-	local f = CreateFrame("frame", "GlobalPlayedLDBFrame")
 	local dataobj = ldb:NewDataObject("GlobalPlayed", { 
 		type = "data source",
 		text = "GlobalPlayed",
-		data = "Null",
 		icon = "Interface\\AddOns\\GlobalPlayed\\Icons\\ldb_icon.jpg",
 		OnClick = function(self, button)
 			if button == "LeftButton" then

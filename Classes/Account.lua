@@ -10,17 +10,9 @@ function GlobalPlayed_Account_Create()
 end
 
 function GlobalPlayed_Account_GetPlayed(self)
-	local daysUnit, hoursUnit = nil
+	local units = GlobalPlayed_Character_GetPlayTimeUnits()
 
-	if GlobalPlayed_Options.useShortDuration == true then
-		daysUnit = "d"
-		hoursUnit = "h"
-	else
-		daysUnit = "days"
-		hoursUnit = "hours"
-	end
-
-	return string.format("Account Total: %s%s %s%s (%sh)", self.days, daysUnit, self.hours, hoursUnit, self.totalAsHours)
+	return string.format("Account Total: %s%s %s%s (%sh)", self.days, units.day, self.hours, units.hour, self.totalAsHours)
 end
 
 function GlobalPlayed_Account_UpdatePlayed(self)
