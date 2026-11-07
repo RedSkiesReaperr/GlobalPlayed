@@ -1,35 +1,39 @@
+-- Options added by later versions are filled in for players upgrading with existing settings
+local DEFAULT_OPTIONS = {
+	useClassColoration = true,
+	useShortDuration = false,
+	useFactionIcon = true,
+	useFullDuration = false
+}
+
+-- Initializes saved variables and migrations, then loads the window, options panel and broker
 function GlobalPlayed_AddonLoadedHandler()
 	if GlobalPlayed_MyAccount == nil then -- If no account registered
 		GlobalPlayed_MyAccount = GlobalPlayed_Account_Create()
 	end
 
 	if GlobalPlayed_Characters == nil then -- If no characters registered
-		GlobalPlayed_Characters = {  }
+		GlobalPlayed_Characters = {}
 	end
 
 	if GlobalPlayed_Options == nil then -- If no options registered
 		GlobalPlayed_Options = {
-			useAce = GlobalPlayed_Addon_IsLoaded("Ace3"),
-			useClassColoration = true,
-			useShortDuration = false,
-			useFactionIcon = true
+			useAce = GlobalPlayed_Addon_IsLoaded("Ace3")
 		}
 	end
 
-	local searchResult = GlobalPlayed_FindCharacter(UnitName("player"), GetRealmName())
-
-	if searchResult == nil then
-		currentCharacter = GlobalPlayed_Character_Create(UnitName("player"), GetRealmName())
-		table.insert(GlobalPlayed_Characters, currentCharacter)
-	else
-		currentCharacter = searchResult
+	for key, value in pairs(DEFAULT_OPTIONS) do
+		if GlobalPlayed_Options[key] == nil then
+			GlobalPlayed_Options[key] = value
+		end
 	end
+
+	GlobalPlayed_Character_MigrateForeverRealms()
 
 	GlobalPlayed_LoadUI()
 	GlobalPlayed_LoadOptionsPanel()
 
 	GlobalPlayed_Account_UpdatePlayed(GlobalPlayed_MyAccount)
-	GlobalPlayedFrame:UnregisterEvent("ADDON_LOADED")
 	GlobalPlayed_LoadLdbIntegration()
 	GlobalPlayed_Log("Successfully loaded!")
 end

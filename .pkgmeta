@@ -1,0 +1,12 @@
+package-as: GlobalPlayed
+
+manual-changelog:
+  filename: CHANGELOG.md
+  markup-type: markdown
+
+ignore:
+  - README.md
+  - CHANGELOG.md
+
+optional-dependencies:
+  - ace3

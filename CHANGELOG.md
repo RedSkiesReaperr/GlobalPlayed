@@ -1,5 +1,32 @@
 # Changelogs
 
+## 1.6.0 (2026-11-07)
+
+- Add WoW Forever support
+- Update Interface version for Retail v12.1.5 and Forever v1.60.1
+- Add played time is now fetched silently at character login
+- Add **/gplayed** and **/gplayed all** now refresh played time before displaying it
+- Add MiddleClick on databroker object no longer prints in chat
+- Add option to display minutes and seconds in played time
+- Add characters can now be removed from the options panel
+- Add characters and realms are now sorted by name in every list
+- Add GlobalPlayed window now adapts its columns to its width and remembers its size and position
+- Add Refresh button in the GlobalPlayed window
+- Add auto build and upload to CurseForge and Wago.io
+- Fix account and realm totals losing the minutes of each character
+- Fix faction and class are now refreshed at each character login
+- Fix databroker clicks ignored on Titan Panel
+- Fix options panel checkboxes on current game versions
+- Fix install in Interface/AddOns/ without GlobalPlayed/
+- Fix addon files loaded twice
+- Fix display error for characters with an unknown class
+- Fix class colors now match the official game colors
+- Fix options added by new versions now get their default value on upgrade
+- Fix account total hours now use two digits like characters
+- Fix /gplayed commands now ignore case and extra spaces
+- Fix WoW Forever characters now use their full name, so characters sharing a first name are no longer merged
+- Fix WoW Forever characters are now grouped under a single header instead of a technical realm name
+
 ## 1.5.3 (2025-01-28)
 
 - Update Interface version for v11.0.7

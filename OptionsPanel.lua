@@ -1,82 +1,203 @@
-local GlobalPlayedOptionsPanel = CreateFrame("Frame", "GlobalPlayedOptionsPanel", InterfaceOptionsFramePanelContainer);
-GlobalPlayedOptionsPanel.name = "GlobalPlayed";
-GlobalPlayedOptionsPanel.close = function (self) self:Close(); end;
+local GlobalPlayedOptionsPanel = CreateFrame("Frame", "GlobalPlayedOptionsPanel")
+GlobalPlayedOptionsPanel.name = "GlobalPlayed"
 
 local category = Settings.RegisterCanvasLayoutCategory(GlobalPlayedOptionsPanel, GlobalPlayedOptionsPanel.name)
 Settings.RegisterAddOnCategory(category)
 
+local CHARACTER_ROW_HEIGHT = 26
 
-function GlobalPlayed_LoadOptionsPanel()
-    GlobalPlayedOptionsPanel:SetScript("OnShow", function(self)
-        local Title = self:CreateFontString(GlobalPlayedOptionsPanel.name, "ARTWORK", "GameFontNormalHuge")
-        Title:SetPoint("TOPLEFT", 16, -16)
-        Title:SetText(self.name)
+local characterRows = {}
+local characterList = nil
 
-        local SubTitle = self:CreateFontString("$SubTitle", "ARTWORK", "GameFontHighlightSmall")
-        SubTitle:SetPoint("TOPLEFT", Title, "BOTTOMLEFT", 0, -8)
-        SubTitle:SetPoint("RIGHT", -32, 0)
-        SubTitle:SetHeight(32)
-        SubTitle:SetJustifyH("LEFT")
-        SubTitle:SetJustifyV("TOP")
-        SubTitle:SetText("See all your characters played")
-        
-        local useAceCheck = CreateFrame("CheckButton", "Ace", self, "InterfaceOptionsCheckButtonTemplate")
-        useAceCheck:SetPoint("TOPLEFT", SubTitle, "BOTTOMLEFT", 0, 5)
-        useAceCheck.Text:SetText("Use Ace3 GUI")
-        useAceCheck.tooltipText = "Use the Ace3 integration to display played infos in a nice windowed UI"
-        useAceCheck:SetChecked(GlobalPlayed_Options.useAce)
-		useAceCheck:SetScript("OnClick", function(this) GlobalPlayed_Options.useAce = this:GetChecked() end)
+local OPTIONS = {
+	{
+		key = "useAce",
+		label = "Use Ace3 GUI",
+		tooltip = "Use the Ace3 integration to display played infos in a nice windowed UI"
+	},
+	{
+		key = "useClassColoration",
+		label = "Use class colors",
+		tooltip = "Use class coloration in UI, databroker, chat messages"
+	},
+	{
+		key = "useShortDuration",
+		label = "Use short duration units",
+		tooltip = "Display 'd' and 'h' instead of 'days' and 'hours'"
+	},
+	{
+		key = "useFullDuration",
+		label = "Show full played time",
+		tooltip = "Display minutes and seconds in addition to days and hours"
+	},
+	{
+		key = "useFactionIcon",
+		label = "Show faction icons"
+	}
+}
 
-		local useClassColorationCheck = CreateFrame("CheckButton", "Ace", self, "InterfaceOptionsCheckButtonTemplate")
-        useClassColorationCheck:SetPoint("TOPLEFT", useAceCheck, "BOTTOMLEFT", 0, 5)
-        useClassColorationCheck.Text:SetText("Use class colors")
-        useClassColorationCheck.tooltipText = "Use class coloration in UI, databroker, chat messages"
-        useClassColorationCheck:SetChecked(GlobalPlayed_Options.useClassColoration)
-		useClassColorationCheck:SetScript("OnClick", function(this) GlobalPlayed_Options.useClassColoration = this:GetChecked() end)
-		
-		local useShortDurationCheck = CreateFrame("CheckButton", "Ace", self, "InterfaceOptionsCheckButtonTemplate")
-        useShortDurationCheck:SetPoint("TOPLEFT", useClassColorationCheck, "BOTTOMLEFT", 0, 5)
-        useShortDurationCheck.Text:SetText("Use short duration units")
-        useShortDurationCheck.tooltipText = "Display 'd' and 'h' instead of 'days' and 'hours'"
-        useShortDurationCheck:SetChecked(GlobalPlayed_Options.useShortDuration)
-        useShortDurationCheck:SetScript("OnClick", function(this) GlobalPlayed_Options.useShortDuration = this:GetChecked() end)
+-- Creates a checkbox bound to an option below p_anchor. p_onChange runs after each click
+local function GlobalPlayed_CreateOptionCheck(p_parent, p_anchor, p_option, p_onChange)
+	local check = CreateFrame("CheckButton", nil, p_parent, "UICheckButtonTemplate")
+	check:SetSize(26, 26)
+	check:SetPoint("TOPLEFT", p_anchor, "BOTTOMLEFT", 0, 0)
+	check.optionKey = p_option.key
+	check:SetChecked(GlobalPlayed_Options[p_option.key])
+	check:SetScript("OnClick", function(this)
+		GlobalPlayed_Options[this.optionKey] = this:GetChecked()
+		p_onChange()
+	end)
 
-		local useFactionIconCheck = CreateFrame("CheckButton", "Ace", self, "InterfaceOptionsCheckButtonTemplate")
-        useFactionIconCheck:SetPoint("TOPLEFT", useShortDurationCheck, "BOTTOMLEFT", 0, 5)
-        useFactionIconCheck.Text:SetText("Show faction icons")
-        useFactionIconCheck:SetChecked(GlobalPlayed_Options.useFactionIcon)
-        useFactionIconCheck:SetScript("OnClick", function(this) GlobalPlayed_Options.useFactionIcon = this:GetChecked() end)
+	local label = check:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+	label:SetPoint("LEFT", check, "RIGHT", 4, 0)
+	label:SetText(p_option.label)
 
-        local Disclaimer = self:CreateFontString("$SubTitle", "ARTWORK", "GameFontHighlightSmall")
-        Disclaimer:SetPoint("BOTTOMLEFT", GlobalPlayedOptionsPanel, "BOTTOMLEFT", 20, 20)
-        Disclaimer:SetHeight(32)
-        Disclaimer:SetWidth(400)
-        Disclaimer:SetJustifyH("CENTER")
-        Disclaimer:SetJustifyV("MIDDLE")
-        Disclaimer:SetText("Disclaimer: After update some options, you may need to reload your UI through /reload or 'Save & Reload' button")
+	if p_option.tooltip ~= nil then
+		check:SetScript("OnEnter", function(this)
+			GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+			GameTooltip:SetText(p_option.tooltip, 1, 1, 1, 1, true)
+			GameTooltip:Show()
+		end)
+		check:SetScript("OnLeave", function() GameTooltip:Hide() end)
+	end
 
-        local SaveReload = CreateFrame("Button", "$SaveReload" , self, "UIPanelButtonTemplate")
-        SaveReload:SetPoint("BOTTOMRIGHT", GlobalPlayedOptionsPanel, "BOTTOMRIGHT", -20, 20)
-        SaveReload:SetWidth(100)
-        SaveReload:SetHeight(25)
-        SaveReload:SetText("Save & Reload")
-        SaveReload:SetScript("OnClick", function(self, button, down)
-            GlobalPlayedOptionsPanel:Hide()
-            ReloadUI()
-        end)
-
-        function self:refresh()
-			useAceCheck:SetChecked(GlobalPlayed_Options.useAce)
-			useClassColorationCheck:SetChecked(GlobalPlayed_Options.useClassColoration)
-			useShortDurationCheck:SetChecked(GlobalPlayed_Options.useShortDuration)
-			useFactionIconCheck:SetChecked(GlobalPlayed_Options.useFactionIcon)
-        end
-
-        self:refresh()
-        self:SetScript("OnShow", nil)
-    end)
+	return check
 end
 
+-- Creates a character row with its name, played time and delete button
+local function GlobalPlayed_CreateCharacterRow(p_index)
+	local row = CreateFrame("Frame", nil, characterList)
+	row:SetHeight(CHARACTER_ROW_HEIGHT)
+	row:SetPoint("TOPLEFT", 0, -(p_index - 1) * CHARACTER_ROW_HEIGHT)
+	row:SetPoint("RIGHT")
+
+	row.deleteButton = CreateFrame("Button", nil, row, "UIPanelButtonTemplate")
+	row.deleteButton:SetSize(70, 22)
+	row.deleteButton:SetPoint("RIGHT")
+	row.deleteButton:SetText("Delete")
+	row.deleteButton:SetScript("OnClick", function()
+		StaticPopup_Show("GLOBALPLAYED_DELETE_CHARACTER", row.displayName, nil, row.character)
+	end)
+
+	row.playedText = row:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+	row.playedText:SetPoint("RIGHT", row.deleteButton, "LEFT", -8, 0)
+
+	row.nameText = row:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+	row.nameText:SetPoint("LEFT")
+	row.nameText:SetPoint("RIGHT", row.playedText, "LEFT", -8, 0)
+	row.nameText:SetJustifyH("LEFT")
+	row.nameText:SetWordWrap(false)
+
+	return row
+end
+
+-- Fills the character rows, reusing existing ones and hiding the extra ones
+local function GlobalPlayed_RefreshCharacterList()
+	local characters = GlobalPlayed_Roster_Sort(GlobalPlayed_Characters, true)
+
+	for index, character in ipairs(characters) do
+		local row = characterRows[index] or GlobalPlayed_CreateCharacterRow(index)
+
+		characterRows[index] = row
+		row.character = character
+		row.displayName = GlobalPlayed_Character_GetDisplayName(character)
+		row.nameText:SetText(GlobalPlayed_Character_GetDisplayNameColored(character))
+		row.playedText:SetText(GlobalPlayed_Character_GetPlayedWithTotal(character))
+		row.deleteButton:SetEnabled(character ~= GlobalPlayed_CurrentCharacter)
+		row:Show()
+	end
+
+	for index = #characters + 1, #characterRows do
+		characterRows[index]:Hide()
+	end
+
+	characterList:SetHeight(math.max(#characters * CHARACTER_ROW_HEIGHT, 1))
+end
+
+StaticPopupDialogs["GLOBALPLAYED_DELETE_CHARACTER"] = {
+	text = "Remove %s from GlobalPlayed?",
+	button1 = YES,
+	button2 = NO,
+	-- Removes the confirmed character and refreshes the list
+	OnAccept = function(self, p_character)
+		GlobalPlayed_Roster_Remove(p_character)
+		GlobalPlayed_RefreshCharacterList()
+	end,
+	timeout = 0,
+	whileDead = true,
+	hideOnEscape = true,
+	preferredIndex = 3
+}
+
+-- Builds the panel content on first show, when saved variables are loaded
+function GlobalPlayed_LoadOptionsPanel()
+	GlobalPlayedOptionsPanel:SetScript("OnShow", function(self)
+		local title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalHuge")
+		title:SetPoint("TOPLEFT", 16, -16)
+		title:SetText(self.name)
+
+		local subTitle = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+		subTitle:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
+		subTitle:SetPoint("RIGHT", -32, 0)
+		subTitle:SetHeight(32)
+		subTitle:SetJustifyH("LEFT")
+		subTitle:SetJustifyV("TOP")
+		subTitle:SetText("See all your characters played")
+
+		local checks = {}
+		local anchor = subTitle
+		for _, option in ipairs(OPTIONS) do
+			anchor = GlobalPlayed_CreateOptionCheck(self, anchor, option, GlobalPlayed_RefreshCharacterList)
+			table.insert(checks, anchor)
+		end
+
+		local charactersTitle = self:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+		charactersTitle:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, -12)
+		charactersTitle:SetText("Characters")
+
+		local charactersHint = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+		charactersHint:SetPoint("TOPLEFT", charactersTitle, "BOTTOMLEFT", 0, -4)
+		charactersHint:SetText("Remove characters you deleted. The logged in character cannot be removed.")
+
+		local charactersScroll = CreateFrame("ScrollFrame", "GlobalPlayedCharactersScroll", self, "UIPanelScrollFrameTemplate")
+		charactersScroll:SetPoint("TOPLEFT", charactersHint, "BOTTOMLEFT", 0, -8)
+		charactersScroll:SetPoint("BOTTOMRIGHT", GlobalPlayedOptionsPanel, "BOTTOMRIGHT", -36, 64)
+
+		characterList = CreateFrame("Frame", nil, charactersScroll)
+		characterList:SetSize(1, 1)
+		charactersScroll:SetScrollChild(characterList)
+		charactersScroll:SetScript("OnSizeChanged", function(this, width) characterList:SetWidth(width) end)
+
+		local disclaimer = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+		disclaimer:SetPoint("BOTTOMLEFT", GlobalPlayedOptionsPanel, "BOTTOMLEFT", 20, 20)
+		disclaimer:SetHeight(32)
+		disclaimer:SetWidth(400)
+		disclaimer:SetJustifyH("CENTER")
+		disclaimer:SetJustifyV("MIDDLE")
+		disclaimer:SetText("Disclaimer: After updating some options, you may need to reload your UI through /reload or 'Save & Reload' button")
+
+		local saveReload = CreateFrame("Button", nil, self, "UIPanelButtonTemplate")
+		saveReload:SetPoint("BOTTOMRIGHT", GlobalPlayedOptionsPanel, "BOTTOMRIGHT", -20, 20)
+		saveReload:SetWidth(100)
+		saveReload:SetHeight(25)
+		saveReload:SetText("Save & Reload")
+		saveReload:SetScript("OnClick", function() ReloadUI() end)
+
+		-- Syncs the checkboxes and the character list with the saved data
+		function self:refresh()
+			for _, check in ipairs(checks) do
+				check:SetChecked(GlobalPlayed_Options[check.optionKey])
+			end
+
+			GlobalPlayed_RefreshCharacterList()
+		end
+
+		self:refresh()
+		self:SetScript("OnShow", function(this) this:refresh() end)
+	end)
+end
+
+-- Opens the game settings on the addon panel
 function GlobalPlayed_OpenOptionsPanel()
-    Settings.OpenToCategory(category.ID, GlobalPlayedOptionsPanel.name)
+	Settings.OpenToCategory(category:GetID())
 end

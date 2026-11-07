@@ -1,71 +1,58 @@
 ----------------------
--- Addon behavior
+-- Slash command and game events
 ----------------------
-local currentCharacter = nil
+-- Shows played time: the Ace3 window when enabled, otherwise a report in chat
+function GlobalPlayed_ShowPlayed(p_withCharacters)
+	if GlobalPlayed_Addon_IsAceEnabled() == true then
+		GlobalPlayed_OpenUI()
+		return
+	end
 
-SLASH_GLOBAL_PLAYED1 = '/gplayed'
-SlashCmdList['GLOBAL_PLAYED'] = function(msg, editbox)
-	if msg == "" then
-		GlobalPlayed_UpdateAll()
+	if p_withCharacters == true then
+		GlobalPlayed_Roster_LogPlayed()
+	end
 
-		if GlobalPlayed_Addon_IsAceEnabled() == false then
-			GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))		
-		else
-			GlobalPlayed_OpenUI()
-		end	
-	elseif msg == "all" then
-		GlobalPlayed_UpdateAll()
+	GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
+end
 
-		if GlobalPlayed_Addon_IsAceEnabled() == false then
-			GlobalPlayed_LogCharactersPlayed()
-			GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
-		else
-			GlobalPlayed_OpenUI()
-		end
-	elseif msg == "options" then
-		GlobalPlayed_OpenOptionsPanel()
+SLASH_GLOBAL_PLAYED1 = "/gplayed"
+-- Handles /gplayed, /gplayed all and /gplayed options, ignoring case and extra spaces
+SlashCmdList["GLOBAL_PLAYED"] = function(p_message)
+	local command = p_message:match("^%s*(.-)%s*$"):lower()
+
+	if command == "" or command == "all" then
+		GlobalPlayed_RequestPlayed(function() GlobalPlayed_ShowPlayed(command == "all") end)
+	elseif command == "options" then
 		GlobalPlayed_OpenOptionsPanel()
 	else
-		GlobalPlayed_Log("Unknown command: /gplayed " .. msg)
-		GlobalPlayed_Log("Availaible commands:")
+		GlobalPlayed_Log("Unknown command: /gplayed " .. p_message)
+		GlobalPlayed_Log("Available commands:")
 		GlobalPlayed_Log("    /gplayed")
 		GlobalPlayed_Log("    /gplayed all")
 		GlobalPlayed_Log("    /gplayed options")
 	end
 end
 
-function GlobalPlayedFrame_OnLoad(self)
-	self:RegisterEvent("ADDON_LOADED")
-	self:RegisterEvent("PLAYER_ENTERING_WORLD")
-	self:RegisterEvent("TIME_PLAYED_MSG")
-end
+local eventFrame = CreateFrame("Frame")
 
-function GlobalPlayedFrame_OnEvent(self, event, ...)
-	if event == "ADDON_LOADED" then
-		local addon = ...
+eventFrame:RegisterEvent("ADDON_LOADED")
+eventFrame:RegisterEvent("PLAYER_LOGIN")
+eventFrame:RegisterEvent("TIME_PLAYED_MSG")
 
-		if addon == "GlobalPlayed" then
+-- Dispatches game events to their handler
+eventFrame:SetScript("OnEvent", function(self, p_event, ...)
+	if p_event == "ADDON_LOADED" then
+		local addonName = ...
+
+		if addonName == "GlobalPlayed" then
+			self:UnregisterEvent("ADDON_LOADED")
 			GlobalPlayed_AddonLoadedHandler()
 		end
-	end
+	elseif p_event == "PLAYER_LOGIN" then
+		GlobalPlayed_PlayerLoginHandler()
+	elseif p_event == "TIME_PLAYED_MSG" then
+		local totalSeconds = ...
 
-	if event == "PLAYER_ENTERING_WORLD" then
-		-- Do something when player enter in world (also after loading a new place like after tp, etc...)
+		GlobalPlayed_TimePlayedMsgHandler(totalSeconds)
 	end
-
-	if event == "TIME_PLAYED_MSG" then
-		local total, currentLvl = ...
-
-		GlobalPlayed_TimePlayedMsgHandler(total, currentLvl)
-	end
-end
-
-function GlobalPlayed_UpdateAll()
-	if currentCharacter ~= nil then
-		GlobalPlayed_Character_UpdatePlayed(currentCharacter, days, hours)
-	end
-
-	if GlobalPlayed_MyAccount ~= nil then
-		GlobalPlayed_Account_UpdatePlayed(GlobalPlayed_MyAccount)
-	end
-end
+end)
