@@ -22,8 +22,8 @@ end
 function GlobalPlayed_Account_UpdatePlayed(self)
 	local seconds = 0
 
-	for k, v in ipairs(GlobalPlayed_Characters) do
-		seconds = seconds + GlobalPlayed_Character_GetTotalSeconds(v)
+	for _, character in ipairs(GlobalPlayed_Characters) do
+		seconds = seconds + GlobalPlayed_Character_GetTotalSeconds(character)
 	end
 
 	GlobalPlayed_PlayedTime_Store(self, seconds)

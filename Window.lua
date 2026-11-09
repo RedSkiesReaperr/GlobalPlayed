@@ -23,7 +23,7 @@ local BOTTOM_BUTTON_RIGHT = 24
 local BOTTOM_BUTTON_Y = 3
 local BOTTOM_BUTTON_GAP = 4
 
-local REALM_COLOR = { 0.17, 0.69, 0.33 }
+local GROUP_HEADER_COLOR = { 0.17, 0.69, 0.33 }
 local PLAYED_COLOR = { 0.9, 0.6, 0.2 }
 local CARD_BACKDROP = {
 	bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
@@ -53,7 +53,7 @@ local function GlobalPlayed_Window_GetHeader(p_index)
 		local header = cardsContent:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 
 		header:SetJustifyH("CENTER")
-		header:SetTextColor(unpack(REALM_COLOR))
+		header:SetTextColor(unpack(GROUP_HEADER_COLOR))
 		headers[p_index] = header
 	end
 

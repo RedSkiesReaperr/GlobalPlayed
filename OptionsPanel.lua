@@ -281,7 +281,7 @@ function GlobalPlayed_LoadOptionsPanel()
 		characterList = CreateFrame("Frame", nil, charactersScroll)
 		characterList:SetSize(1, 1)
 		charactersScroll:SetScrollChild(characterList)
-		charactersScroll:SetScript("OnSizeChanged", function(this, width) characterList:SetWidth(width) end)
+		charactersScroll:SetScript("OnSizeChanged", function(_, p_width) characterList:SetWidth(p_width) end)
 
 		local disclaimer = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 		disclaimer:SetPoint("BOTTOMLEFT", GlobalPlayedOptionsPanel, "BOTTOMLEFT", 20, 20)

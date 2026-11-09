@@ -1,7 +1,7 @@
 local L = GlobalPlayed_L
 
 local HINT_COLOR = { 0, 0.7, 0.8 }
-local REALM_COLOR = { 0.17, 0.69, 0.33 }
+local GROUP_HEADER_COLOR = { 0.17, 0.69, 0.33 }
 local TOOLTIP_MIN_WIDTH = 250
 local BROKER_NAME = "GlobalPlayed"
 local BROKER_ICON = "Interface\\Icons\\INV_Misc_PocketWatch_01"
@@ -116,14 +116,14 @@ function GlobalPlayed_LoadLdbIntegration()
 		self:AddLine(" ")
 
 		local groups = GlobalPlayed_Roster_Group(GlobalPlayed_Characters)
-		for k, v in ipairs(groups) do
-			GlobalPlayed_LDB_AddColoredLine(self, string.format("%s:", v.label), string.format(L["Total: %sh"], v.totalAsHours), REALM_COLOR)
+		for _, group in ipairs(groups) do
+			GlobalPlayed_LDB_AddColoredLine(self, string.format("%s:", group.label), string.format(L["Total: %sh"], group.totalAsHours), GROUP_HEADER_COLOR)
 
-			for kk, vv in ipairs(v.characters) do
-				local name, played = GlobalPlayed_LDB_GetCharacterLine(vv)
+			for _, character in ipairs(group.characters) do
+				local name, played = GlobalPlayed_LDB_GetCharacterLine(character)
 
 				if GlobalPlayed_Options.useFactionIcon == true then
-					local factionIcon = GlobalPlayed_Character_GetFactionIcon(vv)
+					local factionIcon = GlobalPlayed_Character_GetFactionIcon(character)
 
 					self:AddDoubleLine("|T" .. factionIcon .. ":16:16:2:0|t  " .. name, played)
 				else

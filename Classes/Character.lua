@@ -25,8 +25,8 @@ function GlobalPlayed_Character_MigrateForeverRealms()
 		return
 	end
 
-	for k, v in ipairs(GlobalPlayed_Characters) do
-		v.realm = FOREVER_REALM
+	for _, character in ipairs(GlobalPlayed_Characters) do
+		character.realm = FOREVER_REALM
 	end
 end
 

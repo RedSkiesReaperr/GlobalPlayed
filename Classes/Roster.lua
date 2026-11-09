@@ -8,9 +8,9 @@ end
 
 -- Returns the saved character matching name and realm, or nil
 function GlobalPlayed_Roster_Find(p_name, p_realm)
-	for k, v in ipairs(GlobalPlayed_Characters) do
-		if v.name == p_name and v.realm == p_realm then
-			return v
+	for _, character in ipairs(GlobalPlayed_Characters) do
+		if character.name == p_name and character.realm == p_realm then
+			return character
 		end
 	end
 
@@ -45,17 +45,17 @@ end
 function GlobalPlayed_Roster_Sort(p_characters, p_byRealm)
 	local sorted = {}
 
-	for k, v in ipairs(p_characters) do
-		table.insert(sorted, v)
+	for _, character in ipairs(p_characters) do
+		table.insert(sorted, character)
+	end
+
+	local first, second = "name", "realm"
+
+	if p_byRealm == true then
+		first, second = "realm", "name"
 	end
 
 	table.sort(sorted, function(a, b)
-		local first, second = "name", "realm"
-
-		if p_byRealm == true then
-			first, second = "realm", "name"
-		end
-
 		if a[first]:lower() ~= b[first]:lower() then
 			return GlobalPlayed_Roster_IsBefore(a[first], b[first])
 		end
@@ -107,8 +107,8 @@ function GlobalPlayed_Roster_Group(p_characters)
 	local groups = {}
 	local groupsByLabel = {}
 
-	for k, v in ipairs(GlobalPlayed_Roster_SortForDisplay(p_characters)) do
-		local label = GlobalPlayed_Roster_GetGroupLabel(v)
+	for _, character in ipairs(GlobalPlayed_Roster_SortForDisplay(p_characters)) do
+		local label = GlobalPlayed_Roster_GetGroupLabel(character)
 		local group = groupsByLabel[label]
 
 		if group == nil then
@@ -117,9 +117,9 @@ function GlobalPlayed_Roster_Group(p_characters)
 			table.insert(groups, group)
 		end
 
-		table.insert(group.characters, v)
+		table.insert(group.characters, character)
 
-		group.totalSeconds = group.totalSeconds + GlobalPlayed_Character_GetTotalSeconds(v)
+		group.totalSeconds = group.totalSeconds + GlobalPlayed_Character_GetTotalSeconds(character)
 		group.totalAsHours = GlobalPlayed_PlayedTime_ToHours(group.totalSeconds)
 	end
 
@@ -141,9 +141,9 @@ function GlobalPlayed_Roster_Remove(p_character)
 		return false
 	end
 
-	for k, v in ipairs(GlobalPlayed_Characters) do
-		if v == p_character then
-			table.remove(GlobalPlayed_Characters, k)
+	for index, character in ipairs(GlobalPlayed_Characters) do
+		if character == p_character then
+			table.remove(GlobalPlayed_Characters, index)
 			GlobalPlayed_Account_UpdatePlayed(GlobalPlayed_MyAccount)
 
 			return true
@@ -155,7 +155,7 @@ end
 
 -- Prints every character played time in chat, following the sort option
 function GlobalPlayed_Roster_LogPlayed()
-	for k, v in ipairs(GlobalPlayed_Roster_SortForDisplay(GlobalPlayed_Characters)) do
-		GlobalPlayed_Log(GlobalPlayed_Character_GetNameRealmColored(v) .. ": " .. GlobalPlayed_Character_GetPlayedWithTotal(v))
+	for _, character in ipairs(GlobalPlayed_Roster_SortForDisplay(GlobalPlayed_Characters)) do
+		GlobalPlayed_Log(GlobalPlayed_Character_GetNameRealmColored(character) .. ": " .. GlobalPlayed_Character_GetPlayedWithTotal(character))
 	end
 end
