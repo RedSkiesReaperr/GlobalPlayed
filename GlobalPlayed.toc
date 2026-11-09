@@ -31,8 +31,9 @@ EventHandlers/TimePlayed.lua
 Loaders/LdbIntegration.lua
 GlobalPlayed.lua
 
-# Ace3 window
+# Windows
 UI.lua
+NativeWindow.lua
 
 # Options panel
 OptionsPanel.lua

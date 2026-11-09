@@ -59,7 +59,7 @@ function GlobalPlayed_LoadLdbIntegration()
 		self:AddLine("GlobalPlayed")
 		self:AddLine(" ")
 
-		if GlobalPlayed_Addon_IsAceEnabled() == true then
+		if GlobalPlayed_Addon_IsWindowEnabled() == true then
 			GlobalPlayed_LDB_AddColoredLine(self, "Left click", "Show/Hide UI", HINT_COLOR)
 		else
 			GlobalPlayed_LDB_AddColoredLine(self, "Left click", "Show report in chat", HINT_COLOR)

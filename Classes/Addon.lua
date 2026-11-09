@@ -22,3 +22,8 @@ end
 function GlobalPlayed_Addon_IsAceEnabled()
 	return GlobalPlayed_Options ~= nil and GlobalPlayed_Addon_IsLoaded("Ace3") == true and GlobalPlayed_Options.useAce == true
 end
+
+-- Returns whether played time is shown in a window instead of a chat report
+function GlobalPlayed_Addon_IsWindowEnabled()
+	return (GlobalPlayed_Options ~= nil and GlobalPlayed_Options.useNativeWindow == true) or GlobalPlayed_Addon_IsAceEnabled()
+end

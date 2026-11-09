@@ -3,7 +3,8 @@ local DEFAULT_OPTIONS = {
 	useClassColoration = true,
 	useShortDuration = false,
 	useFactionIcon = true,
-	useFullDuration = false
+	useFullDuration = false,
+	useNativeWindow = true
 }
 
 -- Initializes saved variables and migrations, then loads the window, options panel and broker
