@@ -1,5 +1,5 @@
 ----------------------
--- Native game window: characters grouped by realm, without any library
+-- Played time window: characters grouped by realm, built on the game native templates
 ----------------------
 local WINDOW_NAME = "GlobalPlayedWindow"
 local DEFAULT_WIDTH = 700

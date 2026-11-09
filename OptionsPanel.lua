@@ -11,14 +11,9 @@ local characterList = nil
 
 local OPTIONS = {
 	{
-		key = "useNativeWindow",
-		label = "Use the native window (test)",
-		tooltip = "Show played time in the game native window, with or without Ace3"
-	},
-	{
-		key = "useAce",
-		label = "Use Ace3 GUI",
-		tooltip = "Use the Ace3 integration to display played infos in a nice windowed UI"
+		key = "useWindow",
+		label = "Use the window",
+		tooltip = "Show played time in a window. When disabled, /gplayed writes a report in chat"
 	},
 	{
 		key = "useClassColoration",

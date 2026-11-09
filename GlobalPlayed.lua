@@ -1,15 +1,10 @@
 ----------------------
 -- Slash command and game events
 ----------------------
--- Shows played time: the Ace3 window when enabled, otherwise a report in chat
+-- Shows played time: the window when enabled, otherwise a report in chat
 function GlobalPlayed_ShowPlayed(p_withCharacters)
-	if GlobalPlayed_Options.useNativeWindow == true then
+	if GlobalPlayed_Addon_IsWindowEnabled() == true then
 		GlobalPlayed_Window_Toggle()
-		return
-	end
-
-	if GlobalPlayed_Addon_IsAceEnabled() == true then
-		GlobalPlayed_OpenUI()
 		return
 	end
 

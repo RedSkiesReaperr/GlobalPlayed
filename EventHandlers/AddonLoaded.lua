@@ -4,10 +4,13 @@ local DEFAULT_OPTIONS = {
 	useShortDuration = false,
 	useFactionIcon = true,
 	useFullDuration = false,
-	useNativeWindow = true
+	useWindow = true
 }
 
--- Initializes saved variables and migrations, then loads the window, options panel and broker
+-- Settings of the removed Ace3 window
+local OBSOLETE_OPTIONS = { "useAce", "useNativeWindow", "uiFrameStatus" }
+
+-- Initializes saved variables and migrations, then loads the options panel and broker
 function GlobalPlayed_AddonLoadedHandler()
 	if GlobalPlayed_MyAccount == nil then -- If no account registered
 		GlobalPlayed_MyAccount = GlobalPlayed_Account_Create()
@@ -18,9 +21,11 @@ function GlobalPlayed_AddonLoadedHandler()
 	end
 
 	if GlobalPlayed_Options == nil then -- If no options registered
-		GlobalPlayed_Options = {
-			useAce = GlobalPlayed_Addon_IsLoaded("Ace3")
-		}
+		GlobalPlayed_Options = {}
+	end
+
+	for _, key in ipairs(OBSOLETE_OPTIONS) do
+		GlobalPlayed_Options[key] = nil
 	end
 
 	for key, value in pairs(DEFAULT_OPTIONS) do
@@ -31,7 +36,6 @@ function GlobalPlayed_AddonLoadedHandler()
 
 	GlobalPlayed_Character_MigrateForeverRealms()
 
-	GlobalPlayed_LoadUI()
 	GlobalPlayed_LoadOptionsPanel()
 
 	GlobalPlayed_Account_UpdatePlayed(GlobalPlayed_MyAccount)
