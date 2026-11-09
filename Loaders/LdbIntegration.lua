@@ -1,6 +1,7 @@
 local HINT_COLOR = { 0, 0.7, 0.8 }
 local REALM_COLOR = { 0.17, 0.69, 0.33 }
 local TOOLTIP_MIN_WIDTH = 250
+local BROKER_NAME = "GlobalPlayed"
 
 -- Adds a two column tooltip line with both texts in one color
 local function GlobalPlayed_LDB_AddColoredLine(p_tooltip, p_left, p_right, p_color)
@@ -9,10 +10,34 @@ local function GlobalPlayed_LDB_AddColoredLine(p_tooltip, p_left, p_right, p_col
 	p_tooltip:AddDoubleLine(p_left, p_right, r, g, b, r, g, b)
 end
 
--- Registers the LibDataBroker data source, its clicks and its tooltip
+-- Shows or hides the minimap button and remembers the choice
+function GlobalPlayed_Minimap_SetShown(p_shown)
+	local icon = LibStub("LibDBIcon-1.0")
+
+	GlobalPlayed_Options.minimap.hide = not p_shown
+
+	if p_shown == true then
+		icon:Show(BROKER_NAME)
+	else
+		icon:Hide(BROKER_NAME)
+	end
+end
+
+-- Adds or removes the addon compartment entry. LibDBIcon remembers the choice
+function GlobalPlayed_Minimap_SetInCompartment(p_inCompartment)
+	local icon = LibStub("LibDBIcon-1.0")
+
+	if p_inCompartment == true then
+		icon:AddButtonToCompartment(BROKER_NAME)
+	else
+		icon:RemoveButtonFromCompartment(BROKER_NAME)
+	end
+end
+
+-- Registers the LibDataBroker data source, its clicks, its tooltip and its minimap button
 function GlobalPlayed_LoadLdbIntegration()
 	local ldb = LibStub:GetLibrary("LibDataBroker-1.1")
-	local dataobj = ldb:NewDataObject("GlobalPlayed", {
+	local dataobj = ldb:NewDataObject(BROKER_NAME, {
 		type = "data source",
 		text = "GlobalPlayed",
 		icon = "Interface\\AddOns\\GlobalPlayed\\Icons\\ldb_icon.jpg",
@@ -28,6 +53,8 @@ function GlobalPlayed_LoadLdbIntegration()
 			end
 		end
 	})
+
+	LibStub("LibDBIcon-1.0"):Register(BROKER_NAME, dataobj, GlobalPlayed_Options.minimap)
 
 	-- Builds the left and right texts of the account total line
 	local function GlobalPlayed_LDB_GetAccountLine(p_account)

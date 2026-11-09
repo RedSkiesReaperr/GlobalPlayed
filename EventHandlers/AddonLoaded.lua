@@ -34,6 +34,10 @@ function GlobalPlayed_AddonLoadedHandler()
 		end
 	end
 
+	if GlobalPlayed_Options.minimap == nil then
+		GlobalPlayed_Options.minimap = { hide = false, showInCompartment = true }
+	end
+
 	GlobalPlayed_Character_MigrateForeverRealms()
 
 	GlobalPlayed_LoadOptionsPanel()

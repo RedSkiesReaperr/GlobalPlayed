@@ -33,18 +33,46 @@ local OPTIONS = {
 	{
 		key = "useFactionIcon",
 		label = "Show faction icons"
+	},
+	{
+		label = "Show the minimap button",
+		getValue = function() return GlobalPlayed_Options.minimap.hide ~= true end,
+		setValue = function(p_value) GlobalPlayed_Minimap_SetShown(p_value) end
+	},
+	{
+		label = "Show in the addon compartment",
+		getValue = function() return GlobalPlayed_Options.minimap.showInCompartment == true end,
+		setValue = function(p_value) GlobalPlayed_Minimap_SetInCompartment(p_value) end
 	}
 }
+
+-- Returns the current value of an option entry
+local function GlobalPlayed_Options_GetValue(p_option)
+	if p_option.getValue ~= nil then
+		return p_option.getValue()
+	end
+
+	return GlobalPlayed_Options[p_option.key]
+end
+
+-- Stores a new value for an option entry
+local function GlobalPlayed_Options_SetValue(p_option, p_value)
+	if p_option.setValue ~= nil then
+		p_option.setValue(p_value)
+	else
+		GlobalPlayed_Options[p_option.key] = p_value
+	end
+end
 
 -- Creates a checkbox bound to an option below p_anchor. p_onChange runs after each click
 local function GlobalPlayed_CreateOptionCheck(p_parent, p_anchor, p_option, p_onChange)
 	local check = CreateFrame("CheckButton", nil, p_parent, "UICheckButtonTemplate")
 	check:SetSize(26, 26)
 	check:SetPoint("TOPLEFT", p_anchor, "BOTTOMLEFT", 0, 0)
-	check.optionKey = p_option.key
-	check:SetChecked(GlobalPlayed_Options[p_option.key])
+	check.option = p_option
+	check:SetChecked(GlobalPlayed_Options_GetValue(p_option))
 	check:SetScript("OnClick", function(this)
-		GlobalPlayed_Options[this.optionKey] = this:GetChecked()
+		GlobalPlayed_Options_SetValue(this.option, this:GetChecked())
 		p_onChange()
 	end)
 
@@ -186,7 +214,7 @@ function GlobalPlayed_LoadOptionsPanel()
 		-- Syncs the checkboxes and the character list with the saved data
 		function self:refresh()
 			for _, check in ipairs(checks) do
-				check:SetChecked(GlobalPlayed_Options[check.optionKey])
+				check:SetChecked(GlobalPlayed_Options_GetValue(check.option))
 			end
 
 			GlobalPlayed_RefreshCharacterList()
