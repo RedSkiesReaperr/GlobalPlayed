@@ -15,7 +15,7 @@ end
 
 -- Formats the account total for chat and the window status bar
 function GlobalPlayed_Account_GetPlayed(self)
-	return L["Account Total: "] .. GlobalPlayed_PlayedTime_Format(self.totalSeconds or 0) .. string.format(" (%sh)", self.totalAsHours)
+	return L["Account Total: "] .. GlobalPlayed_PlayedTime_Format(self.totalSeconds or 0) .. GlobalPlayed_PlayedTime_FormatHoursSuffix(self.totalAsHours)
 end
 
 -- Recomputes the account total from every saved character

@@ -32,6 +32,11 @@ function GlobalPlayed_PlayedTime_Store(p_target, p_totalSeconds)
 	p_target.hours = p_target.totalAsHours - (p_target.days * HOURS_PER_DAY)
 end
 
+-- Formats a whole hour count as " (123h)", to append after a name or a duration
+function GlobalPlayed_PlayedTime_FormatHoursSuffix(p_hours)
+	return " (" .. p_hours .. L["h"] .. ")"
+end
+
 -- Formats "Xd YYh", plus minutes and seconds when enabled. p_valueFormat wraps each value, for example in a color
 function GlobalPlayed_PlayedTime_Format(p_totalSeconds, p_valueFormat)
 	local valueFormat = p_valueFormat or "%s"

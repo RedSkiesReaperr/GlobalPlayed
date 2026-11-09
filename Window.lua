@@ -139,7 +139,7 @@ local function GlobalPlayed_Window_Fill()
 	for groupIndex, group in ipairs(groups) do
 		local header = GlobalPlayed_Window_GetHeader(groupIndex)
 
-		header:SetText(group.label .. string.format(" (%sh)", group.totalAsHours))
+		header:SetText(group.label .. GlobalPlayed_PlayedTime_FormatHoursSuffix(group.totalAsHours))
 		header:Show()
 
 		for _, character in ipairs(group.characters) do

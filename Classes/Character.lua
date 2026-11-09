@@ -85,7 +85,7 @@ end
 
 -- Formats the played time followed by the total in hours
 function GlobalPlayed_Character_GetPlayedWithTotal(self)
-	return GlobalPlayed_PlayedTime_Format(GlobalPlayed_Character_GetTotalSeconds(self)) .. string.format(" (%sh)", self.totalAsHours)
+	return GlobalPlayed_PlayedTime_Format(GlobalPlayed_Character_GetTotalSeconds(self)) .. GlobalPlayed_PlayedTime_FormatHoursSuffix(self.totalAsHours)
 end
 
 -- Returns the whole played time in hours

@@ -86,7 +86,7 @@ function GlobalPlayed_LoadLdbIntegration()
 
 	-- Builds the left and right texts of the account total line
 	local function GlobalPlayed_LDB_GetAccountLine(p_account)
-		local left = L["Total"] .. string.format(" (%dh)", p_account.totalAsHours)
+		local left = L["Total"] .. GlobalPlayed_PlayedTime_FormatHoursSuffix(p_account.totalAsHours)
 		local playtime = GlobalPlayed_PlayedTime_Format(p_account.totalSeconds or 0, "|cffffffff%s|r")
 
 		return {
@@ -98,7 +98,7 @@ function GlobalPlayed_LoadLdbIntegration()
 	-- Builds the name and played texts of a character line
 	local function GlobalPlayed_LDB_GetCharacterLine(p_character)
 		local coloredName = GlobalPlayed_Character_GetListName(p_character)
-		local name = coloredName .. " (" .. GlobalPlayed_Character_GetPlayedAsHours(p_character) .. "h)"
+		local name = coloredName .. GlobalPlayed_PlayedTime_FormatHoursSuffix(GlobalPlayed_Character_GetPlayedAsHours(p_character))
 		local playtime = GlobalPlayed_Character_GetPlayed(p_character)
 
 		return {
