@@ -6,38 +6,52 @@ Small addon to get your total playtime across characters, on Retail and WoW Fore
 
 ### **Usage**
 * Connect once to each of your characters: WoW only gives the played time of the character you are logged on
-* Type any GlobalPlayed command in chat, or use the data broker in your display addon
+* Type any GlobalPlayed command in chat, use the minimap button or the data broker in your display addon
 * Retail and WoW Forever keep separate totals
 
 ### **Available in-game commands**
-* **/gplayed** : Refresh and display your account total in chat (or open/close the window if [Ace3](https://www.curseforge.com/wow/addons/ace3 "Ace3") is installed and enabled in options)
-* **/gplayed all** : Refresh and display every character and the account total in chat (or open/close the window if [Ace3](https://www.curseforge.com/wow/addons/ace3 "Ace3") is installed and enabled in options)
+* **/gplayed** : Refresh and show the window (or your account total in chat if the window is disabled in options)
+* **/gplayed all** : Refresh and show the window (or every character and the account total in chat if the window is disabled in options)
 * **/gplayed options** : Open the GlobalPlayed options panel (also via **Esc &gt; Options &gt; Add-ons &gt; GlobalPlayed**)
+* A key binding to show or hide played time is available in **Esc &gt; Options &gt; Keybindings &gt; AddOns**
 
-### **Data broker**
-* **Hover** : characters grouped by realm with their played time, and the account total
-* **Left click** : open/close the window, or print the report in chat without Ace3
+### **Minimap button, addon compartment and data broker**
+* **Hover** : characters with their played time, and the account total
+* **Left click** : open/close the window, or print the report in chat if the window is disabled
 * **Middle click** : refresh the played time
 * **Right click** : open the options panel
 
-### **Window** (requires Ace3)
-* Characters grouped by realm, sorted by name
+### **Window**
+* Characters grouped by realm, class or faction, sorted by name or played time
 * Columns adapt to the window width, and its size and position are remembered
 * **Refresh** button next to **Close**
 
 ### **Options** (**Esc &gt; Options &gt; Add-ons &gt; GlobalPlayed**)
-* Use the Ace3 window
-* Class colors
-* Short duration units (d, h instead of days, hours)
-* Full played time with minutes and seconds
-* Faction icons
+* Use the window, or print reports in chat
+* Class colors, short duration units, full played time with minutes and seconds, faction icons
+* Show or hide the minimap button and the addon compartment entry
+* Text of the data broker: addon name, account total or current character
+* Group and sort characters
 * Remove the characters you deleted from the list (the logged in character cannot be removed)
+* Import played time from DataStore or Altoholic when they are installed
 
 ### **Dependencies**
-* [**Ace3 AddOn**](https://www.curseforge.com/wow/addons/ace3 "View it on CurseForge") (optional) for the resizable window
 * [Embedded] [**CallbackHandler-1.0**](https://www.curseforge.com/wow/addons/callbackhandler "View it on CurseForge")
 * [Embedded] [**LibDataBroker-1.1**](https://www.curseforge.com/wow/addons/libdatabroker-1-1 "View it on CurseForge")
+* [Embedded] [**LibDBIcon-1.0**](https://www.curseforge.com/wow/addons/libdbicon-1-0 "View it on CurseForge")
 * [Embedded] [**LibStub**](https://www.curseforge.com/wow/addons/libstub "View it on CurseForge")
+
+### **Translations**
+All the texts of GlobalPlayed are listed in `Locales/enUS.lua`, the reference for translators. Pull requests for new languages are welcome! To add one:
+
+1. Copy `Locales/enUS.lua` to a new file named after the game language: `deDE`, `esES`, `esMX`, `itIT`, `koKR`, `ptBR`, `ruRU`, `zhCN` or `zhTW`.
+2. Replace the line `GlobalPlayed_Locale_RegisterDefault({` with `GlobalPlayed_Locale_Register("deDE", {`, using your language code.
+3. Translate only the right side of each line. The left side must stay in English, exactly as it is. Keep `%s` and `%d` in your text: the addon replaces them with values.
+4. In `GlobalPlayed.toc`, add your file right after `Locales/frFR.lua`.
+5. Optionally, in `GlobalPlayed.toc`, add the addon list texts: `## Notes-deDE:` and `## Category-deDE:`, using the [official category names](https://warcraft.wiki.gg/wiki/Addon_Categories).
+6. Check it on a game client in your language, then open a pull request against `master`.
+
+A translation can be partial: any missing text is displayed in English. When a new text is added to the code, add it to `Locales/enUS.lua` too.
 
 ### **Bug reports & Feature requests**
 Bug reports and feature requests are welcome. Feel free to create issues on the [GitHub project](https://github.com/RedSkiesReaperr/GlobalPlayed/) to submit them!
@@ -49,4 +63,4 @@ Bug reports and feature requests are welcome. Feel free to create issues on the 
 - [wow-ui-source](https://github.com/Gethe/wow-ui-source)
 
 ### Releasing
-Push a `vX.Y.Z` tag, or `vX.Y.Z-betaN` for a beta. It must match `## Version:` in `GlobalPlayed.toc` and a dated `## X.Y.Z (YYYY-MM-DD)` entry in `CHANGELOG.md`. The workflow then packages the addon and uploads it to CurseForge and Wago.
+Push a `vX.Y.Z` tag, or `vX.Y.Z-betaN` for a beta. It must match `## Version:` in `GlobalPlayed.toc` and a dated `## X.Y.Z (YYYY-MM-DD)` entry in `CHANGELOG.md`. The workflow then packages the addon and uploads it to CurseForge, Wago and GitHub Releases. Tags must be annotated (`git tag -a`).

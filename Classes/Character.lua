@@ -11,15 +11,11 @@ local NEUTRAL_ICON = "neutral"
 function GlobalPlayed_Character_GetPlayerIdentity()
 	local name, surname = UnitName("player")
 
-	if GlobalPlayed_Addon_IsForever() == false then
-		return name, GetRealmName()
-	end
-
-	if surname ~= nil and surname ~= "" then
+	if GlobalPlayed_Addon_IsForever() == true and surname ~= nil and surname ~= "" then
 		name = name .. " " .. surname
 	end
 
-	return name, FOREVER_REALM
+	return name, GlobalPlayed_Character_NormalizeRealm(GetRealmName())
 end
 
 -- Moves every saved character to the Forever group on a Forever client.
@@ -29,21 +25,42 @@ function GlobalPlayed_Character_MigrateForeverRealms()
 		return
 	end
 
-	for k, v in ipairs(GlobalPlayed_Characters) do
-		v.realm = FOREVER_REALM
+	for _, character in ipairs(GlobalPlayed_Characters) do
+		character.realm = FOREVER_REALM
 	end
 end
 
--- Creates a character entry with an empty played time
-function GlobalPlayed_Character_Create(p_name, p_realm)
-	local character = {
-		name = p_name,
-		realm = p_realm,
-		days = 0,
-		hours = 0,
-		totalAsHours = 0,
-		totalSeconds = 0
-	}
+-- Converts a game realm name to the one stored for a character
+function GlobalPlayed_Character_NormalizeRealm(p_realm)
+	if GlobalPlayed_Addon_IsForever() == true then
+		return FOREVER_REALM
+	end
+
+	return p_realm
+end
+
+-- Builds an entry with a name, a realm and an empty played time
+local function GlobalPlayed_Character_New(p_name, p_realm)
+	local character = { name = p_name, realm = p_realm }
+
+	GlobalPlayed_PlayedTime_Store(character, 0)
+
+	return character
+end
+
+-- Creates a character entry from data provided by another addon
+function GlobalPlayed_Character_CreateImported(p_name, p_realm, p_class, p_faction)
+	local character = GlobalPlayed_Character_New(p_name, p_realm)
+
+	character.class = p_class ~= "" and p_class or nil
+	character.faction = p_faction ~= "" and p_faction or nil
+
+	return character
+end
+
+-- Creates the entry of the logged in character, with an empty played time
+function GlobalPlayed_Character_CreateCurrent(p_name, p_realm)
+	local character = GlobalPlayed_Character_New(p_name, p_realm)
 
 	GlobalPlayed_Character_RefreshIdentity(character)
 
@@ -66,7 +83,7 @@ end
 
 -- Formats the played time followed by the total in hours
 function GlobalPlayed_Character_GetPlayedWithTotal(self)
-	return GlobalPlayed_PlayedTime_Format(GlobalPlayed_Character_GetTotalSeconds(self)) .. string.format(" (%sh)", self.totalAsHours)
+	return GlobalPlayed_PlayedTime_Format(GlobalPlayed_Character_GetTotalSeconds(self)) .. GlobalPlayed_PlayedTime_FormatHoursSuffix(self.totalAsHours)
 end
 
 -- Returns the whole played time in hours
@@ -75,7 +92,7 @@ function GlobalPlayed_Character_GetPlayedAsHours(self)
 end
 
 -- Returns the character class color, or nil when unknown
-function GlobalPlayed_Character_GetClassColor(self)
+local function GlobalPlayed_Character_GetClassColor(self)
 	return GlobalPlayed_ClassColor_GetColor(self.class)
 end
 
@@ -92,7 +109,7 @@ local function GlobalPlayed_Character_Colorize(self, p_text)
 end
 
 -- Returns the name, class colored when the option is enabled
-function GlobalPlayed_Character_GetNameColored(self)
+local function GlobalPlayed_Character_GetNameColored(self)
 	return GlobalPlayed_Character_Colorize(self, self.name)
 end
 
@@ -122,6 +139,35 @@ function GlobalPlayed_Character_GetNameRealmColored(self)
 	end
 
 	return GlobalPlayed_Character_Colorize(self, self.name .. "-" .. self.realm)
+end
+
+-- Returns the name to list a character under its group: its realm is only useful when groups are not realms
+function GlobalPlayed_Character_GetListName(self)
+	if GlobalPlayed_Options.groupBy == "realm" then
+		return GlobalPlayed_Character_GetNameColored(self)
+	end
+
+	return GlobalPlayed_Character_GetDisplayNameColored(self)
+end
+
+-- Returns the localized class name, or a generic label when unknown
+function GlobalPlayed_Character_GetClassLabel(self)
+	if self.class == nil then
+		return UNKNOWN
+	end
+
+	return LOCALIZED_CLASS_NAMES_MALE ~= nil and LOCALIZED_CLASS_NAMES_MALE[self.class] or self.class
+end
+
+-- Returns the localized faction name, or a generic label when unknown
+function GlobalPlayed_Character_GetFactionLabel(self)
+	if self.faction == "Alliance" then
+		return FACTION_ALLIANCE
+	elseif self.faction == "Horde" then
+		return FACTION_HORDE
+	end
+
+	return UNKNOWN
 end
 
 -- Returns the faction icon texture path, neutral when unknown

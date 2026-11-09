@@ -1,3 +1,6 @@
+----------------------
+-- Silent played time requests and their replies
+----------------------
 local PLAYED_REQUEST_TIMEOUT = 5
 local PLAYED_EVENT = "TIME_PLAYED_MSG"
 
@@ -77,6 +80,8 @@ function GlobalPlayed_TimePlayedMsgHandler(p_totalSeconds)
 		GlobalPlayed_Character_UpdatePlayed(GlobalPlayed_CurrentCharacter, p_totalSeconds)
 
 		GlobalPlayed_Account_UpdatePlayed(GlobalPlayed_MyAccount)
+		GlobalPlayed_Broker_UpdateText()
+		GlobalPlayed_Window_Update()
 	end
 
 	GlobalPlayed_FinishPlayedRequest()

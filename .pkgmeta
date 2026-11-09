@@ -4,9 +4,16 @@ manual-changelog:
   filename: CHANGELOG.md
   markup-type: markdown
 
+embedded-libraries:
+  - libstub
+  - callbackhandler
+  - libdatabroker-1-1
+  - libdbicon-1-0
+
+optional-dependencies:
+  - altoholic
+
 ignore:
   - README.md
   - CHANGELOG.md
-
-optional-dependencies:
-  - ace3
+  - symbolic-link.sh

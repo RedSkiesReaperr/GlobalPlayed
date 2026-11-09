@@ -1,10 +1,14 @@
 ----------------------
 -- Slash command and game events
 ----------------------
--- Shows played time: the Ace3 window when enabled, otherwise a report in chat
+local L = GlobalPlayed_L
+
+local isShowPending = false
+
+-- Toggles the window when enabled, otherwise prints a report in chat
 function GlobalPlayed_ShowPlayed(p_withCharacters)
-	if GlobalPlayed_Addon_IsAceEnabled() == true then
-		GlobalPlayed_OpenUI()
+	if GlobalPlayed_Addon_IsWindowEnabled() == true then
+		GlobalPlayed_Window_Toggle()
 		return
 	end
 
@@ -15,18 +19,36 @@ function GlobalPlayed_ShowPlayed(p_withCharacters)
 	GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
 end
 
+-- Asks the played time, then shows it. Used by the slash command and the key binding.
+-- Repeated requests are ignored until the first one is answered, so a double press does not open then close the window
+function GlobalPlayed_RefreshAndShowPlayed(p_withCharacters)
+	if isShowPending == true then
+		return
+	end
+
+	isShowPending = true
+
+	GlobalPlayed_RequestPlayed(function()
+		isShowPending = false
+		GlobalPlayed_ShowPlayed(p_withCharacters)
+	end)
+end
+
+BINDING_HEADER_GLOBALPLAYED = "GlobalPlayed"
+BINDING_NAME_GLOBALPLAYED_TOGGLE = L["Show or hide played time"]
+
 SLASH_GLOBAL_PLAYED1 = "/gplayed"
 -- Handles /gplayed, /gplayed all and /gplayed options, ignoring case and extra spaces
 SlashCmdList["GLOBAL_PLAYED"] = function(p_message)
 	local command = p_message:match("^%s*(.-)%s*$"):lower()
 
 	if command == "" or command == "all" then
-		GlobalPlayed_RequestPlayed(function() GlobalPlayed_ShowPlayed(command == "all") end)
+		GlobalPlayed_RefreshAndShowPlayed(command == "all")
 	elseif command == "options" then
 		GlobalPlayed_OpenOptionsPanel()
 	else
-		GlobalPlayed_Log("Unknown command: /gplayed " .. p_message)
-		GlobalPlayed_Log("Available commands:")
+		GlobalPlayed_Log(L["Unknown command: /gplayed "] .. p_message)
+		GlobalPlayed_Log(L["Available commands:"])
 		GlobalPlayed_Log("    /gplayed")
 		GlobalPlayed_Log("    /gplayed all")
 		GlobalPlayed_Log("    /gplayed options")

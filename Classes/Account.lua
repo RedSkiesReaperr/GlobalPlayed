@@ -1,6 +1,8 @@
 ----------------------
 -- Here is the Account behavior
 ----------------------
+local L = GlobalPlayed_L
+
 -- Creates an empty account total
 function GlobalPlayed_Account_Create()
 	return {
@@ -13,19 +15,15 @@ end
 
 -- Formats the account total for chat and the window status bar
 function GlobalPlayed_Account_GetPlayed(self)
-	return "Account Total: " .. GlobalPlayed_PlayedTime_Format(self.totalSeconds or 0) .. string.format(" (%sh)", self.totalAsHours)
+	return L["Account Total: "] .. GlobalPlayed_PlayedTime_Format(self.totalSeconds) .. GlobalPlayed_PlayedTime_FormatHoursSuffix(self.totalAsHours)
 end
 
 -- Recomputes the account total from every saved character
 function GlobalPlayed_Account_UpdatePlayed(self)
 	local seconds = 0
 
-	if GlobalPlayed_Characters == nil then
-		return
-	end
-
-	for k, v in ipairs(GlobalPlayed_Characters) do
-		seconds = seconds + GlobalPlayed_Character_GetTotalSeconds(v)
+	for _, character in ipairs(GlobalPlayed_Characters) do
+		seconds = seconds + GlobalPlayed_Character_GetTotalSeconds(character)
 	end
 
 	GlobalPlayed_PlayedTime_Store(self, seconds)

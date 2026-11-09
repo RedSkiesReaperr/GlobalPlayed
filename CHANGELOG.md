@@ -1,5 +1,23 @@
 # Changelogs
 
+## 1.7.0 (2026-11-09)
+
+- Add native window, used by default and can be disabled in the options, Ace3 is no longer needed
+- Add minimap button and addon compartment entry, both can be disabled in the options
+- Add addon icon in the addon list
+- Add key binding to show or hide played time
+- Add played time import from DataStore and Altoholic, from a button in the options
+- Add choice of the text shown by the data broker: addon name, account total or current character
+- Add characters can be grouped by realm, class or faction
+- Add characters can be sorted by name or played time
+- Add French translation
+- Add tooltips explaining each option
+- Add options grouped in sections, with a separate page for characters
+- Add auto upload to GitHub Releases
+- Remove Save & Reload button, every option now applies immediately
+- Fix open window now updates as soon as played time is received
+- Fix repeated commands while played time is being requested
+
 ## 1.6.0 (2026-11-07)
 
 - Add WoW Forever support
