@@ -343,6 +343,8 @@ local function GlobalPlayed_BuildCharactersPage(p_page)
 	characterList:SetSize(1, 1)
 	charactersScroll:SetScrollChild(characterList)
 	charactersScroll:SetScript("OnSizeChanged", function(_, p_width) characterList:SetWidth(p_width) end)
+	-- The scroll frame may already have its size here, and OnSizeChanged would then not fire on the first show
+	characterList:SetWidth(charactersScroll:GetWidth())
 end
 
 -- Builds a page on its first show, when saved variables are loaded, then only refreshes it
