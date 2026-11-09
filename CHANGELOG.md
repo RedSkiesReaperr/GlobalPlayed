@@ -2,7 +2,7 @@
 
 ## 1.7.0 (2026-11-09)
 
-- Add native window, Ace3 is no longer needed
+- Add native window, used by default and can be disabled in the options, Ace3 is no longer needed
 - Add minimap button and addon compartment entry, both can be disabled in the options
 - Add addon icon in the addon list
 - Add key binding to show or hide played time
