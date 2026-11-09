@@ -4,6 +4,7 @@ local HINT_COLOR = { 0, 0.7, 0.8 }
 local REALM_COLOR = { 0.17, 0.69, 0.33 }
 local TOOLTIP_MIN_WIDTH = 250
 local BROKER_NAME = "GlobalPlayed"
+local BROKER_ICON = "Interface\\Icons\\INV_Misc_PocketWatch_01"
 
 local brokerObject = nil
 
@@ -64,7 +65,7 @@ function GlobalPlayed_LoadLdbIntegration()
 	local dataobj = ldb:NewDataObject(BROKER_NAME, {
 		type = "data source",
 		text = "GlobalPlayed",
-		icon = "Interface\\AddOns\\GlobalPlayed\\Icons\\ldb_icon.jpg",
+		icon = BROKER_ICON,
 		-- Left: report or window, middle: refresh played time, right: options
 		OnClick = function(self, button)
 			if button == "LeftButton" then
