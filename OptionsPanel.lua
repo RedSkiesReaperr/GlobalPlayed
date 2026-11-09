@@ -5,6 +5,8 @@ local category = Settings.RegisterCanvasLayoutCategory(GlobalPlayedOptionsPanel,
 Settings.RegisterAddOnCategory(category)
 
 local CHARACTER_ROW_HEIGHT = 26
+local DROPDOWN_WIDTH = 180
+local DROPDOWN_COLUMN_X = 300
 
 local characterRows = {}
 local characterList = nil
@@ -43,6 +45,19 @@ local OPTIONS = {
 		label = "Show in the addon compartment",
 		getValue = function() return GlobalPlayed_Options.minimap.showInCompartment == true end,
 		setValue = function(p_value) GlobalPlayed_Minimap_SetInCompartment(p_value) end
+	}
+}
+
+-- Options shown as drop-down lists, in the right column of the panel
+local DROPDOWN_OPTIONS = {
+	{
+		key = "brokerText",
+		label = "Broker text",
+		choices = {
+			{ value = "name", label = "Addon name" },
+			{ value = "account", label = "Account total" },
+			{ value = "character", label = "Current character" }
+		}
 	}
 }
 
@@ -90,6 +105,31 @@ local function GlobalPlayed_CreateOptionCheck(p_parent, p_anchor, p_option, p_on
 	end
 
 	return check
+end
+
+-- Creates a labeled drop-down bound to an option below p_anchor. p_onChange runs after each choice
+local function GlobalPlayed_CreateOptionDropdown(p_parent, p_anchor, p_option, p_onChange)
+	local label = p_parent:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+
+	label:SetPoint("TOPLEFT", p_anchor, "BOTTOMLEFT", 0, -8)
+	label:SetText(p_option.label)
+
+	local dropdown = CreateFrame("DropdownButton", nil, p_parent, "WowStyle1DropdownTemplate")
+
+	dropdown:SetPoint("TOPLEFT", label, "BOTTOMLEFT", 0, -4)
+	dropdown:SetWidth(DROPDOWN_WIDTH)
+	dropdown:SetupMenu(function(_, p_rootDescription)
+		for _, choice in ipairs(p_option.choices) do
+			p_rootDescription:CreateRadio(choice.label, function()
+				return GlobalPlayed_Options[p_option.key] == choice.value
+			end, function()
+				GlobalPlayed_Options[p_option.key] = choice.value
+				p_onChange()
+			end)
+		end
+	end)
+
+	return dropdown
 end
 
 -- Creates a character row with its name, played time and delete button
@@ -142,6 +182,13 @@ local function GlobalPlayed_RefreshCharacterList()
 	characterList:SetHeight(math.max(#characters * CHARACTER_ROW_HEIGHT, 1))
 end
 
+-- Applies an option change everywhere it is displayed
+local function GlobalPlayed_Options_OnChanged()
+	GlobalPlayed_RefreshCharacterList()
+	GlobalPlayed_Broker_UpdateText()
+	GlobalPlayed_Window_Update()
+end
+
 StaticPopupDialogs["GLOBALPLAYED_DELETE_CHARACTER"] = {
 	text = "Remove %s from GlobalPlayed?",
 	button1 = YES,
@@ -149,7 +196,7 @@ StaticPopupDialogs["GLOBALPLAYED_DELETE_CHARACTER"] = {
 	-- Removes the confirmed character and refreshes the list
 	OnAccept = function(self, p_character)
 		GlobalPlayed_Roster_Remove(p_character)
-		GlobalPlayed_RefreshCharacterList()
+		GlobalPlayed_Options_OnChanged()
 	end,
 	timeout = 0,
 	whileDead = true,
@@ -175,8 +222,17 @@ function GlobalPlayed_LoadOptionsPanel()
 		local checks = {}
 		local anchor = subTitle
 		for _, option in ipairs(OPTIONS) do
-			anchor = GlobalPlayed_CreateOptionCheck(self, anchor, option, GlobalPlayed_RefreshCharacterList)
+			anchor = GlobalPlayed_CreateOptionCheck(self, anchor, option, GlobalPlayed_Options_OnChanged)
 			table.insert(checks, anchor)
+		end
+
+		local dropdownAnchor = CreateFrame("Frame", nil, self)
+
+		dropdownAnchor:SetSize(1, 1)
+		dropdownAnchor:SetPoint("TOPLEFT", subTitle, "BOTTOMLEFT", DROPDOWN_COLUMN_X, 0)
+
+		for _, option in ipairs(DROPDOWN_OPTIONS) do
+			dropdownAnchor = GlobalPlayed_CreateOptionDropdown(self, dropdownAnchor, option, GlobalPlayed_Options_OnChanged)
 		end
 
 		local charactersTitle = self:CreateFontString(nil, "ARTWORK", "GameFontNormal")
@@ -191,7 +247,7 @@ function GlobalPlayed_LoadOptionsPanel()
 			importButton:SetText("Import from DataStore")
 			importButton:SetScript("OnClick", function()
 				GlobalPlayed_DataStoreImport_Run()
-				GlobalPlayed_RefreshCharacterList()
+				GlobalPlayed_Options_OnChanged()
 			end)
 		end
 

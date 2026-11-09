@@ -3,11 +3,33 @@ local REALM_COLOR = { 0.17, 0.69, 0.33 }
 local TOOLTIP_MIN_WIDTH = 250
 local BROKER_NAME = "GlobalPlayed"
 
+local brokerObject = nil
+
 -- Adds a two column tooltip line with both texts in one color
 local function GlobalPlayed_LDB_AddColoredLine(p_tooltip, p_left, p_right, p_color)
 	local r, g, b = unpack(p_color)
 
 	p_tooltip:AddDoubleLine(p_left, p_right, r, g, b, r, g, b)
+end
+
+-- Returns the text matching the broker text option
+local function GlobalPlayed_Broker_GetText()
+	if GlobalPlayed_Options.brokerText == "account" then
+		return GlobalPlayed_PlayedTime_Format(GlobalPlayed_MyAccount.totalSeconds or 0)
+	end
+
+	if GlobalPlayed_Options.brokerText == "character" and GlobalPlayed_CurrentCharacter ~= nil then
+		return GlobalPlayed_PlayedTime_Format(GlobalPlayed_Character_GetTotalSeconds(GlobalPlayed_CurrentCharacter))
+	end
+
+	return BROKER_NAME
+end
+
+-- Updates the text shown by display addons such as Titan Panel or ElvUI
+function GlobalPlayed_Broker_UpdateText()
+	if brokerObject ~= nil then
+		brokerObject.text = GlobalPlayed_Broker_GetText()
+	end
 end
 
 -- Shows or hides the minimap button and remembers the choice
@@ -53,6 +75,9 @@ function GlobalPlayed_LoadLdbIntegration()
 			end
 		end
 	})
+
+	brokerObject = dataobj
+	GlobalPlayed_Broker_UpdateText()
 
 	LibStub("LibDBIcon-1.0"):Register(BROKER_NAME, dataobj, GlobalPlayed_Options.minimap)
 

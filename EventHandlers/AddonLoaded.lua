@@ -4,7 +4,8 @@ local DEFAULT_OPTIONS = {
 	useShortDuration = false,
 	useFactionIcon = true,
 	useFullDuration = false,
-	useWindow = true
+	useWindow = true,
+	brokerText = "name"
 }
 
 -- Settings of the removed Ace3 window

@@ -292,6 +292,13 @@ local function GlobalPlayed_Window_Create()
 	table.insert(UISpecialFrames, WINDOW_NAME)
 end
 
+-- Rebuilds the content of the open window, for example after an option change
+function GlobalPlayed_Window_Update()
+	if window ~= nil and window:IsShown() then
+		GlobalPlayed_Window_Fill()
+	end
+end
+
 -- Opens the window with up to date content, or closes it when already shown
 function GlobalPlayed_Window_Toggle()
 	if window == nil then

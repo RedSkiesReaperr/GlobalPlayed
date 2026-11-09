@@ -77,6 +77,7 @@ function GlobalPlayed_TimePlayedMsgHandler(p_totalSeconds)
 		GlobalPlayed_Character_UpdatePlayed(GlobalPlayed_CurrentCharacter, p_totalSeconds)
 
 		GlobalPlayed_Account_UpdatePlayed(GlobalPlayed_MyAccount)
+		GlobalPlayed_Broker_UpdateText()
 	end
 
 	GlobalPlayed_FinishPlayedRequest()
