@@ -70,6 +70,31 @@ function GlobalPlayed_Roster_Sort(p_characters, p_byRealm)
 	return sorted
 end
 
+-- Returns a copy sorted following the sort option: by name, or by played time with the most played first
+local function GlobalPlayed_Roster_SortForDisplay(p_characters)
+	local sorted = GlobalPlayed_Roster_Sort(p_characters, false)
+
+	if GlobalPlayed_Options.sortBy == "played" then
+		local positions = {}
+
+		for index, character in ipairs(sorted) do
+			positions[character] = index
+		end
+
+		table.sort(sorted, function(a, b)
+			local aSeconds, bSeconds = GlobalPlayed_Character_GetTotalSeconds(a), GlobalPlayed_Character_GetTotalSeconds(b)
+
+			if aSeconds ~= bSeconds then
+				return aSeconds > bSeconds
+			end
+
+			return positions[a] < positions[b]
+		end)
+	end
+
+	return sorted
+end
+
 -- Returns the label of the group a character belongs to, following the group option
 local function GlobalPlayed_Roster_GetGroupLabel(p_character)
 	if GlobalPlayed_Options.groupBy == "class" then
@@ -81,12 +106,12 @@ local function GlobalPlayed_Roster_GetGroupLabel(p_character)
 	return p_character.realm
 end
 
--- Groups characters following the group option, sorted by name, with each group played total
+-- Groups characters following the group and sort options, with each group played total
 function GlobalPlayed_Roster_Group(p_characters)
 	local groups = {}
 	local groupsByLabel = {}
 
-	for k, v in ipairs(GlobalPlayed_Roster_Sort(p_characters, false)) do
+	for k, v in ipairs(GlobalPlayed_Roster_SortForDisplay(p_characters)) do
 		local label = GlobalPlayed_Roster_GetGroupLabel(v)
 		local group = groupsByLabel[label]
 
@@ -102,7 +127,13 @@ function GlobalPlayed_Roster_Group(p_characters)
 		group.totalAsHours = GlobalPlayed_PlayedTime_ToHours(group.totalSeconds)
 	end
 
-	table.sort(groups, function(a, b) return GlobalPlayed_Roster_IsBefore(a.label, b.label) end)
+	table.sort(groups, function(a, b)
+		if GlobalPlayed_Options.sortBy == "played" and a.totalSeconds ~= b.totalSeconds then
+			return a.totalSeconds > b.totalSeconds
+		end
+
+		return GlobalPlayed_Roster_IsBefore(a.label, b.label)
+	end)
 
 	return groups
 end
@@ -126,9 +157,9 @@ function GlobalPlayed_Roster_Remove(p_character)
 	return false
 end
 
--- Prints every character played time in chat, sorted by name
+-- Prints every character played time in chat, following the sort option
 function GlobalPlayed_Roster_LogPlayed()
-	for k, v in ipairs(GlobalPlayed_Roster_Sort(GlobalPlayed_Characters, false)) do
+	for k, v in ipairs(GlobalPlayed_Roster_SortForDisplay(GlobalPlayed_Characters)) do
 		GlobalPlayed_Log(GlobalPlayed_Character_GetNameRealmColored(v) .. ": " .. GlobalPlayed_Character_GetPlayedWithTotal(v))
 	end
 end

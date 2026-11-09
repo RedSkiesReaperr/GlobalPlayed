@@ -67,6 +67,14 @@ local DROPDOWN_OPTIONS = {
 			{ value = "class", label = "Class" },
 			{ value = "faction", label = "Faction" }
 		}
+	},
+	{
+		key = "sortBy",
+		label = "Sort characters by",
+		choices = {
+			{ value = "name", label = "Name" },
+			{ value = "played", label = "Played time" }
+		}
 	}
 }
 

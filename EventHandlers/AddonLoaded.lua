@@ -6,7 +6,8 @@ local DEFAULT_OPTIONS = {
 	useFullDuration = false,
 	useWindow = true,
 	brokerText = "name",
-	groupBy = "realm"
+	groupBy = "realm",
+	sortBy = "name"
 }
 
 -- Settings of the removed Ace3 window
