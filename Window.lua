@@ -173,17 +173,11 @@ local function GlobalPlayed_Window_Fill()
 	GlobalPlayed_Window_Layout()
 end
 
--- Asks the played time again and rebuilds the content. The button stays disabled until the reply arrives
+-- Asks the played time again. The button stays disabled until the reply or the timeout
 local function GlobalPlayed_Window_Refresh()
 	refreshButton:SetEnabled(false)
 
-	GlobalPlayed_RequestPlayed(function()
-		refreshButton:SetEnabled(true)
-
-		if window:IsShown() then
-			GlobalPlayed_Window_Fill()
-		end
-	end)
+	GlobalPlayed_RequestPlayed(function() refreshButton:SetEnabled(true) end)
 end
 
 -- Saves the size and position so the window reopens as it was left
