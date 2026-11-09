@@ -1,3 +1,6 @@
+----------------------
+-- LibDataBroker data source, minimap button and addon compartment
+----------------------
 local L = GlobalPlayed_L
 
 local HINT_COLOR = { 0, 0.7, 0.8 }

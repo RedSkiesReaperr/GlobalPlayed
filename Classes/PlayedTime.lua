@@ -1,5 +1,5 @@
 ----------------------
--- Played time storage and formatting, shared by characters, realms and the account
+-- Played time storage and formatting, shared by characters, groups and the account
 ----------------------
 local L = GlobalPlayed_L
 

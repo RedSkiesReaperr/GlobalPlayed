@@ -1,3 +1,6 @@
+----------------------
+-- Silent played time requests and their replies
+----------------------
 local PLAYED_REQUEST_TIMEOUT = 5
 local PLAYED_EVENT = "TIME_PLAYED_MSG"
 

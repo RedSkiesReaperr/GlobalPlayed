@@ -1,3 +1,6 @@
+----------------------
+-- Options panel: settings and character management
+----------------------
 local L = GlobalPlayed_L
 
 local GlobalPlayedOptionsPanel = CreateFrame("Frame", "GlobalPlayedOptionsPanel")

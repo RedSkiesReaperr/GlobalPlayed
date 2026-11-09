@@ -1,8 +1,8 @@
-local L = GlobalPlayed_L
-
 ----------------------
 -- Here is the Account behavior
 ----------------------
+local L = GlobalPlayed_L
+
 -- Creates an empty account total
 function GlobalPlayed_Account_Create()
 	return {

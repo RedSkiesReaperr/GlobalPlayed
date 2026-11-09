@@ -5,7 +5,7 @@ local L = GlobalPlayed_L
 
 local isShowPending = false
 
--- Shows played time: the window when enabled, otherwise a report in chat
+-- Toggles the window when enabled, otherwise prints a report in chat
 function GlobalPlayed_ShowPlayed(p_withCharacters)
 	if GlobalPlayed_Addon_IsWindowEnabled() == true then
 		GlobalPlayed_Window_Toggle()

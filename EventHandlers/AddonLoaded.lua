@@ -1,3 +1,6 @@
+----------------------
+-- Saved variables setup when the addon loads
+----------------------
 local L = GlobalPlayed_L
 
 -- Options added by later versions are filled in for players upgrading with existing settings
@@ -17,15 +20,15 @@ local OBSOLETE_OPTIONS = { "useAce", "useNativeWindow", "uiFrameStatus" }
 
 -- Initializes saved variables and migrations, then loads the options panel and broker
 function GlobalPlayed_AddonLoadedHandler()
-	if GlobalPlayed_MyAccount == nil then -- If no account registered
+	if GlobalPlayed_MyAccount == nil then
 		GlobalPlayed_MyAccount = GlobalPlayed_Account_Create()
 	end
 
-	if GlobalPlayed_Characters == nil then -- If no characters registered
+	if GlobalPlayed_Characters == nil then
 		GlobalPlayed_Characters = {}
 	end
 
-	if GlobalPlayed_Options == nil then -- If no options registered
+	if GlobalPlayed_Options == nil then
 		GlobalPlayed_Options = {}
 	end
 

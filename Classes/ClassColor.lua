@@ -1,4 +1,6 @@
--- Official colors from the game RAID_CLASS_COLORS table
+----------------------
+-- Class colors: the official values of the game RAID_CLASS_COLORS table
+----------------------
 local classColors = {
 	WARRIOR = "C69B6D",
 	PALADIN = "F48CBA",
