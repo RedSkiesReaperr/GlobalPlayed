@@ -11,7 +11,7 @@ local SHORT_UNITS = { day = L["d"], hour = L["h"], minute = L["m"], second = L["
 local LONG_UNITS = { day = L["days"], hour = L["hours"], minute = L["minutes"], second = L["seconds"] }
 
 -- Returns the unit labels matching the short duration option
-function GlobalPlayed_PlayedTime_GetUnits()
+local function GlobalPlayed_PlayedTime_GetUnits()
 	if GlobalPlayed_Options.useShortDuration == true then
 		return SHORT_UNITS
 	end

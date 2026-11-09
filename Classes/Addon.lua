@@ -13,5 +13,5 @@ end
 
 -- Returns whether played time is shown in a window instead of a chat report
 function GlobalPlayed_Addon_IsWindowEnabled()
-	return GlobalPlayed_Options ~= nil and GlobalPlayed_Options.useWindow == true
+	return GlobalPlayed_Options.useWindow == true
 end

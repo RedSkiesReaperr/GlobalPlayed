@@ -18,7 +18,7 @@ end
 -- Returns the text matching the broker text option
 local function GlobalPlayed_Broker_GetText()
 	if GlobalPlayed_Options.brokerText == "account" then
-		return GlobalPlayed_PlayedTime_Format(GlobalPlayed_MyAccount.totalSeconds or 0)
+		return GlobalPlayed_PlayedTime_Format(GlobalPlayed_MyAccount.totalSeconds)
 	end
 
 	if GlobalPlayed_Options.brokerText == "character" and GlobalPlayed_CurrentCharacter ~= nil then
@@ -62,7 +62,7 @@ end
 -- Returns the left and right texts of the account total line
 local function GlobalPlayed_LDB_GetAccountLine(p_account)
 	local left = L["Total"] .. GlobalPlayed_PlayedTime_FormatHoursSuffix(p_account.totalAsHours)
-	local right = GlobalPlayed_PlayedTime_Format(p_account.totalSeconds or 0, "|cffffffff%s|r")
+	local right = GlobalPlayed_PlayedTime_Format(p_account.totalSeconds, "|cffffffff%s|r")
 
 	return left, right
 end

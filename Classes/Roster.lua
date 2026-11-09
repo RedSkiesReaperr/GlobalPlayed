@@ -8,10 +8,6 @@ end
 
 -- Returns the saved character matching name and realm, or nil
 function GlobalPlayed_Roster_Find(p_name, p_realm)
-	if GlobalPlayed_Characters == nil then
-		return nil
-	end
-
 	for k, v in ipairs(GlobalPlayed_Characters) do
 		if v.name == p_name and v.realm == p_realm then
 			return v
@@ -141,7 +137,7 @@ end
 -- Removes a character from the saved list and updates the account total.
 -- The logged in character cannot be removed, its entry would be recreated at next login
 function GlobalPlayed_Roster_Remove(p_character)
-	if GlobalPlayed_Characters == nil or p_character == GlobalPlayed_CurrentCharacter then
+	if p_character == GlobalPlayed_CurrentCharacter then
 		return false
 	end
 

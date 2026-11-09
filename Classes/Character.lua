@@ -92,7 +92,7 @@ function GlobalPlayed_Character_GetPlayedAsHours(self)
 end
 
 -- Returns the character class color, or nil when unknown
-function GlobalPlayed_Character_GetClassColor(self)
+local function GlobalPlayed_Character_GetClassColor(self)
 	return GlobalPlayed_ClassColor_GetColor(self.class)
 end
 
@@ -109,7 +109,7 @@ local function GlobalPlayed_Character_Colorize(self, p_text)
 end
 
 -- Returns the name, class colored when the option is enabled
-function GlobalPlayed_Character_GetNameColored(self)
+local function GlobalPlayed_Character_GetNameColored(self)
 	return GlobalPlayed_Character_Colorize(self, self.name)
 end
 
@@ -153,7 +153,7 @@ end
 -- Returns the localized class name, or a generic label when unknown
 function GlobalPlayed_Character_GetClassLabel(self)
 	if self.class == nil then
-		return UNKNOWN or "Unknown"
+		return UNKNOWN
 	end
 
 	return LOCALIZED_CLASS_NAMES_MALE ~= nil and LOCALIZED_CLASS_NAMES_MALE[self.class] or self.class
@@ -162,12 +162,12 @@ end
 -- Returns the localized faction name, or a generic label when unknown
 function GlobalPlayed_Character_GetFactionLabel(self)
 	if self.faction == "Alliance" then
-		return FACTION_ALLIANCE or "Alliance"
+		return FACTION_ALLIANCE
 	elseif self.faction == "Horde" then
-		return FACTION_HORDE or "Horde"
+		return FACTION_HORDE
 	end
 
-	return UNKNOWN or "Unknown"
+	return UNKNOWN
 end
 
 -- Returns the faction icon texture path, neutral when unknown
