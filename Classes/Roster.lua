@@ -36,7 +36,7 @@ function GlobalPlayed_Roster_FindOrAddCurrent()
 	end
 
 	if character == nil then
-		character = GlobalPlayed_Character_Create(name, realm)
+		character = GlobalPlayed_Character_CreateCurrent(name, realm)
 		table.insert(GlobalPlayed_Characters, character)
 	else
 		GlobalPlayed_Character_RefreshIdentity(character)

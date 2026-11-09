@@ -39,30 +39,28 @@ function GlobalPlayed_Character_NormalizeRealm(p_realm)
 	return p_realm
 end
 
--- Creates a character entry from data provided by another addon
-function GlobalPlayed_Character_CreateImported(p_name, p_realm, p_class, p_faction)
-	return {
-		name = p_name,
-		realm = p_realm,
-		class = p_class ~= "" and p_class or nil,
-		faction = p_faction ~= "" and p_faction or nil,
-		days = 0,
-		hours = 0,
-		totalAsHours = 0,
-		totalSeconds = 0
-	}
+-- Builds an entry with a name, a realm and an empty played time
+local function GlobalPlayed_Character_New(p_name, p_realm)
+	local character = { name = p_name, realm = p_realm }
+
+	GlobalPlayed_PlayedTime_Store(character, 0)
+
+	return character
 end
 
--- Creates a character entry with an empty played time
-function GlobalPlayed_Character_Create(p_name, p_realm)
-	local character = {
-		name = p_name,
-		realm = p_realm,
-		days = 0,
-		hours = 0,
-		totalAsHours = 0,
-		totalSeconds = 0
-	}
+-- Creates a character entry from data provided by another addon
+function GlobalPlayed_Character_CreateImported(p_name, p_realm, p_class, p_faction)
+	local character = GlobalPlayed_Character_New(p_name, p_realm)
+
+	character.class = p_class ~= "" and p_class or nil
+	character.faction = p_faction ~= "" and p_faction or nil
+
+	return character
+end
+
+-- Creates the entry of the logged in character, with an empty played time
+function GlobalPlayed_Character_CreateCurrent(p_name, p_realm)
+	local character = GlobalPlayed_Character_New(p_name, p_realm)
 
 	GlobalPlayed_Character_RefreshIdentity(character)
 
