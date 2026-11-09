@@ -1,6 +1,8 @@
 ----------------------
 -- Played time window: grouped character cards, built on the game native templates
 ----------------------
+local L = GlobalPlayed_L
+
 local WINDOW_NAME = "GlobalPlayedWindow"
 local DEFAULT_WIDTH = 700
 local DEFAULT_HEIGHT = 500
@@ -250,7 +252,7 @@ local function GlobalPlayed_Window_CreateBottomBar()
 	refreshButton = CreateFrame("Button", nil, window, "UIPanelButtonTemplate")
 	refreshButton:SetSize(BOTTOM_BUTTON_WIDTH, BOTTOM_BUTTON_HEIGHT)
 	refreshButton:SetPoint("RIGHT", closeButton, "LEFT", -BOTTOM_BUTTON_GAP, 0)
-	refreshButton:SetText("Refresh")
+	refreshButton:SetText(L["Refresh"])
 	refreshButton:SetScript("OnClick", GlobalPlayed_Window_Refresh)
 
 	statusText = window:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")

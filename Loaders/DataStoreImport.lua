@@ -1,6 +1,8 @@
 ----------------------
 -- Optional import of played time from DataStore, the database used by Altoholic
 ----------------------
+local L = GlobalPlayed_L
+
 local DATASTORE_ACCOUNT = "Default"
 
 -- Returns whether DataStore and its characters module are loaded
@@ -57,5 +59,5 @@ function GlobalPlayed_DataStoreImport_Run()
 	end
 
 	GlobalPlayed_Account_UpdatePlayed(GlobalPlayed_MyAccount)
-	GlobalPlayed_Log(string.format("DataStore import: %d added, %d updated", added, updated))
+	GlobalPlayed_Log(string.format(L["DataStore import: %d added, %d updated"], added, updated))
 end

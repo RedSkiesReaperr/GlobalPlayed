@@ -1,3 +1,5 @@
+local L = GlobalPlayed_L
+
 local GlobalPlayedOptionsPanel = CreateFrame("Frame", "GlobalPlayedOptionsPanel")
 GlobalPlayedOptionsPanel.name = "GlobalPlayed"
 
@@ -14,35 +16,35 @@ local characterList = nil
 local OPTIONS = {
 	{
 		key = "useWindow",
-		label = "Use the window",
-		tooltip = "Show played time in a window. When disabled, /gplayed writes a report in chat"
+		label = L["Use the window"],
+		tooltip = L["Show played time in a window. When disabled, /gplayed writes a report in chat"]
 	},
 	{
 		key = "useClassColoration",
-		label = "Use class colors",
-		tooltip = "Use class coloration in UI, databroker, chat messages"
+		label = L["Use class colors"],
+		tooltip = L["Use class coloration in UI, databroker, chat messages"]
 	},
 	{
 		key = "useShortDuration",
-		label = "Use short duration units",
-		tooltip = "Display 'd' and 'h' instead of 'days' and 'hours'"
+		label = L["Use short duration units"],
+		tooltip = L["Display 'd' and 'h' instead of 'days' and 'hours'"]
 	},
 	{
 		key = "useFullDuration",
-		label = "Show full played time",
-		tooltip = "Display minutes and seconds in addition to days and hours"
+		label = L["Show full played time"],
+		tooltip = L["Display minutes and seconds in addition to days and hours"]
 	},
 	{
 		key = "useFactionIcon",
-		label = "Show faction icons"
+		label = L["Show faction icons"]
 	},
 	{
-		label = "Show the minimap button",
+		label = L["Show the minimap button"],
 		getValue = function() return GlobalPlayed_Options.minimap.hide ~= true end,
 		setValue = function(p_value) GlobalPlayed_Minimap_SetShown(p_value) end
 	},
 	{
-		label = "Show in the addon compartment",
+		label = L["Show in the addon compartment"],
 		getValue = function() return GlobalPlayed_Options.minimap.showInCompartment == true end,
 		setValue = function(p_value) GlobalPlayed_Minimap_SetInCompartment(p_value) end
 	}
@@ -52,28 +54,28 @@ local OPTIONS = {
 local DROPDOWN_OPTIONS = {
 	{
 		key = "brokerText",
-		label = "Broker text",
+		label = L["Broker text"],
 		choices = {
-			{ value = "name", label = "Addon name" },
-			{ value = "account", label = "Account total" },
-			{ value = "character", label = "Current character" }
+			{ value = "name", label = L["Addon name"] },
+			{ value = "account", label = L["Account total"] },
+			{ value = "character", label = L["Current character"] }
 		}
 	},
 	{
 		key = "groupBy",
-		label = "Group characters by",
+		label = L["Group characters by"],
 		choices = {
-			{ value = "realm", label = "Realm" },
-			{ value = "class", label = "Class" },
-			{ value = "faction", label = "Faction" }
+			{ value = "realm", label = L["Realm"] },
+			{ value = "class", label = L["Class"] },
+			{ value = "faction", label = L["Faction"] }
 		}
 	},
 	{
 		key = "sortBy",
-		label = "Sort characters by",
+		label = L["Sort characters by"],
 		choices = {
-			{ value = "name", label = "Name" },
-			{ value = "played", label = "Played time" }
+			{ value = "name", label = L["Name"] },
+			{ value = "played", label = L["Played time"] }
 		}
 	}
 }
@@ -157,9 +159,9 @@ local function GlobalPlayed_CreateCharacterRow(p_index)
 	row:SetPoint("RIGHT")
 
 	row.deleteButton = CreateFrame("Button", nil, row, "UIPanelButtonTemplate")
-	row.deleteButton:SetSize(70, 22)
+	row.deleteButton:SetSize(90, 22)
 	row.deleteButton:SetPoint("RIGHT")
-	row.deleteButton:SetText("Delete")
+	row.deleteButton:SetText(L["Delete"])
 	row.deleteButton:SetScript("OnClick", function()
 		StaticPopup_Show("GLOBALPLAYED_DELETE_CHARACTER", row.displayName, nil, row.character)
 	end)
@@ -207,7 +209,7 @@ local function GlobalPlayed_Options_OnChanged()
 end
 
 StaticPopupDialogs["GLOBALPLAYED_DELETE_CHARACTER"] = {
-	text = "Remove %s from GlobalPlayed?",
+	text = L["Remove %s from GlobalPlayed?"],
 	button1 = YES,
 	button2 = NO,
 	-- Removes the confirmed character and refreshes the list
@@ -234,7 +236,7 @@ function GlobalPlayed_LoadOptionsPanel()
 		subTitle:SetHeight(32)
 		subTitle:SetJustifyH("LEFT")
 		subTitle:SetJustifyV("TOP")
-		subTitle:SetText("See all your characters played")
+		subTitle:SetText(L["See all your characters played"])
 
 		local checks = {}
 		local anchor = subTitle
@@ -254,14 +256,14 @@ function GlobalPlayed_LoadOptionsPanel()
 
 		local charactersTitle = self:CreateFontString(nil, "ARTWORK", "GameFontNormal")
 		charactersTitle:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, -12)
-		charactersTitle:SetText("Characters")
+		charactersTitle:SetText(L["Characters"])
 
 		if GlobalPlayed_DataStoreImport_IsAvailable() == true then
 			local importButton = CreateFrame("Button", nil, self, "UIPanelButtonTemplate")
 
 			importButton:SetPoint("LEFT", charactersTitle, "RIGHT", 16, 0)
 			importButton:SetSize(180, 22)
-			importButton:SetText("Import from DataStore")
+			importButton:SetText(L["Import from DataStore"])
 			importButton:SetScript("OnClick", function()
 				GlobalPlayed_DataStoreImport_Run()
 				GlobalPlayed_Options_OnChanged()
@@ -270,7 +272,7 @@ function GlobalPlayed_LoadOptionsPanel()
 
 		local charactersHint = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 		charactersHint:SetPoint("TOPLEFT", charactersTitle, "BOTTOMLEFT", 0, -4)
-		charactersHint:SetText("Remove characters you deleted. The logged in character cannot be removed.")
+		charactersHint:SetText(L["Remove characters you deleted. The logged in character cannot be removed."])
 
 		local charactersScroll = CreateFrame("ScrollFrame", "GlobalPlayedCharactersScroll", self, "UIPanelScrollFrameTemplate")
 		charactersScroll:SetPoint("TOPLEFT", charactersHint, "BOTTOMLEFT", 0, -8)
@@ -287,13 +289,13 @@ function GlobalPlayed_LoadOptionsPanel()
 		disclaimer:SetWidth(400)
 		disclaimer:SetJustifyH("CENTER")
 		disclaimer:SetJustifyV("MIDDLE")
-		disclaimer:SetText("Disclaimer: After updating some options, you may need to reload your UI through /reload or 'Save & Reload' button")
+		disclaimer:SetText(L["Disclaimer: After updating some options, you may need to reload your UI through /reload or 'Save & Reload' button"])
 
 		local saveReload = CreateFrame("Button", nil, self, "UIPanelButtonTemplate")
 		saveReload:SetPoint("BOTTOMRIGHT", GlobalPlayedOptionsPanel, "BOTTOMRIGHT", -20, 20)
-		saveReload:SetWidth(100)
+		saveReload:SetWidth(140)
 		saveReload:SetHeight(25)
-		saveReload:SetText("Save & Reload")
+		saveReload:SetText(L["Save & Reload"])
 		saveReload:SetScript("OnClick", function() ReloadUI() end)
 
 		-- Syncs the checkboxes and the character list with the saved data

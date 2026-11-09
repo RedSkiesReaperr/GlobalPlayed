@@ -1,3 +1,5 @@
+local L = GlobalPlayed_L
+
 -- Options added by later versions are filled in for players upgrading with existing settings
 local DEFAULT_OPTIONS = {
 	useClassColoration = true,
@@ -47,5 +49,5 @@ function GlobalPlayed_AddonLoadedHandler()
 
 	GlobalPlayed_Account_UpdatePlayed(GlobalPlayed_MyAccount)
 	GlobalPlayed_LoadLdbIntegration()
-	GlobalPlayed_Log("Successfully loaded!")
+	GlobalPlayed_Log(L["Successfully loaded!"])
 end

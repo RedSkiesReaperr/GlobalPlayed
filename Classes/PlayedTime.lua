@@ -1,12 +1,14 @@
 ----------------------
 -- Played time storage and formatting, shared by characters, realms and the account
 ----------------------
+local L = GlobalPlayed_L
+
 local SECONDS_PER_MINUTE = 60
 local SECONDS_PER_HOUR = 3600
 local HOURS_PER_DAY = 24
 
-local SHORT_UNITS = { day = "d", hour = "h", minute = "m", second = "s" }
-local LONG_UNITS = { day = "days", hour = "hours", minute = "minutes", second = "seconds" }
+local SHORT_UNITS = { day = L["d"], hour = L["h"], minute = L["m"], second = L["s"] }
+local LONG_UNITS = { day = L["days"], hour = L["hours"], minute = L["minutes"], second = L["seconds"] }
 
 -- Returns the unit labels matching the short duration option
 function GlobalPlayed_PlayedTime_GetUnits()

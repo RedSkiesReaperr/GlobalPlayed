@@ -1,3 +1,5 @@
+local L = GlobalPlayed_L
+
 local HINT_COLOR = { 0, 0.7, 0.8 }
 local REALM_COLOR = { 0.17, 0.69, 0.33 }
 local TOOLTIP_MIN_WIDTH = 250
@@ -83,7 +85,7 @@ function GlobalPlayed_LoadLdbIntegration()
 
 	-- Builds the left and right texts of the account total line
 	local function GlobalPlayed_LDB_GetAccountLine(p_account)
-		local left = "Total " .. string.format("(%dh)", p_account.totalAsHours)
+		local left = L["Total"] .. string.format(" (%dh)", p_account.totalAsHours)
 		local playtime = GlobalPlayed_PlayedTime_Format(p_account.totalSeconds or 0, "|cffffffff%s|r")
 
 		return {
@@ -112,18 +114,18 @@ function GlobalPlayed_LoadLdbIntegration()
 		self:AddLine(" ")
 
 		if GlobalPlayed_Addon_IsWindowEnabled() == true then
-			GlobalPlayed_LDB_AddColoredLine(self, "Left click", "Show/Hide UI", HINT_COLOR)
+			GlobalPlayed_LDB_AddColoredLine(self, L["Left click"], L["Show/Hide UI"], HINT_COLOR)
 		else
-			GlobalPlayed_LDB_AddColoredLine(self, "Left click", "Show report in chat", HINT_COLOR)
+			GlobalPlayed_LDB_AddColoredLine(self, L["Left click"], L["Show report in chat"], HINT_COLOR)
 		end
-		GlobalPlayed_LDB_AddColoredLine(self, "Middle click", "Refresh data", HINT_COLOR)
-		GlobalPlayed_LDB_AddColoredLine(self, "Right click", "Open options panel", HINT_COLOR)
+		GlobalPlayed_LDB_AddColoredLine(self, L["Middle click"], L["Refresh data"], HINT_COLOR)
+		GlobalPlayed_LDB_AddColoredLine(self, L["Right click"], L["Open options panel"], HINT_COLOR)
 		self:AddLine(" ")
 
 		local factionIcon = nil
 		local groups = GlobalPlayed_Roster_Group(GlobalPlayed_Characters)
 		for k, v in ipairs(groups) do
-			GlobalPlayed_LDB_AddColoredLine(self, string.format("%s:", v.label), string.format("Total: %sh", v.totalAsHours), REALM_COLOR)
+			GlobalPlayed_LDB_AddColoredLine(self, string.format("%s:", v.label), string.format(L["Total: %sh"], v.totalAsHours), REALM_COLOR)
 
 			for kk, vv in ipairs(v.characters) do
 				local characterLineTexts = GlobalPlayed_LDB_GetCharacterLine(vv)

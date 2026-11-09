@@ -1,6 +1,8 @@
 ----------------------
 -- Slash command and game events
 ----------------------
+local L = GlobalPlayed_L
+
 -- Shows played time: the window when enabled, otherwise a report in chat
 function GlobalPlayed_ShowPlayed(p_withCharacters)
 	if GlobalPlayed_Addon_IsWindowEnabled() == true then
@@ -21,7 +23,7 @@ function GlobalPlayed_RefreshAndShowPlayed(p_withCharacters)
 end
 
 BINDING_HEADER_GLOBALPLAYED = "GlobalPlayed"
-BINDING_NAME_GLOBALPLAYED_TOGGLE = "Show or hide played time"
+BINDING_NAME_GLOBALPLAYED_TOGGLE = L["Show or hide played time"]
 
 SLASH_GLOBAL_PLAYED1 = "/gplayed"
 -- Handles /gplayed, /gplayed all and /gplayed options, ignoring case and extra spaces
@@ -33,8 +35,8 @@ SlashCmdList["GLOBAL_PLAYED"] = function(p_message)
 	elseif command == "options" then
 		GlobalPlayed_OpenOptionsPanel()
 	else
-		GlobalPlayed_Log("Unknown command: /gplayed " .. p_message)
-		GlobalPlayed_Log("Available commands:")
+		GlobalPlayed_Log(L["Unknown command: /gplayed "] .. p_message)
+		GlobalPlayed_Log(L["Available commands:"])
 		GlobalPlayed_Log("    /gplayed")
 		GlobalPlayed_Log("    /gplayed all")
 		GlobalPlayed_Log("    /gplayed options")
