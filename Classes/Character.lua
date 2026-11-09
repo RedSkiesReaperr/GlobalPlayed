@@ -143,6 +143,35 @@ function GlobalPlayed_Character_GetNameRealmColored(self)
 	return GlobalPlayed_Character_Colorize(self, self.name .. "-" .. self.realm)
 end
 
+-- Returns the name to list a character under its group: its realm is only useful when groups are not realms
+function GlobalPlayed_Character_GetListName(self)
+	if GlobalPlayed_Options.groupBy == "realm" then
+		return GlobalPlayed_Character_GetNameColored(self)
+	end
+
+	return GlobalPlayed_Character_GetDisplayNameColored(self)
+end
+
+-- Returns the localized class name, or a generic label when unknown
+function GlobalPlayed_Character_GetClassLabel(self)
+	if self.class == nil then
+		return UNKNOWN or "Unknown"
+	end
+
+	return LOCALIZED_CLASS_NAMES_MALE ~= nil and LOCALIZED_CLASS_NAMES_MALE[self.class] or self.class
+end
+
+-- Returns the localized faction name, or a generic label when unknown
+function GlobalPlayed_Character_GetFactionLabel(self)
+	if self.faction == "Alliance" then
+		return FACTION_ALLIANCE or "Alliance"
+	elseif self.faction == "Horde" then
+		return FACTION_HORDE or "Horde"
+	end
+
+	return UNKNOWN or "Unknown"
+end
+
 -- Returns the faction icon texture path, neutral when unknown
 function GlobalPlayed_Character_GetFactionIcon(self)
 	return FACTION_ICONS_PATH .. (FACTION_ICONS[self.faction] or NEUTRAL_ICON)

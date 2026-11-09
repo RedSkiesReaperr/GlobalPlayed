@@ -58,6 +58,15 @@ local DROPDOWN_OPTIONS = {
 			{ value = "account", label = "Account total" },
 			{ value = "character", label = "Current character" }
 		}
+	},
+	{
+		key = "groupBy",
+		label = "Group characters by",
+		choices = {
+			{ value = "realm", label = "Realm" },
+			{ value = "class", label = "Class" },
+			{ value = "faction", label = "Faction" }
+		}
 	}
 }
 

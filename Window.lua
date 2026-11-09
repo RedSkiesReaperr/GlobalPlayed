@@ -1,5 +1,5 @@
 ----------------------
--- Played time window: characters grouped by realm, built on the game native templates
+-- Played time window: grouped character cards, built on the game native templates
 ----------------------
 local WINDOW_NAME = "GlobalPlayedWindow"
 local DEFAULT_WIDTH = 700
@@ -38,14 +38,14 @@ local statusText = nil
 local refreshButton = nil
 local headers = {}
 local cards = {}
-local realms = {}
+local groups = {}
 
 -- Returns how many card columns fit in a width, between 1 and MAX_COLUMNS
 local function GlobalPlayed_Window_GetColumnCount(p_width)
 	return math.max(1, math.min(MAX_COLUMNS, math.floor((p_width + CARD_GAP) / (CARD_MIN_WIDTH + CARD_GAP))))
 end
 
--- Returns the realm header at an index, created on first use
+-- Returns the group header at an index, created on first use
 local function GlobalPlayed_Window_GetHeader(p_index)
 	if headers[p_index] == nil then
 		local header = cardsContent:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
@@ -102,8 +102,8 @@ local function GlobalPlayed_Window_Layout()
 	local y = 0
 	local cardIndex = 0
 
-	for realmIndex, realm in ipairs(realms) do
-		local header = GlobalPlayed_Window_GetHeader(realmIndex)
+	for groupIndex, group in ipairs(groups) do
+		local header = GlobalPlayed_Window_GetHeader(groupIndex)
 
 		header:ClearAllPoints()
 		header:SetPoint("TOPLEFT", 0, -y)
@@ -111,7 +111,7 @@ local function GlobalPlayed_Window_Layout()
 		header:SetHeight(HEADER_HEIGHT)
 		y = y + HEADER_HEIGHT
 
-		for characterIndex = 1, #realm.characters do
+		for characterIndex = 1, #group.characters do
 			local column = (characterIndex - 1) % columns
 			local row = math.floor((characterIndex - 1) / columns)
 			local card = GlobalPlayed_Window_GetCard(cardIndex + characterIndex)
@@ -121,8 +121,8 @@ local function GlobalPlayed_Window_Layout()
 			card:SetPoint("TOPLEFT", column * (cardWidth + CARD_GAP), -(y + (row * (CARD_HEIGHT + CARD_GAP))))
 		end
 
-		cardIndex = cardIndex + #realm.characters
-		y = y + (math.ceil(#realm.characters / columns) * (CARD_HEIGHT + CARD_GAP))
+		cardIndex = cardIndex + #group.characters
+		y = y + (math.ceil(#group.characters / columns) * (CARD_HEIGHT + CARD_GAP))
 	end
 
 	cardsContent:SetHeight(math.max(y, 1))
@@ -130,22 +130,22 @@ end
 
 -- Fills the headers, cards and account total from the saved characters
 local function GlobalPlayed_Window_Fill()
-	realms = GlobalPlayed_Roster_GroupByRealm(GlobalPlayed_Characters)
+	groups = GlobalPlayed_Roster_Group(GlobalPlayed_Characters)
 
 	local cardIndex = 0
 
-	for realmIndex, realm in ipairs(realms) do
-		local header = GlobalPlayed_Window_GetHeader(realmIndex)
+	for groupIndex, group in ipairs(groups) do
+		local header = GlobalPlayed_Window_GetHeader(groupIndex)
 
-		header:SetText(realm.realm .. string.format(" (%sh)", realm.totalAsHours))
+		header:SetText(group.label .. string.format(" (%sh)", group.totalAsHours))
 		header:Show()
 
-		for _, character in ipairs(realm.characters) do
+		for _, character in ipairs(group.characters) do
 			cardIndex = cardIndex + 1
 
 			local card = GlobalPlayed_Window_GetCard(cardIndex)
 
-			card.nameText:SetText(GlobalPlayed_Character_GetNameColored(character))
+			card.nameText:SetText(GlobalPlayed_Character_GetListName(character))
 			card.playedText:SetText(GlobalPlayed_Character_GetPlayedWithTotal(character))
 
 			if GlobalPlayed_Options.useFactionIcon == true then
@@ -159,7 +159,7 @@ local function GlobalPlayed_Window_Fill()
 		end
 	end
 
-	for index = #realms + 1, #headers do
+	for index = #groups + 1, #headers do
 		headers[index]:Hide()
 	end
 

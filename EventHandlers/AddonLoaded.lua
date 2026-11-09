@@ -5,7 +5,8 @@ local DEFAULT_OPTIONS = {
 	useFactionIcon = true,
 	useFullDuration = false,
 	useWindow = true,
-	brokerText = "name"
+	brokerText = "name",
+	groupBy = "realm"
 }
 
 -- Settings of the removed Ace3 window

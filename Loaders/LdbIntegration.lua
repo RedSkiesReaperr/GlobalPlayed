@@ -94,7 +94,7 @@ function GlobalPlayed_LoadLdbIntegration()
 
 	-- Builds the name and played texts of a character line
 	local function GlobalPlayed_LDB_GetCharacterLine(p_character)
-		local coloredName = GlobalPlayed_Character_GetNameColored(p_character)
+		local coloredName = GlobalPlayed_Character_GetListName(p_character)
 		local name = coloredName .. " (" .. GlobalPlayed_Character_GetPlayedAsHours(p_character) .. "h)"
 		local playtime = GlobalPlayed_Character_GetPlayed(p_character)
 
@@ -104,7 +104,7 @@ function GlobalPlayed_LoadLdbIntegration()
 		}
 	end
 
-	-- Fills the tooltip with usage hints, characters grouped by realm and the account total
+	-- Fills the tooltip with usage hints, grouped characters and the account total
 	function dataobj:OnTooltipShow()
 		self:SetMinimumWidth(TOOLTIP_MIN_WIDTH)
 
@@ -121,9 +121,9 @@ function GlobalPlayed_LoadLdbIntegration()
 		self:AddLine(" ")
 
 		local factionIcon = nil
-		local realms = GlobalPlayed_Roster_GroupByRealm(GlobalPlayed_Characters)
-		for k, v in ipairs(realms) do
-			GlobalPlayed_LDB_AddColoredLine(self, string.format("%s:", v.realm), string.format("Realm total: %sh", v.totalAsHours), REALM_COLOR)
+		local groups = GlobalPlayed_Roster_Group(GlobalPlayed_Characters)
+		for k, v in ipairs(groups) do
+			GlobalPlayed_LDB_AddColoredLine(self, string.format("%s:", v.label), string.format("Total: %sh", v.totalAsHours), REALM_COLOR)
 
 			for kk, vv in ipairs(v.characters) do
 				local characterLineTexts = GlobalPlayed_LDB_GetCharacterLine(vv)

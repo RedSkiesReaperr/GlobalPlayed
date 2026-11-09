@@ -70,24 +70,41 @@ function GlobalPlayed_Roster_Sort(p_characters, p_byRealm)
 	return sorted
 end
 
--- Groups characters by realm, both sorted by name, with each realm played total
-function GlobalPlayed_Roster_GroupByRealm(p_characters)
-	local realms = {}
-	local realm = nil
-
-	for k, v in ipairs(GlobalPlayed_Roster_Sort(p_characters, true)) do
-		if realm == nil or realm.realm ~= v.realm then
-			realm = { realm = v.realm, totalSeconds = 0, totalAsHours = 0, characters = {} }
-			table.insert(realms, realm)
-		end
-
-		table.insert(realm.characters, v)
-
-		realm.totalSeconds = realm.totalSeconds + GlobalPlayed_Character_GetTotalSeconds(v)
-		realm.totalAsHours = GlobalPlayed_PlayedTime_ToHours(realm.totalSeconds)
+-- Returns the label of the group a character belongs to, following the group option
+local function GlobalPlayed_Roster_GetGroupLabel(p_character)
+	if GlobalPlayed_Options.groupBy == "class" then
+		return GlobalPlayed_Character_GetClassLabel(p_character)
+	elseif GlobalPlayed_Options.groupBy == "faction" then
+		return GlobalPlayed_Character_GetFactionLabel(p_character)
 	end
 
-	return realms
+	return p_character.realm
+end
+
+-- Groups characters following the group option, sorted by name, with each group played total
+function GlobalPlayed_Roster_Group(p_characters)
+	local groups = {}
+	local groupsByLabel = {}
+
+	for k, v in ipairs(GlobalPlayed_Roster_Sort(p_characters, false)) do
+		local label = GlobalPlayed_Roster_GetGroupLabel(v)
+		local group = groupsByLabel[label]
+
+		if group == nil then
+			group = { label = label, totalSeconds = 0, totalAsHours = 0, characters = {} }
+			groupsByLabel[label] = group
+			table.insert(groups, group)
+		end
+
+		table.insert(group.characters, v)
+
+		group.totalSeconds = group.totalSeconds + GlobalPlayed_Character_GetTotalSeconds(v)
+		group.totalAsHours = GlobalPlayed_PlayedTime_ToHours(group.totalSeconds)
+	end
+
+	table.sort(groups, function(a, b) return GlobalPlayed_Roster_IsBefore(a.label, b.label) end)
+
+	return groups
 end
 
 -- Removes a character from the saved list and updates the account total.
