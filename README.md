@@ -41,6 +41,18 @@ Small addon to get your total playtime across characters, on Retail and WoW Fore
 * [Embedded] [**LibDBIcon-1.0**](https://www.curseforge.com/wow/addons/libdbicon-1-0 "View it on CurseForge")
 * [Embedded] [**LibStub**](https://www.curseforge.com/wow/addons/libstub "View it on CurseForge")
 
+### **Translations**
+All the texts of GlobalPlayed are listed in `Locales/enUS.lua`, the reference for translators. Pull requests for new languages are welcome! To add one:
+
+1. Copy `Locales/enUS.lua` to a new file named after the game language: `deDE`, `esES`, `esMX`, `itIT`, `koKR`, `ptBR`, `ruRU`, `zhCN` or `zhTW`.
+2. Replace the line `GlobalPlayed_Locale_RegisterDefault({` with `GlobalPlayed_Locale_Register("deDE", {`, using your language code.
+3. Translate only the right side of each line. The left side must stay in English, exactly as it is. Keep `%s` and `%d` in your text: the addon replaces them with values.
+4. In `GlobalPlayed.toc`, add your file right after `Locales/frFR.lua`.
+5. Optionally, in `GlobalPlayed.toc`, add the addon list texts: `## Notes-deDE:` and `## Category-deDE:`, using the [official category names](https://warcraft.wiki.gg/wiki/Addon_Categories).
+6. Check it on a game client in your language, then open a pull request against `master`.
+
+A translation can be partial: any missing text is displayed in English. When a new text is added to the code, add it to `Locales/enUS.lua` too.
+
 ### **Bug reports & Feature requests**
 Bug reports and feature requests are welcome. Feel free to create issues on the [GitHub project](https://github.com/RedSkiesReaperr/GlobalPlayed/) to submit them!
 

@@ -23,7 +23,9 @@ Libs/LibDataBroker-1.1.lua
 Libs/LibDBIcon-1.0.lua
 
 # Core
-Locales.lua
+Locales/Locales.lua
+Locales/enUS.lua
+Locales/frFR.lua
 Utils.lua
 Classes/Addon.lua
 Classes/ClassColor.lua
