@@ -2,7 +2,7 @@
 ## Title: GlobalPlayed
 ## Notes: See the played time of all your characters|n|n|cffE57D06/gplayed|r Show played time|n|cffE57D06/gplayed all|r Show every character|n|cffE57D06/gplayed options|r Open the options
 ## Notes-frFR: Le temps de jeu de tous vos personnages|n|n|cffE57D06/gplayed|r Afficher le temps de jeu|n|cffE57D06/gplayed all|r Détailler chaque personnage|n|cffE57D06/gplayed options|r Ouvrir les options
-## IconTexture: Interface\Icons\INV_Misc_PocketWatch_01
+## IconTexture: Interface\AddOns\GlobalPlayed\Icons\globalplayed
 ## Author: RedSkiesReaperr
 ## Version: 1.6.0
 ## SavedVariables: GlobalPlayed_Characters, GlobalPlayed_MyAccount, GlobalPlayed_Options

@@ -7,7 +7,7 @@ local HINT_COLOR = { 0, 0.7, 0.8 }
 local GROUP_HEADER_COLOR = { 0.17, 0.69, 0.33 }
 local TOOLTIP_MIN_WIDTH = 250
 local BROKER_NAME = "GlobalPlayed"
-local BROKER_ICON = "Interface\\Icons\\INV_Misc_PocketWatch_01"
+local BROKER_ICON = "Interface\\AddOns\\GlobalPlayed\\Icons\\globalplayed"
 
 local brokerObject = nil
 
