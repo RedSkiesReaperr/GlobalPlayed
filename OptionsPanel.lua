@@ -12,6 +12,7 @@ Settings.RegisterAddOnCategory(category)
 local CHARACTER_ROW_HEIGHT = 26
 local DROPDOWN_WIDTH = 180
 local DROPDOWN_COLUMN_X = 300
+local CHECK_LABEL_GAP = 4
 
 local characterRows = {}
 local characterList = nil
@@ -20,12 +21,12 @@ local OPTIONS = {
 	{
 		key = "useWindow",
 		label = L["Use the window"],
-		tooltip = L["Show played time in a window. When disabled, /gplayed writes a report in chat"]
+		tooltip = L["Opens a window listing your characters. When disabled, /gplayed, the key binding and the left click on the button write a report in chat instead."]
 	},
 	{
 		key = "useClassColoration",
 		label = L["Use class colors"],
-		tooltip = L["Use class coloration in UI, databroker, chat messages"]
+		tooltip = L["Colors character names with their class color in the window, the button tooltip, the chat report and this panel."]
 	},
 	{
 		key = "useShortDuration",
@@ -39,15 +40,18 @@ local OPTIONS = {
 	},
 	{
 		key = "useFactionIcon",
-		label = L["Show faction icons"]
+		label = L["Show faction icons"],
+		tooltip = L["Shows the Alliance or Horde icon next to each character in the window and the button tooltip."]
 	},
 	{
 		label = L["Show the minimap button"],
+		tooltip = L["Shows the GlobalPlayed button on the edge of the minimap."],
 		getValue = function() return GlobalPlayed_Options.minimap.hide ~= true end,
 		setValue = function(p_value) GlobalPlayed_Minimap_SetShown(p_value) end
 	},
 	{
 		label = L["Show in the addon compartment"],
+		tooltip = L["Adds GlobalPlayed to the game's addon list, opened from the small button next to the minimap."],
 		getValue = function() return GlobalPlayed_Options.minimap.showInCompartment == true end,
 		setValue = function(p_value) GlobalPlayed_Minimap_SetInCompartment(p_value) end
 	}
@@ -58,6 +62,7 @@ local DROPDOWN_OPTIONS = {
 	{
 		key = "brokerText",
 		label = L["Broker text"],
+		tooltip = L["Text shown next to the GlobalPlayed icon in data bar addons such as Titan Panel."],
 		choices = {
 			{ value = "name", label = L["Addon name"] },
 			{ value = "account", label = L["Account total"] },
@@ -67,6 +72,7 @@ local DROPDOWN_OPTIONS = {
 	{
 		key = "groupBy",
 		label = L["Group characters by"],
+		tooltip = L["Chooses the sections that gather your characters in the window and the button tooltip."],
 		choices = {
 			{ value = "realm", label = L["Realm"] },
 			{ value = "class", label = L["Class"] },
@@ -76,6 +82,7 @@ local DROPDOWN_OPTIONS = {
 	{
 		key = "sortBy",
 		label = L["Sort characters by"],
+		tooltip = L["Order of the characters in the window, the button tooltip and the chat report. Played time puts the most played first."],
 		choices = {
 			{ value = "name", label = L["Name"] },
 			{ value = "played", label = L["Played time"] }
@@ -101,6 +108,18 @@ local function GlobalPlayed_Options_SetValue(p_option, p_value)
 	end
 end
 
+-- Shows a title and an explanation while the mouse is over p_frame.
+-- Hooks the scripts because the button templates use them for their own highlight
+local function GlobalPlayed_AddTooltip(p_frame, p_title, p_text)
+	p_frame:HookScript("OnEnter", function(this)
+		GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+		GameTooltip:SetText(p_title, 1, 0.82, 0)
+		GameTooltip:AddLine(p_text, 1, 1, 1, true)
+		GameTooltip:Show()
+	end)
+	p_frame:HookScript("OnLeave", function() GameTooltip:Hide() end)
+end
+
 -- Creates a checkbox bound to an option below p_anchor. p_onChange runs after each click
 local function GlobalPlayed_CreateOptionCheck(p_parent, p_anchor, p_option, p_onChange)
 	local check = CreateFrame("CheckButton", nil, p_parent, "UICheckButtonTemplate")
@@ -114,17 +133,12 @@ local function GlobalPlayed_CreateOptionCheck(p_parent, p_anchor, p_option, p_on
 	end)
 
 	local label = check:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-	label:SetPoint("LEFT", check, "RIGHT", 4, 0)
+	label:SetPoint("LEFT", check, "RIGHT", CHECK_LABEL_GAP, 0)
 	label:SetText(p_option.label)
 
-	if p_option.tooltip ~= nil then
-		check:SetScript("OnEnter", function(this)
-			GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
-			GameTooltip:SetText(p_option.tooltip, 1, 1, 1, 1, true)
-			GameTooltip:Show()
-		end)
-		check:SetScript("OnLeave", function() GameTooltip:Hide() end)
-	end
+	-- Extends the clickable area over the label, so hovering the text shows the tooltip too
+	check:SetHitRectInsets(0, -(CHECK_LABEL_GAP + label:GetStringWidth()), 0, 0)
+	GlobalPlayed_AddTooltip(check, p_option.label, p_option.tooltip)
 
 	return check
 end
@@ -150,6 +164,8 @@ local function GlobalPlayed_CreateOptionDropdown(p_parent, p_anchor, p_option, p
 			end)
 		end
 	end)
+
+	GlobalPlayed_AddTooltip(dropdown, p_option.label, p_option.tooltip)
 
 	return dropdown
 end
@@ -271,6 +287,7 @@ function GlobalPlayed_LoadOptionsPanel()
 				GlobalPlayed_DataStoreImport_Run()
 				GlobalPlayed_Options_OnChanged()
 			end)
+			GlobalPlayed_AddTooltip(importButton, L["Import from DataStore"], L["Adds the characters known by DataStore or Altoholic that are missing from this list. For the others, keeps the highest played time."])
 		end
 
 		local charactersHint = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
@@ -300,6 +317,7 @@ function GlobalPlayed_LoadOptionsPanel()
 		saveReload:SetHeight(25)
 		saveReload:SetText(L["Save & Reload"])
 		saveReload:SetScript("OnClick", function() ReloadUI() end)
+		GlobalPlayed_AddTooltip(saveReload, L["Save & Reload"], L["Reloads the interface to save your changes and apply them everywhere."])
 
 		-- Syncs the checkboxes and the character list with the saved data
 		function self:refresh()
