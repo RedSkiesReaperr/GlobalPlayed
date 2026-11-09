@@ -1,0 +1,5 @@
+<Bindings>
+	<Binding name="GLOBALPLAYED_TOGGLE" header="GLOBALPLAYED" category="ADDONS">
+		GlobalPlayed_RefreshAndShowPlayed(true)
+	</Binding>
+</Bindings>

@@ -15,13 +15,21 @@ function GlobalPlayed_ShowPlayed(p_withCharacters)
 	GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
 end
 
+-- Asks the played time, then shows it. Used by the slash command and the key binding
+function GlobalPlayed_RefreshAndShowPlayed(p_withCharacters)
+	GlobalPlayed_RequestPlayed(function() GlobalPlayed_ShowPlayed(p_withCharacters) end)
+end
+
+BINDING_HEADER_GLOBALPLAYED = "GlobalPlayed"
+BINDING_NAME_GLOBALPLAYED_TOGGLE = "Show or hide played time"
+
 SLASH_GLOBAL_PLAYED1 = "/gplayed"
 -- Handles /gplayed, /gplayed all and /gplayed options, ignoring case and extra spaces
 SlashCmdList["GLOBAL_PLAYED"] = function(p_message)
 	local command = p_message:match("^%s*(.-)%s*$"):lower()
 
 	if command == "" or command == "all" then
-		GlobalPlayed_RequestPlayed(function() GlobalPlayed_ShowPlayed(command == "all") end)
+		GlobalPlayed_RefreshAndShowPlayed(command == "all")
 	elseif command == "options" then
 		GlobalPlayed_OpenOptionsPanel()
 	else
