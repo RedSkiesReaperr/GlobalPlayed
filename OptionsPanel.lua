@@ -1,5 +1,5 @@
 ----------------------
--- Options panel: settings and character management
+-- Options panel: a settings page and a character management page
 ----------------------
 local L = GlobalPlayed_L
 
@@ -9,83 +9,96 @@ GlobalPlayedOptionsPanel.name = "GlobalPlayed"
 local category = Settings.RegisterCanvasLayoutCategory(GlobalPlayedOptionsPanel, GlobalPlayedOptionsPanel.name)
 Settings.RegisterAddOnCategory(category)
 
+local GlobalPlayedCharactersPanel = CreateFrame("Frame", "GlobalPlayedCharactersPanel")
+Settings.RegisterCanvasLayoutSubcategory(category, GlobalPlayedCharactersPanel, L["Characters"])
+
 local CHARACTER_ROW_HEIGHT = 26
 local DROPDOWN_WIDTH = 180
-local DROPDOWN_COLUMN_X = 300
+local DROPDOWN_ROW_HEIGHT = 32
+local DROPDOWN_X = 180
 local CHECK_LABEL_GAP = 4
+local SECTION_SPACING = 16
 
+local optionChecks = {}
 local characterRows = {}
 local characterList = nil
 
-local OPTIONS = {
+-- Settings page content: an entry with choices is a drop-down list, any other entry a checkbox
+local OPTION_SECTIONS = {
 	{
-		key = "useWindow",
-		label = L["Use the window"],
-		tooltip = L["Opens a window listing your characters. When disabled, /gplayed, the key binding and the left click on the button write a report in chat instead."]
-	},
-	{
-		key = "useClassColoration",
-		label = L["Use class colors"],
-		tooltip = L["Colors character names with their class color in the window, the button tooltip, the chat report and this panel."]
-	},
-	{
-		key = "useShortDuration",
-		label = L["Use short duration units"],
-		tooltip = L["Display 'd' and 'h' instead of 'days' and 'hours'"]
-	},
-	{
-		key = "useFullDuration",
-		label = L["Show full played time"],
-		tooltip = L["Display minutes and seconds in addition to days and hours"]
-	},
-	{
-		key = "useFactionIcon",
-		label = L["Show faction icons"],
-		tooltip = L["Shows the Alliance or Horde icon next to each character in the window and the button tooltip."]
-	},
-	{
-		label = L["Show the minimap button"],
-		tooltip = L["Shows the GlobalPlayed button on the edge of the minimap."],
-		getValue = function() return GlobalPlayed_Options.minimap.hide ~= true end,
-		setValue = function(p_value) GlobalPlayed_Minimap_SetShown(p_value) end
-	},
-	{
-		label = L["Show in the addon compartment"],
-		tooltip = L["Adds GlobalPlayed to the game's addon list, opened from the small button next to the minimap."],
-		getValue = function() return GlobalPlayed_Options.minimap.showInCompartment == true end,
-		setValue = function(p_value) GlobalPlayed_Minimap_SetInCompartment(p_value) end
-	}
-}
-
--- Options shown as drop-down lists, in the right column of the panel
-local DROPDOWN_OPTIONS = {
-	{
-		key = "brokerText",
-		label = L["Broker text"],
-		tooltip = L["Text shown next to the GlobalPlayed icon in data bar addons such as Titan Panel."],
-		choices = {
-			{ value = "name", label = L["Addon name"] },
-			{ value = "account", label = L["Account total"] },
-			{ value = "character", label = L["Current character"] }
+		title = L["Display"],
+		options = {
+			{
+				key = "useClassColoration",
+				label = L["Use class colors"],
+				tooltip = L["Colors character names with their class color in the window, the button tooltip, the chat report and the character list of the options."]
+			},
+			{
+				key = "useShortDuration",
+				label = L["Use short duration units"],
+				tooltip = L["Display 'd' and 'h' instead of 'days' and 'hours'"]
+			},
+			{
+				key = "useFullDuration",
+				label = L["Show full played time"],
+				tooltip = L["Display minutes and seconds in addition to days and hours"]
+			},
+			{
+				key = "useFactionIcon",
+				label = L["Show faction icons"],
+				tooltip = L["Shows the Alliance or Horde icon next to each character in the window and the button tooltip."]
+			},
+			{
+				key = "groupBy",
+				label = L["Group by"],
+				tooltip = L["Chooses the sections that gather your characters in the window and the button tooltip."],
+				choices = {
+					{ value = "realm", label = L["Realm"] },
+					{ value = "class", label = L["Class"] },
+					{ value = "faction", label = L["Faction"] }
+				}
+			},
+			{
+				key = "sortBy",
+				label = L["Sort by"],
+				tooltip = L["Order of the characters in the window, the button tooltip and the chat report. Played time puts the most played first."],
+				choices = {
+					{ value = "name", label = L["Name"] },
+					{ value = "played", label = L["Played time"] }
+				}
+			}
 		}
 	},
 	{
-		key = "groupBy",
-		label = L["Group characters by"],
-		tooltip = L["Chooses the sections that gather your characters in the window and the button tooltip."],
-		choices = {
-			{ value = "realm", label = L["Realm"] },
-			{ value = "class", label = L["Class"] },
-			{ value = "faction", label = L["Faction"] }
-		}
-	},
-	{
-		key = "sortBy",
-		label = L["Sort characters by"],
-		tooltip = L["Order of the characters in the window, the button tooltip and the chat report. Played time puts the most played first."],
-		choices = {
-			{ value = "name", label = L["Name"] },
-			{ value = "played", label = L["Played time"] }
+		title = L["Access"],
+		options = {
+			{
+				key = "useWindow",
+				label = L["Use the window"],
+				tooltip = L["Opens a window listing your characters. When disabled, /gplayed, the key binding and the left click on the button write a report in chat instead."]
+			},
+			{
+				label = L["Show the minimap button"],
+				tooltip = L["Shows the GlobalPlayed button on the edge of the minimap."],
+				getValue = function() return GlobalPlayed_Options.minimap.hide ~= true end,
+				setValue = function(p_value) GlobalPlayed_Minimap_SetShown(p_value) end
+			},
+			{
+				label = L["Show in the minimap addon menu"],
+				tooltip = L["Adds GlobalPlayed to the game's addon menu, opened from the small button with a number at the top of the minimap. Useful to hide the round button and keep an access."],
+				getValue = function() return GlobalPlayed_Options.minimap.showInCompartment == true end,
+				setValue = function(p_value) GlobalPlayed_Minimap_SetInCompartment(p_value) end
+			},
+			{
+				key = "brokerText",
+				label = L["Broker text"],
+				tooltip = L["Text shown next to the GlobalPlayed icon in data bar addons such as Titan Panel."],
+				choices = {
+					{ value = "name", label = L["Addon name"] },
+					{ value = "account", label = L["Account total"] },
+					{ value = "character", label = L["Current character"] }
+				}
+			}
 		}
 	}
 }
@@ -120,16 +133,21 @@ local function GlobalPlayed_AddTooltip(p_frame, p_title, p_text)
 	p_frame:HookScript("OnLeave", function() GameTooltip:Hide() end)
 end
 
--- Creates a checkbox bound to an option below p_anchor. p_onChange runs after each click
-local function GlobalPlayed_CreateOptionCheck(p_parent, p_anchor, p_option, p_onChange)
+-- Applies a setting change everywhere it is displayed. The character page refreshes itself when shown
+local function GlobalPlayed_Options_OnChanged()
+	GlobalPlayed_Broker_UpdateText()
+	GlobalPlayed_Window_Update()
+end
+
+-- Creates a checkbox bound to an option below p_anchor
+local function GlobalPlayed_CreateOptionCheck(p_parent, p_anchor, p_option)
 	local check = CreateFrame("CheckButton", nil, p_parent, "UICheckButtonTemplate")
 	check:SetSize(26, 26)
 	check:SetPoint("TOPLEFT", p_anchor, "BOTTOMLEFT", 0, 0)
 	check.option = p_option
-	check:SetChecked(GlobalPlayed_Options_GetValue(p_option))
 	check:SetScript("OnClick", function(this)
 		GlobalPlayed_Options_SetValue(this.option, this:GetChecked())
-		p_onChange()
+		GlobalPlayed_Options_OnChanged()
 	end)
 
 	local label = check:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
@@ -143,16 +161,22 @@ local function GlobalPlayed_CreateOptionCheck(p_parent, p_anchor, p_option, p_on
 	return check
 end
 
--- Creates a labeled drop-down bound to an option below p_anchor. p_onChange runs after each choice
-local function GlobalPlayed_CreateOptionDropdown(p_parent, p_anchor, p_option, p_onChange)
-	local label = p_parent:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+-- Creates a row with a label and a drop-down bound to an option below p_anchor
+local function GlobalPlayed_CreateOptionDropdown(p_parent, p_anchor, p_option)
+	local row = CreateFrame("Frame", nil, p_parent)
 
-	label:SetPoint("TOPLEFT", p_anchor, "BOTTOMLEFT", 0, -8)
+	row:SetSize(DROPDOWN_X + DROPDOWN_WIDTH, DROPDOWN_ROW_HEIGHT)
+	row:SetPoint("TOPLEFT", p_anchor, "BOTTOMLEFT", 0, 0)
+	row:EnableMouse(true)
+
+	local label = row:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+
+	label:SetPoint("LEFT")
 	label:SetText(p_option.label)
 
-	local dropdown = CreateFrame("DropdownButton", nil, p_parent, "WowStyle1DropdownTemplate")
+	local dropdown = CreateFrame("DropdownButton", nil, row, "WowStyle1DropdownTemplate")
 
-	dropdown:SetPoint("TOPLEFT", label, "BOTTOMLEFT", 0, -4)
+	dropdown:SetPoint("LEFT", row, "LEFT", DROPDOWN_X, 0)
 	dropdown:SetWidth(DROPDOWN_WIDTH)
 	dropdown:SetupMenu(function(_, p_rootDescription)
 		for _, choice in ipairs(p_option.choices) do
@@ -160,14 +184,36 @@ local function GlobalPlayed_CreateOptionDropdown(p_parent, p_anchor, p_option, p
 				return GlobalPlayed_Options[p_option.key] == choice.value
 			end, function()
 				GlobalPlayed_Options[p_option.key] = choice.value
-				p_onChange()
+				GlobalPlayed_Options_OnChanged()
 			end)
 		end
 	end)
 
+	GlobalPlayed_AddTooltip(row, p_option.label, p_option.tooltip)
 	GlobalPlayed_AddTooltip(dropdown, p_option.label, p_option.tooltip)
 
-	return dropdown
+	return row
+end
+
+-- Creates a section title followed by its options. Returns the last control, to anchor what comes next
+local function GlobalPlayed_CreateOptionSection(p_parent, p_anchor, p_section)
+	local title = p_parent:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+
+	title:SetPoint("TOPLEFT", p_anchor, "BOTTOMLEFT", 0, -SECTION_SPACING)
+	title:SetText(p_section.title)
+
+	local anchor = title
+
+	for _, option in ipairs(p_section.options) do
+		if option.choices ~= nil then
+			anchor = GlobalPlayed_CreateOptionDropdown(p_parent, anchor, option)
+		else
+			anchor = GlobalPlayed_CreateOptionCheck(p_parent, anchor, option)
+			table.insert(optionChecks, anchor)
+		end
+	end
+
+	return anchor
 end
 
 -- Creates a character row with its name, played time and delete button
@@ -220,11 +266,10 @@ local function GlobalPlayed_RefreshCharacterList()
 	characterList:SetHeight(math.max(#characters * CHARACTER_ROW_HEIGHT, 1))
 end
 
--- Applies an option change everywhere it is displayed
-local function GlobalPlayed_Options_OnChanged()
+-- Applies a change of the character list everywhere it is displayed
+local function GlobalPlayed_Options_OnCharactersChanged()
 	GlobalPlayed_RefreshCharacterList()
-	GlobalPlayed_Broker_UpdateText()
-	GlobalPlayed_Window_Update()
+	GlobalPlayed_Options_OnChanged()
 end
 
 StaticPopupDialogs["GLOBALPLAYED_DELETE_CHARACTER"] = {
@@ -234,7 +279,7 @@ StaticPopupDialogs["GLOBALPLAYED_DELETE_CHARACTER"] = {
 	-- Removes the confirmed character and refreshes the list
 	OnAccept = function(self, p_character)
 		GlobalPlayed_Roster_Remove(p_character)
-		GlobalPlayed_Options_OnChanged()
+		GlobalPlayed_Options_OnCharactersChanged()
 	end,
 	timeout = 0,
 	whileDead = true,
@@ -242,95 +287,77 @@ StaticPopupDialogs["GLOBALPLAYED_DELETE_CHARACTER"] = {
 	preferredIndex = 3
 }
 
--- Builds the panel content on first show, when saved variables are loaded
-function GlobalPlayed_LoadOptionsPanel()
-	GlobalPlayedOptionsPanel:SetScript("OnShow", function(self)
-		local title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalHuge")
-		title:SetPoint("TOPLEFT", 16, -16)
-		title:SetText(self.name)
+-- Creates the title and the description of a page. Returns the description, to anchor the content
+local function GlobalPlayed_CreatePageHeader(p_page, p_title, p_description)
+	local title = p_page:CreateFontString(nil, "ARTWORK", "GameFontNormalHuge")
+	title:SetPoint("TOPLEFT", 16, -16)
+	title:SetText(p_title)
 
-		local subTitle = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
-		subTitle:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
-		subTitle:SetPoint("RIGHT", -32, 0)
-		subTitle:SetHeight(32)
-		subTitle:SetJustifyH("LEFT")
-		subTitle:SetJustifyV("TOP")
-		subTitle:SetText(L["See all your characters played"])
+	local description = p_page:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+	description:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
+	description:SetPoint("RIGHT", -32, 0)
+	description:SetJustifyH("LEFT")
+	description:SetText(p_description)
 
-		local checks = {}
-		local anchor = subTitle
-		for _, option in ipairs(OPTIONS) do
-			anchor = GlobalPlayed_CreateOptionCheck(self, anchor, option, GlobalPlayed_Options_OnChanged)
-			table.insert(checks, anchor)
-		end
+	return description
+end
 
-		local dropdownAnchor = CreateFrame("Frame", nil, self)
+-- Builds the settings page
+local function GlobalPlayed_BuildSettingsPage(p_page)
+	local anchor = GlobalPlayed_CreatePageHeader(p_page, p_page.name, L["See all your characters played"])
 
-		dropdownAnchor:SetSize(1, 1)
-		dropdownAnchor:SetPoint("TOPLEFT", subTitle, "BOTTOMLEFT", DROPDOWN_COLUMN_X, 0)
+	for _, section in ipairs(OPTION_SECTIONS) do
+		anchor = GlobalPlayed_CreateOptionSection(p_page, anchor, section)
+	end
+end
 
-		for _, option in ipairs(DROPDOWN_OPTIONS) do
-			dropdownAnchor = GlobalPlayed_CreateOptionDropdown(self, dropdownAnchor, option, GlobalPlayed_Options_OnChanged)
-		end
+-- Syncs the checkboxes with the saved options
+local function GlobalPlayed_RefreshOptionChecks()
+	for _, check in ipairs(optionChecks) do
+		check:SetChecked(GlobalPlayed_Options_GetValue(check.option))
+	end
+end
 
-		local charactersTitle = self:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-		charactersTitle:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, -12)
-		charactersTitle:SetText(L["Characters"])
+-- Builds the character management page
+local function GlobalPlayed_BuildCharactersPage(p_page)
+	local description = GlobalPlayed_CreatePageHeader(p_page, L["Characters"], L["Remove characters you deleted. The logged in character cannot be removed."])
 
-		if GlobalPlayed_DataStoreImport_IsAvailable() == true then
-			local importButton = CreateFrame("Button", nil, self, "UIPanelButtonTemplate")
+	if GlobalPlayed_DataStoreImport_IsAvailable() == true then
+		local importButton = CreateFrame("Button", nil, p_page, "UIPanelButtonTemplate")
 
-			importButton:SetPoint("LEFT", charactersTitle, "RIGHT", 16, 0)
-			importButton:SetSize(180, 22)
-			importButton:SetText(L["Import from DataStore"])
-			importButton:SetScript("OnClick", function()
-				GlobalPlayed_DataStoreImport_Run()
-				GlobalPlayed_Options_OnChanged()
-			end)
-			GlobalPlayed_AddTooltip(importButton, L["Import from DataStore"], L["Adds the characters known by DataStore or Altoholic that are missing from this list. For the others, keeps the highest played time."])
-		end
+		importButton:SetPoint("TOPRIGHT", -36, -16)
+		importButton:SetSize(180, 22)
+		importButton:SetText(L["Import from DataStore"])
+		importButton:SetScript("OnClick", function()
+			GlobalPlayed_DataStoreImport_Run()
+			GlobalPlayed_Options_OnCharactersChanged()
+		end)
+		GlobalPlayed_AddTooltip(importButton, L["Import from DataStore"], L["Adds the characters known by DataStore or Altoholic that are missing from this list. For the others, keeps the highest played time."])
+	end
 
-		local charactersHint = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
-		charactersHint:SetPoint("TOPLEFT", charactersTitle, "BOTTOMLEFT", 0, -4)
-		charactersHint:SetText(L["Remove characters you deleted. The logged in character cannot be removed."])
+	local charactersScroll = CreateFrame("ScrollFrame", "GlobalPlayedCharactersScroll", p_page, "UIPanelScrollFrameTemplate")
+	charactersScroll:SetPoint("TOPLEFT", description, "BOTTOMLEFT", 0, -12)
+	charactersScroll:SetPoint("BOTTOMRIGHT", p_page, "BOTTOMRIGHT", -36, 16)
 
-		local charactersScroll = CreateFrame("ScrollFrame", "GlobalPlayedCharactersScroll", self, "UIPanelScrollFrameTemplate")
-		charactersScroll:SetPoint("TOPLEFT", charactersHint, "BOTTOMLEFT", 0, -8)
-		charactersScroll:SetPoint("BOTTOMRIGHT", GlobalPlayedOptionsPanel, "BOTTOMRIGHT", -36, 64)
+	characterList = CreateFrame("Frame", nil, charactersScroll)
+	characterList:SetSize(1, 1)
+	charactersScroll:SetScrollChild(characterList)
+	charactersScroll:SetScript("OnSizeChanged", function(_, p_width) characterList:SetWidth(p_width) end)
+end
 
-		characterList = CreateFrame("Frame", nil, charactersScroll)
-		characterList:SetSize(1, 1)
-		charactersScroll:SetScrollChild(characterList)
-		charactersScroll:SetScript("OnSizeChanged", function(_, p_width) characterList:SetWidth(p_width) end)
-
-		local disclaimer = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
-		disclaimer:SetPoint("BOTTOMLEFT", GlobalPlayedOptionsPanel, "BOTTOMLEFT", 20, 20)
-		disclaimer:SetHeight(32)
-		disclaimer:SetWidth(400)
-		disclaimer:SetJustifyH("CENTER")
-		disclaimer:SetJustifyV("MIDDLE")
-		disclaimer:SetText(L["Disclaimer: After updating some options, you may need to reload your UI through /reload or 'Save & Reload' button"])
-
-		local saveReload = CreateFrame("Button", nil, self, "UIPanelButtonTemplate")
-		saveReload:SetPoint("BOTTOMRIGHT", GlobalPlayedOptionsPanel, "BOTTOMRIGHT", -20, 20)
-		saveReload:SetWidth(140)
-		saveReload:SetHeight(25)
-		saveReload:SetText(L["Save & Reload"])
-		saveReload:SetScript("OnClick", function() ReloadUI() end)
-		GlobalPlayed_AddTooltip(saveReload, L["Save & Reload"], L["Reloads the interface to save your changes and apply them everywhere."])
-
-		-- Syncs the checkboxes and the character list with the saved data
-		function self:refresh()
-			for _, check in ipairs(checks) do
-				check:SetChecked(GlobalPlayed_Options_GetValue(check.option))
-			end
-
-			GlobalPlayed_RefreshCharacterList()
-		end
-
-		self:refresh()
-		self:SetScript("OnShow", function(this) this:refresh() end)
+-- Builds a page on its first show, when saved variables are loaded, then only refreshes it
+local function GlobalPlayed_SetupPage(p_page, p_build, p_refresh)
+	p_page:SetScript("OnShow", function(this)
+		p_build(this)
+		p_refresh()
+		this:SetScript("OnShow", p_refresh)
 	end)
+end
+
+-- Prepares both pages of the panel
+function GlobalPlayed_LoadOptionsPanel()
+	GlobalPlayed_SetupPage(GlobalPlayedOptionsPanel, GlobalPlayed_BuildSettingsPage, GlobalPlayed_RefreshOptionChecks)
+	GlobalPlayed_SetupPage(GlobalPlayedCharactersPanel, GlobalPlayed_BuildCharactersPage, GlobalPlayed_RefreshCharacterList)
 end
 
 -- Opens the game settings on the addon panel
