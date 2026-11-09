@@ -29,6 +29,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Keep only this version in the changelog
+        run: bash .github/workflows/trim_changelog.sh "$GITHUB_REF_NAME"
+
       - name: Package and upload to CurseForge, Wago and GitHub
         uses: BigWigsMods/packager@v2
         env:
