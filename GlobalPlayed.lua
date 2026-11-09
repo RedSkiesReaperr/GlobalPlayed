@@ -3,6 +3,8 @@
 ----------------------
 local L = GlobalPlayed_L
 
+local isShowPending = false
+
 -- Shows played time: the window when enabled, otherwise a report in chat
 function GlobalPlayed_ShowPlayed(p_withCharacters)
 	if GlobalPlayed_Addon_IsWindowEnabled() == true then
@@ -17,9 +19,19 @@ function GlobalPlayed_ShowPlayed(p_withCharacters)
 	GlobalPlayed_Log(GlobalPlayed_Account_GetPlayed(GlobalPlayed_MyAccount))
 end
 
--- Asks the played time, then shows it. Used by the slash command and the key binding
+-- Asks the played time, then shows it. Used by the slash command and the key binding.
+-- Repeated requests are ignored until the first one is answered, so a double press does not open then close the window
 function GlobalPlayed_RefreshAndShowPlayed(p_withCharacters)
-	GlobalPlayed_RequestPlayed(function() GlobalPlayed_ShowPlayed(p_withCharacters) end)
+	if isShowPending == true then
+		return
+	end
+
+	isShowPending = true
+
+	GlobalPlayed_RequestPlayed(function()
+		isShowPending = false
+		GlobalPlayed_ShowPlayed(p_withCharacters)
+	end)
 end
 
 BINDING_HEADER_GLOBALPLAYED = "GlobalPlayed"
