@@ -59,21 +59,36 @@ function GlobalPlayed_Minimap_SetInCompartment(p_inCompartment)
 	end
 end
 
+-- Returns the left and right texts of the account total line
+local function GlobalPlayed_LDB_GetAccountLine(p_account)
+	local left = L["Total"] .. GlobalPlayed_PlayedTime_FormatHoursSuffix(p_account.totalAsHours)
+	local right = GlobalPlayed_PlayedTime_Format(p_account.totalSeconds or 0, "|cffffffff%s|r")
+
+	return left, right
+end
+
+-- Returns the name and played texts of a character line
+local function GlobalPlayed_LDB_GetCharacterLine(p_character)
+	local name = GlobalPlayed_Character_GetListName(p_character) .. GlobalPlayed_PlayedTime_FormatHoursSuffix(GlobalPlayed_Character_GetPlayedAsHours(p_character))
+
+	return name, GlobalPlayed_Character_GetPlayed(p_character)
+end
+
 -- Registers the LibDataBroker data source, its clicks, its tooltip and its minimap button
 function GlobalPlayed_LoadLdbIntegration()
 	local ldb = LibStub:GetLibrary("LibDataBroker-1.1")
 	local dataobj = ldb:NewDataObject(BROKER_NAME, {
 		type = "data source",
-		text = "GlobalPlayed",
+		text = BROKER_NAME,
 		icon = BROKER_ICON,
 		-- Left: report or window, middle: refresh played time, right: options
-		OnClick = function(self, button)
-			if button == "LeftButton" then
+		OnClick = function(_, p_button)
+			if p_button == "LeftButton" then
 				GlobalPlayed_ShowPlayed(true)
-			elseif button == "MiddleButton" then
+			elseif p_button == "MiddleButton" then
 				GlobalPlayed_RequestPlayed()
 				GameTooltip:Hide()
-			elseif button == "RightButton" then
+			elseif p_button == "RightButton" then
 				GlobalPlayed_OpenOptionsPanel()
 			end
 		end
@@ -84,34 +99,11 @@ function GlobalPlayed_LoadLdbIntegration()
 
 	LibStub("LibDBIcon-1.0"):Register(BROKER_NAME, dataobj, GlobalPlayed_Options.minimap)
 
-	-- Builds the left and right texts of the account total line
-	local function GlobalPlayed_LDB_GetAccountLine(p_account)
-		local left = L["Total"] .. GlobalPlayed_PlayedTime_FormatHoursSuffix(p_account.totalAsHours)
-		local playtime = GlobalPlayed_PlayedTime_Format(p_account.totalSeconds or 0, "|cffffffff%s|r")
-
-		return {
-			left = left,
-			right = playtime
-		}
-	end
-
-	-- Builds the name and played texts of a character line
-	local function GlobalPlayed_LDB_GetCharacterLine(p_character)
-		local coloredName = GlobalPlayed_Character_GetListName(p_character)
-		local name = coloredName .. GlobalPlayed_PlayedTime_FormatHoursSuffix(GlobalPlayed_Character_GetPlayedAsHours(p_character))
-		local playtime = GlobalPlayed_Character_GetPlayed(p_character)
-
-		return {
-			name = name,
-			playtime = playtime
-		}
-	end
-
 	-- Fills the tooltip with usage hints, grouped characters and the account total
 	function dataobj:OnTooltipShow()
 		self:SetMinimumWidth(TOOLTIP_MIN_WIDTH)
 
-		self:AddLine("GlobalPlayed")
+		self:AddLine(BROKER_NAME)
 		self:AddLine(" ")
 
 		if GlobalPlayed_Addon_IsWindowEnabled() == true then
@@ -123,19 +115,19 @@ function GlobalPlayed_LoadLdbIntegration()
 		GlobalPlayed_LDB_AddColoredLine(self, L["Right click"], L["Open options panel"], HINT_COLOR)
 		self:AddLine(" ")
 
-		local factionIcon = nil
 		local groups = GlobalPlayed_Roster_Group(GlobalPlayed_Characters)
 		for k, v in ipairs(groups) do
 			GlobalPlayed_LDB_AddColoredLine(self, string.format("%s:", v.label), string.format(L["Total: %sh"], v.totalAsHours), REALM_COLOR)
 
 			for kk, vv in ipairs(v.characters) do
-				local characterLineTexts = GlobalPlayed_LDB_GetCharacterLine(vv)
+				local name, played = GlobalPlayed_LDB_GetCharacterLine(vv)
 
 				if GlobalPlayed_Options.useFactionIcon == true then
-					factionIcon = GlobalPlayed_Character_GetFactionIcon(vv)
-					self:AddDoubleLine("|T" .. factionIcon .. ":16:16:2:0|t  " .. characterLineTexts.name, characterLineTexts.playtime)
+					local factionIcon = GlobalPlayed_Character_GetFactionIcon(vv)
+
+					self:AddDoubleLine("|T" .. factionIcon .. ":16:16:2:0|t  " .. name, played)
 				else
-					self:AddDoubleLine("    " .. characterLineTexts.name, characterLineTexts.playtime)
+					self:AddDoubleLine("    " .. name, played)
 				end
 			end
 
@@ -143,8 +135,7 @@ function GlobalPlayed_LoadLdbIntegration()
 		end
 
 		self:AddLine(" ")
-		local accountLine = GlobalPlayed_LDB_GetAccountLine(GlobalPlayed_MyAccount)
-		self:AddDoubleLine(accountLine.left, accountLine.right)
+		self:AddDoubleLine(GlobalPlayed_LDB_GetAccountLine(GlobalPlayed_MyAccount))
 	end
 
 	-- Shows the tooltip for displays calling OnEnter instead of OnTooltipShow
