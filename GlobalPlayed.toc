@@ -4,7 +4,7 @@
 ## Notes-frFR: Le temps de jeu de tous vos personnages|n|n|cffE57D06/gplayed|r Afficher le temps de jeu|n|cffE57D06/gplayed all|r Détailler chaque personnage|n|cffE57D06/gplayed options|r Ouvrir les options
 ## IconTexture: Interface\AddOns\GlobalPlayed\Icons\globalplayed
 ## Author: RedSkiesReaperr
-## Version: 1.6.0
+## Version: 1.7.0
 ## SavedVariables: GlobalPlayed_Characters, GlobalPlayed_MyAccount, GlobalPlayed_Options
 ## OptionalDeps: DataStore, DataStore_Characters
 
