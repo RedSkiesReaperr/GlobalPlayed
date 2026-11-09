@@ -51,4 +51,4 @@ Bug reports and feature requests are welcome. Feel free to create issues on the 
 - [wow-ui-source](https://github.com/Gethe/wow-ui-source)
 
 ### Releasing
-Push a `vX.Y.Z` tag, or `vX.Y.Z-betaN` for a beta. It must match `## Version:` in `GlobalPlayed.toc` and a dated `## X.Y.Z (YYYY-MM-DD)` entry in `CHANGELOG.md`. The workflow then packages the addon and uploads it to CurseForge and Wago.
+Push a `vX.Y.Z` tag, or `vX.Y.Z-betaN` for a beta. It must match `## Version:` in `GlobalPlayed.toc` and a dated `## X.Y.Z (YYYY-MM-DD)` entry in `CHANGELOG.md`. The workflow then packages the addon and uploads it to CurseForge, Wago and GitHub Releases. Tags must be annotated (`git tag -a`).

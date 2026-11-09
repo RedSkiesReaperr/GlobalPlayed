@@ -13,6 +13,7 @@
 - Add French translation
 - Add tooltips explaining each option
 - Add options grouped in sections, with a separate page for characters
+- Add auto upload to GitHub Releases
 - Remove Save & Reload button, every option now applies immediately
 - Fix open window now updates as soon as played time is received
 - Fix repeated commands while played time is being requested
