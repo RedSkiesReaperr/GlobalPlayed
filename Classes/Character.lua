@@ -11,15 +11,11 @@ local NEUTRAL_ICON = "neutral"
 function GlobalPlayed_Character_GetPlayerIdentity()
 	local name, surname = UnitName("player")
 
-	if GlobalPlayed_Addon_IsForever() == false then
-		return name, GetRealmName()
-	end
-
-	if surname ~= nil and surname ~= "" then
+	if GlobalPlayed_Addon_IsForever() == true and surname ~= nil and surname ~= "" then
 		name = name .. " " .. surname
 	end
 
-	return name, FOREVER_REALM
+	return name, GlobalPlayed_Character_NormalizeRealm(GetRealmName())
 end
 
 -- Moves every saved character to the Forever group on a Forever client.
@@ -32,6 +28,29 @@ function GlobalPlayed_Character_MigrateForeverRealms()
 	for k, v in ipairs(GlobalPlayed_Characters) do
 		v.realm = FOREVER_REALM
 	end
+end
+
+-- Converts a game realm name to the one stored for a character
+function GlobalPlayed_Character_NormalizeRealm(p_realm)
+	if GlobalPlayed_Addon_IsForever() == true then
+		return FOREVER_REALM
+	end
+
+	return p_realm
+end
+
+-- Creates a character entry from data provided by another addon
+function GlobalPlayed_Character_CreateImported(p_name, p_realm, p_class, p_faction)
+	return {
+		name = p_name,
+		realm = p_realm,
+		class = p_class ~= "" and p_class or nil,
+		faction = p_faction ~= "" and p_faction or nil,
+		days = 0,
+		hours = 0,
+		totalAsHours = 0,
+		totalSeconds = 0
+	}
 end
 
 -- Creates a character entry with an empty played time

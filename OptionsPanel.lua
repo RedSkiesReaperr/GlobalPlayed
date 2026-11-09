@@ -183,6 +183,18 @@ function GlobalPlayed_LoadOptionsPanel()
 		charactersTitle:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, -12)
 		charactersTitle:SetText("Characters")
 
+		if GlobalPlayed_DataStoreImport_IsAvailable() == true then
+			local importButton = CreateFrame("Button", nil, self, "UIPanelButtonTemplate")
+
+			importButton:SetPoint("LEFT", charactersTitle, "RIGHT", 16, 0)
+			importButton:SetSize(180, 22)
+			importButton:SetText("Import from DataStore")
+			importButton:SetScript("OnClick", function()
+				GlobalPlayed_DataStoreImport_Run()
+				GlobalPlayed_RefreshCharacterList()
+			end)
+		end
+
 		local charactersHint = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 		charactersHint:SetPoint("TOPLEFT", charactersTitle, "BOTTOMLEFT", 0, -4)
 		charactersHint:SetText("Remove characters you deleted. The logged in character cannot be removed.")

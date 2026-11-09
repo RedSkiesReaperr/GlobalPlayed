@@ -5,6 +5,7 @@
 ## Author: RedSkiesReaperr
 ## Version: 1.6.0
 ## SavedVariables: GlobalPlayed_Characters, GlobalPlayed_MyAccount, GlobalPlayed_Options
+## OptionalDeps: DataStore, DataStore_Characters
 
 ## X-Category: Miscellaneous
 ## X-Website: https://www.curseforge.com/wow/addons/globalplayed
@@ -29,6 +30,7 @@ Classes/Account.lua
 EventHandlers/AddonLoaded.lua
 EventHandlers/PlayerLogin.lua
 EventHandlers/TimePlayed.lua
+Loaders/DataStoreImport.lua
 Loaders/LdbIntegration.lua
 GlobalPlayed.lua
 
