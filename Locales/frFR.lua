@@ -53,6 +53,7 @@ GlobalPlayed_Locale_Register("frFR", {
 	["Ruleset"] = "Ensemble de règles",
 	["Class"] = "Classe",
 	["Faction"] = "Faction",
+	["None"] = "Aucun",
 	["Sort by"] = "Trier par",
 	["Order of the characters in the window, the button tooltip and the chat report. Played time puts the most played first."] = "Ordre des personnages dans la fenêtre, l'infobulle du bouton et le rapport du chat. Le temps de jeu place les plus joués en premier.",
 	["Name"] = "Nom",

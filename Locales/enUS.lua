@@ -54,6 +54,7 @@ GlobalPlayed_Locale_RegisterDefault({
 	["Ruleset"] = "Ruleset",
 	["Class"] = "Class",
 	["Faction"] = "Faction",
+	["None"] = "None",
 	["Sort by"] = "Sort by",
 	["Order of the characters in the window, the button tooltip and the chat report. Played time puts the most played first."] = "Order of the characters in the window, the button tooltip and the chat report. Played time puts the most played first.",
 	["Name"] = "Name",

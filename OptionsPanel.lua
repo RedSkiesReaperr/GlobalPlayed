@@ -55,7 +55,8 @@ local OPTION_SECTIONS = {
 				choices = {
 					{ value = "realm", label = GlobalPlayed_Addon_IsForever() and L["Ruleset"] or L["Realm"] },
 					{ value = "class", label = L["Class"] },
-					{ value = "faction", label = L["Faction"] }
+					{ value = "faction", label = L["Faction"] },
+					{ value = "none", label = L["None"] }
 				}
 			},
 			{
