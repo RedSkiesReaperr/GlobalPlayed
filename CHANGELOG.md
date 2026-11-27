@@ -1,5 +1,11 @@
 # Changelogs
 
+## 1.8.0 (2026-11-27)
+
+- Add WoW Forever characters are grouped by ruleset: Normal, PvP, Roleplaying, Roleplaying PvP or Hardcore, each with its total
+- Add each WoW Forever character remembers its ruleset at login, characters saved before show as unknown ruleset until their next login
+- Add option to list characters without groups, following the sort option only
+
 ## 1.7.0 (2026-11-09)
 
 - Add native window, used by default and can be disabled in the options, Ace3 is no longer needed

@@ -7,7 +7,7 @@ Small addon to get your total playtime across characters, on Retail and WoW Fore
 ### **Usage**
 * Connect once to each of your characters: WoW only gives the played time of the character you are logged on
 * Type any GlobalPlayed command in chat, use the minimap button or the data broker in your display addon
-* Retail and WoW Forever keep separate totals
+* Retail and WoW Forever keep separate totals. On WoW Forever, characters are grouped by ruleset instead of realm
 
 ### **Available in-game commands**
 * **/gplayed** : Refresh and show the window (or your account total in chat if the window is disabled in options)
@@ -22,7 +22,7 @@ Small addon to get your total playtime across characters, on Retail and WoW Fore
 * **Right click** : open the options panel
 
 ### **Window**
-* Characters grouped by realm, class or faction, sorted by name or played time
+* Characters grouped by realm (ruleset on WoW Forever), class or faction, or not grouped, sorted by name or played time
 * Columns adapt to the window width, and its size and position are remembered
 * **Refresh** button next to **Close**
 
