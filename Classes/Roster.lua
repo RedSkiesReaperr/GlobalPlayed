@@ -97,18 +97,28 @@ local function GlobalPlayed_Roster_GetGroupLabel(p_character)
 		return GlobalPlayed_Character_GetClassLabel(p_character)
 	elseif GlobalPlayed_Options.groupBy == "faction" then
 		return GlobalPlayed_Character_GetFactionLabel(p_character)
+	elseif GlobalPlayed_Addon_IsForever() == true then
+		-- Forever has no realms: its rulesets play that role
+		return GlobalPlayed_Character_GetRulesetLabel(p_character)
 	end
 
 	return p_character.realm
 end
 
--- Groups characters following the group and sort options, with each group played total
+-- Returns whether characters are split into groups with a header, or listed together following the sort option only
+function GlobalPlayed_Roster_IsGrouped()
+	return GlobalPlayed_Options.groupBy ~= "none"
+end
+
+-- Groups characters following the group and sort options, with each group played total.
+-- Without grouping, every character is in a single group whose label is not displayed
 function GlobalPlayed_Roster_Group(p_characters)
 	local groups = {}
 	local groupsByLabel = {}
+	local isGrouped = GlobalPlayed_Roster_IsGrouped()
 
 	for _, character in ipairs(GlobalPlayed_Roster_SortForDisplay(p_characters)) do
-		local label = GlobalPlayed_Roster_GetGroupLabel(character)
+		local label = isGrouped and GlobalPlayed_Roster_GetGroupLabel(character) or ""
 		local group = groupsByLabel[label]
 
 		if group == nil then

@@ -6,7 +6,7 @@
 ## Category: Data Broker
 ## Category-frFR: Courtier de Données
 ## Author: RedSkiesReaperr
-## Version: 1.7.0
+## Version: 1.8.0
 ## SavedVariables: GlobalPlayed_Characters, GlobalPlayed_MyAccount, GlobalPlayed_Options
 ## OptionalDeps: DataStore, DataStore_Characters
 

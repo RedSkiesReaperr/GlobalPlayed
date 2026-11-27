@@ -120,7 +120,9 @@ function GlobalPlayed_LoadLdbIntegration()
 
 		local groups = GlobalPlayed_Roster_Group(GlobalPlayed_Characters)
 		for _, group in ipairs(groups) do
-			GlobalPlayed_LDB_AddColoredLine(self, string.format("%s:", group.label), string.format(L["Total: %sh"], group.totalAsHours), GROUP_HEADER_COLOR)
+			if GlobalPlayed_Roster_IsGrouped() then
+				GlobalPlayed_LDB_AddColoredLine(self, string.format("%s:", group.label), string.format(L["Total: %sh"], group.totalAsHours), GROUP_HEADER_COLOR)
+			end
 
 			for _, character in ipairs(group.characters) do
 				local name, played = GlobalPlayed_LDB_GetCharacterLine(character)

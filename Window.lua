@@ -103,15 +103,18 @@ local function GlobalPlayed_Window_Layout()
 	local cardWidth = (width - ((columns - 1) * CARD_GAP)) / columns
 	local y = 0
 	local cardIndex = 0
+	local isGrouped = GlobalPlayed_Roster_IsGrouped()
 
 	for groupIndex, group in ipairs(groups) do
-		local header = GlobalPlayed_Window_GetHeader(groupIndex)
+		if isGrouped then
+			local header = GlobalPlayed_Window_GetHeader(groupIndex)
 
-		header:ClearAllPoints()
-		header:SetPoint("TOPLEFT", 0, -y)
-		header:SetPoint("TOPRIGHT", 0, -y)
-		header:SetHeight(HEADER_HEIGHT)
-		y = y + HEADER_HEIGHT
+			header:ClearAllPoints()
+			header:SetPoint("TOPLEFT", 0, -y)
+			header:SetPoint("TOPRIGHT", 0, -y)
+			header:SetHeight(HEADER_HEIGHT)
+			y = y + HEADER_HEIGHT
+		end
 
 		for characterIndex = 1, #group.characters do
 			local column = (characterIndex - 1) % columns
@@ -135,12 +138,15 @@ local function GlobalPlayed_Window_Fill()
 	groups = GlobalPlayed_Roster_Group(GlobalPlayed_Characters)
 
 	local cardIndex = 0
+	local isGrouped = GlobalPlayed_Roster_IsGrouped()
 
 	for groupIndex, group in ipairs(groups) do
-		local header = GlobalPlayed_Window_GetHeader(groupIndex)
+		if isGrouped then
+			local header = GlobalPlayed_Window_GetHeader(groupIndex)
 
-		header:SetText(group.label .. GlobalPlayed_PlayedTime_FormatHoursSuffix(group.totalAsHours))
-		header:Show()
+			header:SetText(group.label .. GlobalPlayed_PlayedTime_FormatHoursSuffix(group.totalAsHours))
+			header:Show()
+		end
 
 		for _, character in ipairs(group.characters) do
 			cardIndex = cardIndex + 1
@@ -161,7 +167,9 @@ local function GlobalPlayed_Window_Fill()
 		end
 	end
 
-	for index = #groups + 1, #headers do
+	local shownHeaders = isGrouped and #groups or 0
+
+	for index = shownHeaders + 1, #headers do
 		headers[index]:Hide()
 	end
 
