@@ -67,13 +67,47 @@ function GlobalPlayed_Character_CreateCurrent(p_name, p_realm)
 	return character
 end
 
--- Updates class and faction from the logged in player, so only valid for the current character
+-- Returns whether a Forever game rule is active for the logged in character.
+-- A rule missing from the game, after a patch for instance, counts as inactive
+local function GlobalPlayed_Character_IsRuleActive(p_ruleName)
+	local rule = Enum.GameRule[p_ruleName]
+
+	return rule ~= nil and C_GameRules.IsGameRuleActive(rule) == true
+end
+
+-- Returns the Forever ruleset of the logged in character: "hardcore", "rppvp", "rp", "pvp" or "normal".
+-- Roleplaying PvP activates both the roleplaying and the PvP rules
+local function GlobalPlayed_Character_DetectRuleset()
+	if GlobalPlayed_Character_IsRuleActive("HardcoreRuleset") or C_GameRules.IsHardcoreActive() == true then
+		return "hardcore"
+	end
+
+	local isRoleplaying = GlobalPlayed_Character_IsRuleActive("RPRuleset")
+	local isPvP = GlobalPlayed_Character_IsRuleActive("PvPRuleset")
+
+	if isRoleplaying and isPvP then
+		return "rppvp"
+	elseif isRoleplaying then
+		return "rp"
+	elseif isPvP then
+		return "pvp"
+	end
+
+	return "normal"
+end
+
+-- Updates class, faction and Forever ruleset from the logged in player, so only valid for the current character.
+-- The ruleset is read at each login because a dead Hardcore character can move to another ruleset
 function GlobalPlayed_Character_RefreshIdentity(self)
 	local _, englishClass = UnitClass("player")
 	local englishFaction = UnitFactionGroup("player")
 
 	self.class = englishClass or self.class
 	self.faction = englishFaction or self.faction
+
+	if GlobalPlayed_Addon_IsForever() == true then
+		self.ruleset = GlobalPlayed_Character_DetectRuleset()
+	end
 end
 
 -- Formats the played time with white values, for tooltips
