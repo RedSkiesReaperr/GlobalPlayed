@@ -50,6 +50,7 @@ GlobalPlayed_Locale_Register("frFR", {
 	["Group by"] = "Regrouper par",
 	["Chooses the sections that gather your characters in the window and the button tooltip."] = "Choisit les sections qui regroupent vos personnages dans la fenêtre et l'infobulle du bouton.",
 	["Realm"] = "Royaume",
+	["Ruleset"] = "Ensemble de règles",
 	["Class"] = "Classe",
 	["Faction"] = "Faction",
 	["Sort by"] = "Trier par",
@@ -79,5 +80,13 @@ GlobalPlayed_Locale_Register("frFR", {
 	-- DataStore import
 	["Import from DataStore"] = "Importer depuis DataStore",
 	["Adds the characters known by DataStore or Altoholic that are missing from this list. For the others, keeps the highest played time."] = "Ajoute les personnages connus de DataStore ou Altoholic absents de cette liste. Pour les autres, garde le temps de jeu le plus élevé.",
-	["DataStore import: %d added, %d updated"] = "Import DataStore : %d ajoutés, %d mis à jour"
+	["DataStore import: %d added, %d updated"] = "Import DataStore : %d ajoutés, %d mis à jour",
+
+	-- Forever rulesets
+	["Normal"] = "Normal",
+	["PvP"] = "JcJ",
+	["Roleplaying"] = "Jeu de rôle",
+	["Roleplaying PvP"] = "Jeu de rôle JcJ",
+	["Hardcore"] = "Hardcore",
+	["Unknown ruleset"] = "Ensemble de règles inconnu"
 })

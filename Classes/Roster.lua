@@ -97,6 +97,9 @@ local function GlobalPlayed_Roster_GetGroupLabel(p_character)
 		return GlobalPlayed_Character_GetClassLabel(p_character)
 	elseif GlobalPlayed_Options.groupBy == "faction" then
 		return GlobalPlayed_Character_GetFactionLabel(p_character)
+	elseif GlobalPlayed_Addon_IsForever() == true then
+		-- Forever has no realms: its rulesets play that role
+		return GlobalPlayed_Character_GetRulesetLabel(p_character)
 	end
 
 	return p_character.realm

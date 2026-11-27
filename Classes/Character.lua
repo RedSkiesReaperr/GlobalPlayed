@@ -1,7 +1,16 @@
 ----------------------
 -- Here is the Character behavior
 ----------------------
+local L = GlobalPlayed_L
+
 local FOREVER_REALM = "WoW Forever"
+local RULESET_LABELS = {
+	normal = L["Normal"],
+	pvp = L["PvP"],
+	rp = L["Roleplaying"],
+	rppvp = L["Roleplaying PvP"],
+	hardcore = L["Hardcore"]
+}
 local FACTION_ICONS_PATH = "Interface\\AddOns\\GlobalPlayed\\Icons\\Factions\\"
 local FACTION_ICONS = { Alliance = "alliance", Horde = "horde" }
 local NEUTRAL_ICON = "neutral"
@@ -191,6 +200,11 @@ function GlobalPlayed_Character_GetClassLabel(self)
 	end
 
 	return LOCALIZED_CLASS_NAMES_MALE ~= nil and LOCALIZED_CLASS_NAMES_MALE[self.class] or self.class
+end
+
+-- Returns the localized name of the Forever ruleset, or a generic label until the character logs in once
+function GlobalPlayed_Character_GetRulesetLabel(self)
+	return RULESET_LABELS[self.ruleset] or L["Unknown ruleset"]
 end
 
 -- Returns the localized faction name, or a generic label when unknown

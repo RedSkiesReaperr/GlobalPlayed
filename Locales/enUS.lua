@@ -51,6 +51,7 @@ GlobalPlayed_Locale_RegisterDefault({
 	["Group by"] = "Group by",
 	["Chooses the sections that gather your characters in the window and the button tooltip."] = "Chooses the sections that gather your characters in the window and the button tooltip.",
 	["Realm"] = "Realm",
+	["Ruleset"] = "Ruleset",
 	["Class"] = "Class",
 	["Faction"] = "Faction",
 	["Sort by"] = "Sort by",
@@ -80,5 +81,13 @@ GlobalPlayed_Locale_RegisterDefault({
 	-- DataStore import
 	["Import from DataStore"] = "Import from DataStore",
 	["Adds the characters known by DataStore or Altoholic that are missing from this list. For the others, keeps the highest played time."] = "Adds the characters known by DataStore or Altoholic that are missing from this list. For the others, keeps the highest played time.",
-	["DataStore import: %d added, %d updated"] = "DataStore import: %d added, %d updated"
+	["DataStore import: %d added, %d updated"] = "DataStore import: %d added, %d updated",
+
+	-- Forever rulesets
+	["Normal"] = "Normal",
+	["PvP"] = "PvP",
+	["Roleplaying"] = "Roleplaying",
+	["Roleplaying PvP"] = "Roleplaying PvP",
+	["Hardcore"] = "Hardcore",
+	["Unknown ruleset"] = "Unknown ruleset"
 })

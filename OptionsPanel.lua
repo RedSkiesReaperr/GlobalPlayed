@@ -53,7 +53,7 @@ local OPTION_SECTIONS = {
 				label = L["Group by"],
 				tooltip = L["Chooses the sections that gather your characters in the window and the button tooltip."],
 				choices = {
-					{ value = "realm", label = L["Realm"] },
+					{ value = "realm", label = GlobalPlayed_Addon_IsForever() and L["Ruleset"] or L["Realm"] },
 					{ value = "class", label = L["Class"] },
 					{ value = "faction", label = L["Faction"] }
 				}
